@@ -74,7 +74,7 @@ export default function SignInRest() {
                     value={pass}
                 />
 
-                <TouchableOpacity style={styles.button} onPress={logandoRest}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('HomeRest')}>
                     <Text style={styles.buttonText}>Acessar</Text>
                 </TouchableOpacity>
 

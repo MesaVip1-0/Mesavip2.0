@@ -12,6 +12,8 @@ function TabRoutes() {
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 headerShown: false,
+                tabBarHideOnKeyboard: true,
+
                 tabBarIcon: ({ color, size }) => {
                     let iconName = 'home';
 
