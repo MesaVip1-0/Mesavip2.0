@@ -55,12 +55,12 @@ export default function AlterDados() {
                             </View>
 
                             <View style={{ marginTop: 40 }}>
-                                <View>
+                                {/* <View>
                                     <Text style={styles.text1}>Senha Atual:</Text>
                                     <TouchableOpacity style={styles.inputBtn} >
                                         <Text style={styles.text1}>1234567</Text>
                                     </TouchableOpacity>
-                                </View>
+                                </View> */}
                                 <View>
                                     <Text style={styles.text1}>Nova Senha:</Text>
                                     {/*botão de input de dados (senha)*/}
