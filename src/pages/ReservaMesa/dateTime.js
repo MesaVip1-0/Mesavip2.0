@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Image } from 'react-native';
+import styles from "./styles";
 
 const DateTime = () => {
     const [selectedDay, setSelectedDay] = useState(null);
@@ -190,64 +191,3 @@ const DateTime = () => {
 }
 
 export default DateTime;
-
-const styles = StyleSheet.create({
-    dias: {
-        width: 60,
-        height: 60,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 100,
-        margin: 5,
-    },
-    horarios: {
-        width: 100,
-        height: 35,
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 5,
-        borderRadius: 5
-    },
-    escolhaHorario: {
-        color: '#fff',
-        fontSize: 20,
-        paddingLeft: 25,
-        paddingTop: 20,
-        paddingBottom: 10
-    },
-    qtdPessoas: {
-        width: 75,
-        height: 75,
-        borderRadius: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 15,
-        borderWidth: 1,
-        borderColor: '#a99c9c'
-    },
-    mesa: {
-        width: 150,
-        height: 40,
-        backgroundColor: '#5F5959',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 5,
-        marginRight: 40
-    },
-    indisponivel: {
-        fontSize: 15,
-        color: '#fff',
-        paddingLeft: 55
-    },
-    imgMesas: {
-        flexDirection: 'row',
-    },
-    imgEx: {
-        width: 200
-    },
-    imgIn: {
-        width: 90,
-        marginTop: 10,
-        marginLeft: 40
-    }
-});

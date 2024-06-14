@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
-import * as Animatable from 'react-native-animatable'
+import * as Animatable from 'react-native-animatable';
+import styles from './styles';
+
 export default function SignInRest() {
     const navigation = useNavigation();
-    const[email, setEmail] = useState('')
-    const[pass, setPass] = useState('')
+    const [email, setEmail] = useState('')
+    const [pass, setPass] = useState('')
 
     function logandoRest() {
         console.log('If Teste');
@@ -18,7 +20,7 @@ export default function SignInRest() {
             alert("Digite seu e-mail");
             return;
         } else if (pass === '') {
-            alert ("Digite sua senha");
+            alert("Digite sua senha");
             return;
         }
 
@@ -32,20 +34,20 @@ export default function SignInRest() {
                 pass: pass,
             })
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Resposta da API recebida');
-            console.log('Dados recebidos:', data);
-            console.log('Login bem-sucedido:', data);
-            if(data.token){
+            .then(response => response.json())
+            .then(data => {
+                console.log('Resposta da API recebida');
+                console.log('Dados recebidos:', data);
+                console.log('Login bem-sucedido:', data);
+                if (data.token) {
 
-                AcessaHomi()
-            }
+                    AcessaHomi()
+                }
 
-            // fetchUserData(data.token);
+                // fetchUserData(data.token);
 
-        })
-        .catch(error => console.error('Erro no login:', error));
+            })
+            .catch(error => console.error('Erro no login:', error));
     }
     const AcessaHomi = () => {
         navigation.navigate("HomeCli")
@@ -88,58 +90,3 @@ export default function SignInRest() {
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#000'
-    },
-    containerHeader: {
-        marginTop: '14%',
-        marginBottom: '8%',
-        paddingStart: '5%'
-    },
-    message: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: '#fff'
-    },
-    containerForm: {
-        backgroundColor: '#fff',
-        flex: 1,
-        borderTopLeftRadius: 25,
-        borderTopRightRadius: 25,
-        paddingStart: '5%',
-        paddingEnd: '5%'
-    },
-    title: {
-        fontSize: 20,
-        marginTop: 28
-    },
-    input: {
-        borderBottomWidth: 1,
-        height: 40,
-        marginBottom: 12,
-        fontSize: 16
-    },
-    button:{
-        backgroundColor:'red',
-        width:'100%',
-        borderRadius:4,
-        paddingVertical:8,
-        marginTop:14,
-        justifyContent:'center',
-        alignItems:'center'
-    },
-    buttonText:{
-        color:'#000',
-        fontSize:18,
-        fontWeight:'bold'
-    },
-    buttonRegister:{
-        marginTop:14,
-        alignSelf:'center'
-    },
-    registerText:{
-        color:'#a1a1a1'
-    }
-})
