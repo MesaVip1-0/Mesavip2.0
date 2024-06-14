@@ -103,7 +103,7 @@ export default function HomeRest() {
                             <View style={styles.horario}>
                                 <TextMask />
                             </View>
-                            <Text style={styles.horarioText}>à</Text>
+                            <Text style={styles.horarioText}>às</Text>
                             <View style={styles.horario}>
                                 <TextMask />
                             </View>
@@ -117,7 +117,7 @@ export default function HomeRest() {
                             <View style={styles.horario}>
                                 <TextMask />
                             </View>
-                            <Text style={styles.horarioText}> à </Text>
+                            <Text style={styles.horarioText}> às </Text>
                             <View style={styles.horario}>
                                 <TextMask />
                             </View>

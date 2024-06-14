@@ -48,7 +48,7 @@ export default function Perfil() {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.btn}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => navigation.navigate('Cartoes')}>
                             <Feather name="credit-card" style={styles.iconsStyle} />
                             <View style={{ marginLeft: 10 }}>
                                 <Text style={styles.text}>Pagamento</Text>

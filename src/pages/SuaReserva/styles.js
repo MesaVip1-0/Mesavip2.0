@@ -49,21 +49,21 @@ const styles = StyleSheet.create({
         width: 50,
         marginRight: -50
     },
-    bah: {
+    containerBtn: {
         marginTop: 50,
         width: '90%',
         height: "12.9%",
-        backgroundColor: '#a2a2a2',
+        backgroundColor: '#433d3d',
         borderRadius: 10,
         margin: 'auto',
         justifyContent: 'center',
-        borderWidth: 3,
+        borderWidth: 2,
         borderColor: '#fff',
         opacity: 0.8
 
 
     },
-    bah1: {
+    text: {
         width: 300,
         opacity:1
     }

@@ -87,7 +87,7 @@ export default function Welcome() {
                             <View style={styles.horario}>
                                 <Text style={styles.horarioText}>8:00</Text>
                             </View>
-                            <Text style={styles.horarioText}>à</Text>
+                            <Text style={styles.horarioText}>às</Text>
                             <View style={styles.horario}>
                                 <Text style={styles.horarioText}>22:00</Text>
                             </View>
@@ -101,7 +101,7 @@ export default function Welcome() {
                             <View style={styles.horario}>
                                 <Text style={styles.horarioText}>10:00</Text>
                             </View>
-                            <Text style={styles.horarioText}> à </Text>
+                            <Text style={styles.horarioText}> às </Text>
                             <View style={styles.horario}>
                                 <Text style={styles.horarioText}>23:00</Text>
                             </View>

@@ -14,7 +14,7 @@ import NotificacoesCli from "../pages/NotificacoesCli";
 import SuaReserva from "../pages/SuaReserva";
 import ReservaMesa from "../pages/ReservaMesa";
 import HomeRest from "../pages/HomeRest";
-
+import Cartoes from "../pages/Cartoes";
 
 
 const Stack = createNativeStackNavigator();
@@ -96,6 +96,11 @@ export default function StackRoutes() {
             <Stack.Screen
                 name="HomeRest"
                 component={HomeRest}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Cartoes"
+                component={Cartoes}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>

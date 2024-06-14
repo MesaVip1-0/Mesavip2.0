@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     buttonReserv: {
-        backgroundColor: '#8E1515',
+        backgroundColor: '#FE0000',
         width: '80%',
         height: 50,
         borderRadius: 10,
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         alignItems: 'center',
         borderWidth: 2,
-        borderColor: '#8E1515'
+        borderColor: '#FE0000'
     },
     titleReserv: {
         color: '#fff',

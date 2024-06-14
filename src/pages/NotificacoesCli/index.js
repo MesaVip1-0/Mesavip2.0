@@ -10,6 +10,11 @@ export default function NotificacoesCli() {
             <View style={styles.container}>
                 <Text style={{ color: '#fff', fontSize: 26.5 }}>Notificações</Text>
             </View>
+            <SafeAreaView>
+                <View>
+                    
+                </View>
+            </SafeAreaView>
         </SafeAreaView>
     );
 }

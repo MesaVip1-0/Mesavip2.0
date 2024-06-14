@@ -14,11 +14,11 @@ export default function SuaReserva() {
             <View style={styles.title}>
                 <Text style={styles.txtTitle}>Sua Reserva</Text>
             </View>
-            <View style={styles.bah}>
+            <View style={styles.containerBtn}>
                 <View>
                     <TouchableOpacity style={styles.btnMesa}>
                         <Image style={styles.img_mesa} source={require('./mesa-interna.png')}></Image>
-                        <View style={styles.bah1}><Text style={styles.txtBtn}>Mesa Interna 10</Text></View>
+                        <View style={styles.text}><Text style={styles.txtBtn}>Mesa Interna 10</Text></View>
                         <View style={styles.pencil}>
                             <FontAwesome name='pencil' color='#fff' size={40} style={{ margin: 1 }} />
                         </View>
