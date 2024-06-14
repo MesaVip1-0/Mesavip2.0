@@ -153,13 +153,6 @@ export default function HomeRest() {
                         <Text style={styles.buttonText}>Reservar Mesa</Text>
                     </TouchableOpacity>
 
-                    {/* Ícone de Favorito */}
-                    <TouchableOpacity onPress={() => toggleIconSelection('heart')} style={styles.heartContainer}>
-                        <AntDesign
-                            name={selectedIcons.heart ? "heart" : "hearto"}
-                            style={[styles.heartStyle, selectedIcons.heart && styles.heartSelected]}
-                        />
-                    </TouchableOpacity>
                 </ScrollView>
             </Animatable.View>
         </SafeAreaView>

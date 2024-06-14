@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     View,
     Text,
@@ -16,7 +16,16 @@ import { useNavigation } from '@react-navigation/native';
 export default function Welcome() {
     // Usando o hook useNavigation para obter a navegação
     const navigation = useNavigation();
+    const [selectedIcons, setSelectedIcons] = useState({
+        heart: false
+    });
 
+    const toggleIconSelection = (icon) => {
+        setSelectedIcons((prevSelectedIcons) => ({
+            ...prevSelectedIcons,
+            [icon]: !prevSelectedIcons[icon],
+        }));
+    };
     // Retornando o JSX do componente
     return (
         <SafeAreaView style={styles.container}>
@@ -127,7 +136,12 @@ export default function Welcome() {
                     </TouchableOpacity>
 
                     {/* Ícone de Favorito */}
-                    <AntDesign style={styles.heartContainer} name="hearto" />
+                    <TouchableOpacity onPress={() => toggleIconSelection('heart')} style={styles.heartContainer}>
+                    <AntDesign
+                        name={selectedIcons.heart ? "heart" : "hearto"}
+                        style={[styles.heartStyle, selectedIcons.heart && styles.heartSelected]}
+                    />
+                </TouchableOpacity>
                 </ScrollView>
             </Animatable.View>
         </SafeAreaView>
@@ -286,5 +300,20 @@ const styles = StyleSheet.create({
         fontSize: 34,
         color: '#fff',
         zIndex: 1,
-    }
+    },
+    heartStyle: {
+        fontSize: 25,
+        color: 'white',
+    },
+    heartSelected: {
+        fontSize: 25,
+        color: 'red',
+    },
+    heartContainer: {
+        position: 'absolute',
+        top: 30,
+        right: 20,
+        fontSize: 30,
+        color: '#fff',
+    },
 });

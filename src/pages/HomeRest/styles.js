@@ -61,14 +61,6 @@ const styles = StyleSheet.create({
         marginTop: 15,
         paddingStart: '5%',
     },
-
-    heartContainer: {
-        position: 'absolute',
-        top: 30,
-        right: 20,
-        fontSize: 30,
-        color: '#fff',
-    },
     iconsContainerList: {
         flex: 1,
         flexDirection: 'row',
@@ -168,17 +160,9 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     selectedIcon: {
-        color:'white',
-        fontSize:38
-      },
-      heartStyle:{
-        fontSize: 38,
         color: 'white',
-      },
-      heartSelected:{
-        fontSize: 38,
-        color: 'red',
-      }
+        fontSize: 38
+    },
 });
 
 
