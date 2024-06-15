@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TextInput, Pressable, TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
-import { useNavigation } from '@react-navigation/native'
+import { View, Text, Image, TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import styles from './styles';
 
 const agendadas = [
     {
@@ -22,7 +23,7 @@ const agendadas = [
 const ResAgenda = ({ item, navigation }) => {
     return (
         <View style={styles.btnLogo}>
-            <TouchableOpacity onPress={() => navigation.navigate('DetailsCli')}>
+            <TouchableOpacity onPress={() => navigation.navigate('SuaReserva')}>
                 {/* IMAGEM LOGO */}
                 <Image
                     style={styles.image}
@@ -105,14 +106,14 @@ export default function Reservas() {
                 <Text style={styles.txtAgenda}>Agendadas:</Text>
                 <FlatList
                     data={agendadas}
-                    renderItem={({item}) => <ResAgenda item={item} navigation={navigation}/>}
+                    renderItem={({ item }) => <ResAgenda item={item} navigation={navigation} />}
                     ListEmptyComponent={<Text> A LISTA DE PRODUTOS ESTÁ VAZIA</Text>}
                     keyExtractor={item => item.codigo_produto} />
 
                 <Text style={styles.txtAgenda}>Onde já esteve:</Text>
                 <FlatList
                     data={onde_esteve}
-                    renderItem={({item}) => <Anteriores item={item} navigation={navigation}/>}
+                    renderItem={({ item }) => <Anteriores item={item} navigation={navigation} />}
                     ListEmptyComponent={<Text> A LISTA DE PRODUTOS ESTÁ VAZIA</Text>}
                     keyExtractor={item => item.codigo_produto} />
             </SafeAreaView>
@@ -120,58 +121,3 @@ export default function Reservas() {
     );
 }
 
-const styles = StyleSheet.create({
-    // STYLE resAgenda E anteriores
-    btnLogo: {
-        margin: 20,
-        borderBottomWidth: 0.5,
-        paddingBottom: 20,
-        borderColor: '#a2a2a2',
-        borderRadius: 10,
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    image: {
-        width: 60,
-        height: 60,
-        borderRadius: 100,
-        borderWidth: 2.5,
-        borderColor: '#FE0000'
-    },
-    viewDescription: {
-        flexDirection: 'column'
-    },
-    descriptionTxt: {
-        paddingLeft: 10,
-        fontSize: 18,
-        lineHeight: 26,
-        color: '#fff'
-    },
-    subDescripition: {
-        fontSize: 15,
-        color: '#9d9595',
-        paddingLeft: 10
-    },
-    //FINAL STYLE
-
-    //STYLE Reservas
-    container: {
-        backgroundColor: '#141414',
-        height: 100,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    txtFav: {
-        color: '#fff',
-        fontSize: 40
-    },
-    container1: {
-        flex: 1,
-        backgroundColor: '#141414'
-    },
-    txtAgenda: {
-        color: '#fff',
-        fontSize: 20,
-        paddingLeft: 25
-    },
-});

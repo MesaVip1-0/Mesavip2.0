@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
+import styles from './styles';
 
 export default function SignIn() {
     const navigation = useNavigation();
@@ -19,7 +20,8 @@ export default function SignIn() {
             return;
         }
 
-        fetch('http://192.168.0.101:3000/auth/login', {
+
+        fetch('http://192.168.17.75:3000/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -29,21 +31,21 @@ export default function SignIn() {
                 pass: pass,
             })
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Resposta da API recebida');
-            console.log('Dados recebidos:', data);
+            .then(response => response.json())
+            .then(data => {
+                console.log('Resposta da API recebida');
+                console.log('Dados recebidos:', data);
 
-            if (data.token) {
-                navigation.navigate("HomeCli", { token: data.token }); // Passa o token para a próxima tela
-            } else {
-                throw new Error('Token não recebido');
-            }
-        })
-        .catch(error => {
-            console.error('Erro no login:', error);
-            Alert.alert('Erro', 'Não foi possível realizar o login');
-        });
+                if (data.token) {
+                    navigation.navigate("HomeCli", { token: data.token }); // Passa o token para a próxima tela
+                } else {
+                    throw new Error('Token não recebido');
+                }
+            })
+            .catch(error => {
+                console.error('Erro no login:', error);
+                Alert.alert('Erro', 'Não foi possível realizar o login');
+            });
     }
 
     return (
@@ -84,58 +86,3 @@ export default function SignIn() {
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#000'
-    },
-    containerHeader: {
-        marginTop: '14%',
-        marginBottom: '8%',
-        paddingStart: '5%'
-    },
-    message: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: '#fff'
-    },
-    containerForm: {
-        backgroundColor: '#fff',
-        flex: 1,
-        borderTopLeftRadius: 25,
-        borderTopRightRadius: 25,
-        paddingStart: '5%',
-        paddingEnd: '5%'
-    },
-    title: {
-        fontSize: 20,
-        marginTop: 28
-    },
-    input: {
-        borderBottomWidth: 1,
-        height: 40,
-        marginBottom: 12,
-        fontSize: 16
-    },
-    button: {
-        backgroundColor: 'red',
-        width: '100%',
-        borderRadius: 4,
-        paddingVertical: 8,
-        marginTop: 14,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    buttonText: {
-        color: '#000',
-        fontSize: 18,
-        fontWeight: 'bold'
-    },
-    buttonRegister: {
-        marginTop: 14,
-        alignSelf: 'center'
-    },
-    registerText: {
-        color: '#a1a1a1'
-    }
-});

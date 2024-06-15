@@ -1,22 +1,24 @@
-import React from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-    Image,
-    TouchableOpacity,
-    ScrollView,
-    SafeAreaView,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { AntDesign, FontAwesome, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import styles from './styles';
 
 // Definindo o componente Welcome
 export default function Welcome() {
     // Usando o hook useNavigation para obter a navegação
     const navigation = useNavigation();
+    const [selectedIcons, setSelectedIcons] = useState({
+        heart: false
+    });
 
+    const toggleIconSelection = (icon) => {
+        setSelectedIcons((prevSelectedIcons) => ({
+            ...prevSelectedIcons,
+            [icon]: !prevSelectedIcons[icon],
+        }));
+    };
     // Retornando o JSX do componente
     return (
         <SafeAreaView style={styles.container}>
@@ -85,7 +87,7 @@ export default function Welcome() {
                             <View style={styles.horario}>
                                 <Text style={styles.horarioText}>8:00</Text>
                             </View>
-                            <Text style={styles.horarioText}>à</Text>
+                            <Text style={styles.horarioText}>às</Text>
                             <View style={styles.horario}>
                                 <Text style={styles.horarioText}>22:00</Text>
                             </View>
@@ -99,7 +101,7 @@ export default function Welcome() {
                             <View style={styles.horario}>
                                 <Text style={styles.horarioText}>10:00</Text>
                             </View>
-                            <Text style={styles.horarioText}> à </Text>
+                            <Text style={styles.horarioText}> às </Text>
                             <View style={styles.horario}>
                                 <Text style={styles.horarioText}>23:00</Text>
                             </View>
@@ -122,169 +124,20 @@ export default function Welcome() {
 
                     {/* Botão de reserva */}
                     <Text style={styles.titleReserv}>Faça sua Reserva:</Text>
-                    <TouchableOpacity style={styles.buttonReserv}>
+                    <TouchableOpacity style={styles.buttonReserv} onPress={() => navigation.navigate('ReservaMesa')}>
                         <Text style={styles.buttonText}>Reservar Mesa</Text>
                     </TouchableOpacity>
 
                     {/* Ícone de Favorito */}
-                    <AntDesign style={styles.heartContainer} name="hearto" />
+                    <TouchableOpacity onPress={() => toggleIconSelection('heart')} style={styles.heartContainer}>
+                        <AntDesign
+                            name={selectedIcons.heart ? "heart" : "hearto"}
+                            style={[styles.heartStyle, selectedIcons.heart && styles.heartSelected]}
+                        />
+                    </TouchableOpacity>
                 </ScrollView>
             </Animatable.View>
         </SafeAreaView>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 2,
-        backgroundColor: '#000',
-    },
-    containerLogo: {
-        flex: 0.4,
-        backgroundColor: '#000',
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'relative'
-    },
-    containerForm: {
-        flex: 1,
-        backgroundColor: '#141414',
-        borderTopLeftRadius: 25,
-        borderTopRightRadius: 25,
-        borderTopWidth: 1.5,
-        borderLeftWidth: 1.5,
-        borderRightWidth: 1.5,
-        borderColor: '#fff',
-        paddingEnd: '5%',
-    },
-    title: {
-        color: '#fff',
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginTop: 28,
-        paddingStart: '5%',
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    subTitle: {
-        color: '#fff',
-        fontSize: 16.5,
-        fontWeight: 'bold',
-        marginTop: 15,
-        paddingStart: '5%',
-    },
-    text: {
-        color: '#fff',
-        paddingStart: '5%',
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginTop: 28,
-        marginBottom: 12,
-    },
-
-    heartContainer: {
-        position: 'absolute',
-        top: 30,
-        right: 20,
-        fontSize: 30,
-        color: '#fff',
-    },
-    iconsContainerList: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingStart: '5%',
-        paddingEnd: '5%',
-        flexWrap: 'wrap',
-        marginTop: '5%',
-    },
-    iconsStyle: {
-        fontSize: 38,
-        color: '#fff',
-    },
-    iconsContainer: {
-        alignItems: 'center',
-        width: '45%',
-        marginBottom: '5%',
-    },
-    horarioContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingStart: '5%',
-        paddingEnd: '5%',
-        marginTop: 15,
-    },
-    horarioTextContainer: {
-        width: '55%',
-        alignItems: 'flex-start',
-    },
-    horario: {
-        width: '30%',
-        height: 35,
-        borderRadius: 10,
-        borderWidth: 2.5,
-        borderColor: '#fff',
-        backgroundColor: '#423B3B',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    horarioStyle: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    horarioText: {
-        color: '#fff',
-        fontSize: 16.5,
-        fontWeight: 'bold',
-        marginHorizontal: 5,
-    },
-    Button: {
-        backgroundColor: '#423B3B',
-        width: '80%',
-        height: 50,
-        borderRadius: 10,
-        paddingVertical: 8,
-        marginTop: 20,
-        justifyContent: 'center',
-        alignSelf: 'center',
-        alignItems: 'center',
-        borderWidth: 2,
-        borderColor: '#fff'
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 21,
-        fontWeight: 'bold'
-    },
-    buttonReserv: {
-        backgroundColor: '#8E1515',
-        width: '80%',
-        height: 50,
-        borderRadius: 10,
-        paddingVertical: 8,
-        marginTop: 20,
-        justifyContent: 'center',
-        alignSelf: 'center',
-        alignItems: 'center',
-        borderWidth: 2,
-        borderColor: '#8E1515'
-    },
-    titleReserv: {
-        color: '#fff',
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginTop: 28,
-        flexDirection: 'row',
-        alignSelf: 'center',
-        borderBottomWidth: 2,
-        borderColor: '#fff'
-    },
-    return: {
-        position: 'absolute',
-        top: 5,
-        left: 5,
-        fontSize: 34,
-        color: '#fff',
-        zIndex: 1,
-    }
-});

@@ -1,11 +1,10 @@
-// HomeCli.js
-
 import React from 'react';
-import { View, Text, StyleSheet, Image, TextInput, Pressable, TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
+import { View, Text, Image, TextInput, TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
+import styles from './styles';
 import { useNavigation } from '@react-navigation/native'
-import * as Animatable from 'react-native-animatable'
+
 
 const prod = [
     {
@@ -42,25 +41,33 @@ const prod = [
     },
 ];
 
+
 const ProdItem = ({ item, navigation }) => {
     return (
         <View style={styles.container2}>
             <TouchableOpacity onPress={() => navigation.navigate('DetailsCli')} >
+                {/* Image  */}
                 <Image
                     style={styles.image}
                     source={item.imagem_livro}
                 />
             </TouchableOpacity>
+
+            {/* Bed & Bedroom  */}
             <Text style={styles.description}>
                 {item.nome_produto}
             </Text>
+
+            {/* Type & Description */}
             <Text style={styles.description} numberOfLines={2}>
                 {item.descricao_produto}
             </Text>
+
+            {/*  Old price & new price */}
         </View>
     );
-}
 
+}
 export default function HomeCli() {
     const navigation = useNavigation();
     const [searchText, setSearchText] = useState('');
@@ -81,12 +88,15 @@ export default function HomeCli() {
 
     const handleOrderClick = () => {
         let newList = [...prod];
+
         newList.sort((a, b) => (a.name_produto > b.name_produto ? 1 : b.name_produto > a.name_produto ? -1 : 0));
+
         setList(newList);
     };
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+
             <View style={styles.container}>
                 <View style={styles.actionRow}>
                     <TouchableOpacity>
@@ -104,7 +114,9 @@ export default function HomeCli() {
                         <Ionicons name="options-outline" size={24} color={'#fff'} />
                     </TouchableOpacity>
                 </View>
+
             </View>
+
             <SafeAreaView style={styles.container1}>
                 <FlatList
                     data={list}
@@ -112,112 +124,11 @@ export default function HomeCli() {
                     ListEmptyComponent={<Text>A LISTA DE PRODUTOS ESTÁ VAZIA</Text>}
                     keyExtractor={(list) => list.codigo_produto}
                 />
+
             </SafeAreaView>
+
+
         </SafeAreaView>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#141414',
-        height: 100,
-        elevation: 2,
-        shadowColor: '#000',
-        shadowOpacity: 0.1,
-        shadowRadius: 6,
-        shadowOffset: {
-            width: 1,
-            height: 10,
-        },
-    },
-    container1: {
-        flex: 1,
-        backgroundColor: '#141414',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    container2: {
-        width: 340,
-        margin: 20,
-        borderBottomWidth: 0.5,
-        paddingBottom: 20,
-        borderColor: '#a2a2a2',
-        borderRadius: 10,
-    },
-    actionRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 24,
-        paddingBottom: 16,
-        paddingTop: 10
-    },
-    searchBtn: {
-        backgroundColor: '#D7D7D7',
-        flexDirection: 'row',
-        gap: 10,
-        padding: 14,
-        alignItems: 'center',
-        width: 280,
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: '#d5d5d5',
-        borderRadius: 30,
-        elevation: 10,
-        shadowColor: '#000',
-        shadowOpacity: 0.12,
-        shadowRadius: 8,
-        shadowOffset: {
-            width: 1,
-            height: 1,
-        },
-    },
-    filterBtn: {
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#fff',
-        borderRadius: 24,
-    },
-    text: {
-        color: '#000',
-        fontSize: 18,
-        fontWeight: 'bold'
-    },
-    subText: {
-        color: 'grey',
-        fontSize: 15,
-        fontWeight: 'bold'
-    },
-    image: {
-        width: '100%',
-        height: 250,
-        resizeMode: 'cover',
-        borderRadius: 10,
-        borderWidth: 2.5,
-        borderColor: '#FE0000'
-    },
-    bedrooms: {
-        marginVertical: 10,
-        color: '#5b5b5b',
-    },
-    description: {
-        fontSize: 18,
-        lineHeight: 26,
-        textAlign: 'center',
-        color: '#fff'
-    },
-    prices: {
-        fontSize: 18,
-        marginVertical: 10,
-    },
-    oldPrice: {
-        color: '#5b5b5b',
-        textDecorationLine: 'line-through',
-    },
-    price: {
-        fontWeight: 'bold',
-    },
-    totalPrice: {
-        color: '#5b5b5b',
-        textDecorationLine: 'underline',
-    }
-});
