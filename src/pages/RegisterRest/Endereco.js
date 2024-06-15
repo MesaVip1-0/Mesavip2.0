@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
+import styles from './styles';
 
 export default function Endereco() {
     const navigation = useNavigation();
@@ -38,7 +39,7 @@ export default function Endereco() {
 
     const salvarEndereco = async () => {
         try {
-            const response = await fetch('http://192.168.15.9:3000/auth/register_rest', {
+            const response = await fetch('http://192.168.17.75:3000/auth/register_rest', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -129,58 +130,3 @@ export default function Endereco() {
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#000'
-    },
-    containerHeader: {
-        marginTop: '14%',
-        marginBottom: '8%',
-        paddingStart: '5%'
-    },
-    message: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: '#fff'
-    },
-    containerForm: {
-        backgroundColor: '#fff',
-        flex: 1,
-        borderTopLeftRadius: 25,
-        borderTopRightRadius: 25,
-        paddingStart: '5%',
-        paddingEnd: '5%'
-    },
-    title: {
-        fontSize: 20,
-        marginTop: 20
-    },
-    input: {
-        borderBottomWidth: 1,
-        height: 40,
-        marginBottom: 12,
-        fontSize: 16
-    },
-    button: {
-        backgroundColor: 'red',
-        width: '100%',
-        borderRadius: 4,
-        paddingVertical: 8,
-        marginTop: 14,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    buttonText: {
-        color: '#000',
-        fontSize: 18,
-        fontWeight: 'bold'
-    },
-    buttonRegister: {
-        marginTop: 14,
-        alignSelf: 'center'
-    },
-    registerText: {
-        color: '#a1a1a1'
-    }
-});

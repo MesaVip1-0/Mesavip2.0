@@ -47,19 +47,13 @@ const styles = StyleSheet.create({
         marginTop: 28,
         marginBottom: 12,
     },
-    subTitleIcon: {
-        color: 'grey',
-        fontSize: 16.5,
-        fontWeight: 'bold',
-        marginTop: 15,
-        paddingStart: '5%',
-    },
-    titleIconSelected: {
-        color: 'white',
-        fontSize: 16.5,
-        fontWeight: 'bold',
-        marginTop: 15,
-        paddingStart: '5%',
+
+    heartContainer: {
+        position: 'absolute',
+        top: 30,
+        right: 20,
+        fontSize: 30,
+        color: '#fff',
     },
     iconsContainerList: {
         flex: 1,
@@ -72,7 +66,7 @@ const styles = StyleSheet.create({
     },
     iconsStyle: {
         fontSize: 38,
-        color: 'grey',
+        color: '#fff',
     },
     iconsContainer: {
         alignItems: 'center',
@@ -159,11 +153,21 @@ const styles = StyleSheet.create({
         color: '#fff',
         zIndex: 1,
     },
-    selectedIcon: {
+    heartStyle: {
+        fontSize: 25,
         color: 'white',
-        fontSize: 38
+    },
+    heartSelected: {
+        fontSize: 25,
+        color: 'red',
+    },
+    heartContainer: {
+        position: 'absolute',
+        top: 30,
+        right: 20,
+        fontSize: 30,
+        color: '#fff',
     },
 });
-
 
 export default styles;

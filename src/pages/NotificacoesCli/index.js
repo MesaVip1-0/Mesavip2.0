@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TextInput, Pressable, TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native'
+import { View, Text, SafeAreaView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import styles from './styles';
 
 export default function NotificacoesCli() {
     const navigation = useNavigation();
@@ -10,15 +10,12 @@ export default function NotificacoesCli() {
             <View style={styles.container}>
                 <Text style={{ color: '#fff', fontSize: 26.5 }}>Notificações</Text>
             </View>
+            <SafeAreaView>
+                <View>
+                    
+                </View>
+            </SafeAreaView>
         </SafeAreaView>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#141414',
-        height: 100,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-});

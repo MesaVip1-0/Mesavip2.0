@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
     View,
     Text,
-    StyleSheet,
     Image,
     TouchableOpacity,
     ScrollView,
@@ -13,6 +12,8 @@ import * as Animatable from 'react-native-animatable';
 import { TextInputMask } from 'react-native-masked-text';
 import { AntDesign, FontAwesome, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import * as DocumentPicker from 'expo-document-picker';
+import axios from 'axios';
 import styles from './styles';
 
 function TextMask(props) {
@@ -33,13 +34,10 @@ function TextMask(props) {
                 }
             }}
         />
-    )
+    );
 }
 
-
-// Definindo o componente Welcome
 export default function HomeRest() {
-    // Usando o hook useNavigation para obter a navegação
     const navigation = useNavigation();
     const [selectedIcons, setSelectedIcons] = useState({
         wifi: false,
@@ -56,33 +54,51 @@ export default function HomeRest() {
         }));
     };
 
-    // Retornando o JSX do componente
+    const uploadPDF = async () => {
+        try {
+            const result = await DocumentPicker.getDocumentAsync({
+                type: "application/pdf",
+            });
+
+            if (result.type === "success") {
+                const formData = new FormData();
+                formData.append("file", {
+                    uri: result.uri,
+                    type: "application/pdf",
+                    name: result.name,
+                });
+
+                await axios.post("http://192.168.0.8:3000/upload", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                });
+
+                alert("PDF uploaded successfully");
+            }
+        } catch (error) {
+            console.error("Error uploading PDF", error);
+            alert("Error uploading PDF");
+        }
+    };
+
     return (
         <SafeAreaView style={styles.container}>
-            {/* Container do logo */}
             <View style={styles.containerLogo}>
-                {/* Exibindo a imagem do logo */}
                 <Image
                     source={require('../HomeCli/outback.png')}
                     style={{ width: '100%' }}
                     resizeMode="contain"
                 />
-
             </View>
 
-            {/* Container do formulário */}
             <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
                 <ScrollView>
-                    {/* Título do restaurante */}
                     <TextInput style={styles.title} multiline>Outback SteakHouse {"\n"}Churrascaria</TextInput>
-
-                    {/* Descrição do restaurante */}
                     <Text style={styles.title}>Sobre</Text>
                     <TextInput style={styles.subTitle} multiline>
                         A especialidade da casa é a carne, como a costela ao molho barbecue, uma das mais pedidas.
                     </TextInput>
-
-                    {/* Lista de serviços oferecidos pelo restaurante */}
                     <Text style={styles.title}>Temos</Text>
                     <View style={styles.iconsContainerList}>
                         <TouchableOpacity onPress={() => toggleIconSelection('wifi')} style={styles.iconsContainer}>
@@ -103,7 +119,6 @@ export default function HomeRest() {
                         </TouchableOpacity>
                     </View>
 
-                    {/* Horário de funcionamento do restaurante */}
                     <Text style={styles.title}>Horário de Funcionamento:</Text>
                     <View style={styles.horarioContainer}>
                         <Text style={styles.horarioText}>Segunda a Sexta:</Text>
@@ -133,7 +148,6 @@ export default function HomeRest() {
                         </View>
                     </View>
 
-                    {/* Localização do restaurante */}
                     <Text style={styles.title}>Localização:</Text>
                     <Image
                         source={require('../../assets/outLoca.png')}
@@ -141,21 +155,24 @@ export default function HomeRest() {
                         resizeMode="center"
                     />
 
-                    {/* Botão do cardápio */}
                     <Text style={styles.title}>Nosso Cardápio:</Text>
-                    <TouchableOpacity style={styles.Button}>
-                        <Text style={styles.buttonText}>Cardápio</Text>
+                    <TouchableOpacity style={styles.Button} onPress={uploadPDF}>
+                        <Text style={styles.buttonText}>Upload Cardápio (PDF)</Text>
                     </TouchableOpacity>
 
-                    {/* Botão de reserva */}
                     <Text style={styles.titleReserv}>Faça sua Reserva:</Text>
                     <TouchableOpacity style={styles.buttonReserv}>
                         <Text style={styles.buttonText}>Reservar Mesa</Text>
                     </TouchableOpacity>
 
+                    <TouchableOpacity onPress={() => toggleIconSelection('heart')} style={styles.heartContainer}>
+                        <AntDesign
+                            name={selectedIcons.heart ? "heart" : "hearto"}
+                            style={[styles.heartStyle, selectedIcons.heart && styles.heartSelected]}
+                        />
+                    </TouchableOpacity>
                 </ScrollView>
             </Animatable.View>
         </SafeAreaView>
     );
 }
-
