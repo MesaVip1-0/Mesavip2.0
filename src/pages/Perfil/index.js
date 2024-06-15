@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons, } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './styles';
@@ -47,8 +47,8 @@ export default function Perfil() {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.btn}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => navigation.navigate('Cartoes')}>
+                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Cartoes')}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }} >
                             <Feather name="credit-card" style={styles.iconsStyle} />
                             <View style={{ marginLeft: 10 }}>
                                 <Text style={styles.text}>Pagamento</Text>

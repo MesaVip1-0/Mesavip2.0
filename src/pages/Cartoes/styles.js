@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: '65%',
         alignSelf: 'center',
+        alignItems: 'center',
         marginTop: 10,
     },
     txtTitle: {
@@ -21,17 +22,35 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         marginTop: 15,
-        textAlign: 'center',
     },
     btnCad: {
         width: '70%',
-        backgroundColor: '#a2a2a2',
-        borderRadius: 10
+        height: '25%',
+        backgroundColor: '#fe0000',
+        borderRadius: 10,
+        marginTop: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     txtBtn: {
-        color: '#141414',
+        color: '#fff',
         textAlign: 'center',
-        padding: 5
+        padding: 5,
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
+    iconsStyle: {
+        fontSize: 50,
+        color: '#fff',
+        marginStart:'5%',
+        paddingLeft: 15,
+        marginTop: 20
+    },
+    cardDebit: {
+        color: '#fff',
+        paddingStart: '5%',
+        fontSize: 22,
+        marginTop: 15,
     },
 })
 
