@@ -7,6 +7,8 @@ import {
     ScrollView,
     SafeAreaView,
     TextInput,
+    Modal,
+    FlatList
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { TextInputMask } from 'react-native-masked-text';
@@ -15,6 +17,15 @@ import { useNavigation } from '@react-navigation/native';
 import * as DocumentPicker from 'expo-document-picker';
 import axios from 'axios';
 import styles from './styles';
+
+const options = [
+    'Hamburgueria',
+    'Churrascaria',
+    'Pizzaria',
+    'Fitness',
+    'Bar',
+    'Japonesa',
+];
 
 function TextMask(props) {
     return (
@@ -37,6 +48,8 @@ function TextMask(props) {
     );
 }
 
+
+
 export default function HomeRest() {
     const navigation = useNavigation();
     const [selectedIcons, setSelectedIcons] = useState({
@@ -46,6 +59,9 @@ export default function HomeRest() {
         outdoor: false,
         heart: false
     });
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedOption, setSelectedOption] = useState('Selecionar Categoria');
 
     const toggleIconSelection = (icon) => {
         setSelectedIcons((prevSelectedIcons) => ({
@@ -68,7 +84,7 @@ export default function HomeRest() {
                     name: result.name,
                 });
 
-                await axios.post("http://192.168.0.8:3000/upload", formData, {
+                await axios.post("http://192.168.0.7:3000/upload", formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
@@ -82,6 +98,18 @@ export default function HomeRest() {
         }
     };
 
+    const renderOption = ({ item }) => (
+        <TouchableOpacity
+            style={styles.optionButton}
+            onPress={() => {
+                setSelectedOption(item);
+                setModalVisible(false);
+            }}
+        >
+            <Text style={styles.optionText}>{item}</Text>
+        </TouchableOpacity>
+    );
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.containerLogo}>
@@ -94,7 +122,10 @@ export default function HomeRest() {
 
             <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
                 <ScrollView>
-                    <TextInput style={styles.title} multiline>Outback SteakHouse {"\n"}Churrascaria</TextInput>
+                    <TextInput style={styles.title} multiline>Outback SteakHouse</TextInput>
+                    <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.modalTitle}>
+                        <Text style={styles.selectedOption}>{selectedOption}</Text>
+                    </TouchableOpacity>
                     <Text style={styles.title}>Sobre</Text>
                     <TextInput style={styles.subTitle} multiline>
                         A especialidade da casa é a carne, como a costela ao molho barbecue, uma das mais pedidas.
@@ -173,6 +204,28 @@ export default function HomeRest() {
                     </TouchableOpacity>
                 </ScrollView>
             </Animatable.View>
+            <Modal
+                animationType='slide'
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <View style={styles.modalView}>
+                    <FlatList
+                        data={options}
+                        renderItem={renderOption}
+                        keyExtractor={(item) => item}
+                    />
+                    <TouchableOpacity
+                        style={styles.closeButton}
+                        onPress={() => setModalVisible(false)}
+                    >
+                        <Text style={styles.closeButtonText}>Close</Text>
+                    </TouchableOpacity>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 }
