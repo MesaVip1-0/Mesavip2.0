@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, FlatList, Image } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Image, TextInput } from 'react-native';
 import styles from "./styles";
 
 const DateTime = () => {
@@ -8,13 +8,13 @@ const DateTime = () => {
     const [selectedPeople, setSelectedPeople] = useState(null);
     const [selectedMesa, setSelectedMesa] = useState(null);
     const [daysOfWeek, setDaysOfWeek] = useState([]);
-
-    const peopleData = [
+    const [customNumberOfPeople, setCustomNumberOfPeople] = useState('');
+    const [qntPessoas, setQntPessoas] = useState([
         { key: 'a', image: require('./uma-pessoa1.png') },
         { key: 'b', image: require('./duas-pessoas1.png') },
         { key: 'c', image: require('./tres-pessoas1.png') },
-        { key: 'd', image: require('./quatro-pessoas1.png') }
-    ];
+        { key: 'd', image: require('./quatro-pessoas1.png'), customImage: require('./mais-quatro.png') } // Inicialmente sem imagem personalizada
+    ]);
 
     const handleSelectDay = (item) => {
         setSelectedDay(item === selectedDay ? null : item);
@@ -25,7 +25,11 @@ const DateTime = () => {
     };
 
     const handleSelectPeople = (key) => {
-        setSelectedPeople(key === selectedPeople ? null : key);
+        if (key === 'd') {
+            setSelectedPeople('d');
+        } else {
+            setSelectedPeople(key === selectedPeople ? null : key);
+        }
     };
 
     const handleSelectMesa = (item) => {
@@ -50,6 +54,14 @@ const DateTime = () => {
     useEffect(() => {
         setDaysOfWeek(getNext7Days());
     }, []);
+
+    const handleCustomNumberChange = (text) => {
+        // Valida se o texto contém apenas números antes de atualizar o estado
+        if (/^\d+$/.test(text) || text === '') {
+            setCustomNumberOfPeople(text);
+            setSelectedPeople('d'); // Define "d" como selecionado quando o usuário digitar um número customizado
+        }
+    };
 
     return (
         <>
@@ -116,7 +128,7 @@ const DateTime = () => {
             </Text>
 
             <FlatList
-                data={peopleData}
+                data={qntPessoas}
                 horizontal
                 scrollEnabled={false}
                 contentContainerStyle={{
@@ -132,7 +144,24 @@ const DateTime = () => {
                         ]}
                         onPress={() => handleSelectPeople(item.key)}
                     >
-                        <Image source={item.image} style={{ width: 50, height: 50 }} />
+                        <View style={{ alignItems: 'center', flexDirection: 'column' }}>
+                            {item.key === 'd' && selectedPeople === 'd' && item.customImage ? (
+                                <Image source={item.customImage} style={{ width: 44, height: 44, marginTop: 10 }} />
+                            ) : (
+                                <Image source={item.image} style={{ width: 50, height: 50 }} />
+                            )}
+                            {item.key === 'd' && selectedPeople === 'd' ? (
+                                <TextInput
+                                    style={styles.customInput}
+                                    placeholder="Digite a quantidade"
+                                    placeholderTextColor="#888"
+                                    keyboardType="numeric"
+                                    value={customNumberOfPeople}
+                                    onChangeText={handleCustomNumberChange}
+                                    autoFocus={true} // Foca no TextInput automaticamente quando selecionado
+                                />
+                            ) : null}
+                        </View>
                     </TouchableOpacity>
                 )}
             />

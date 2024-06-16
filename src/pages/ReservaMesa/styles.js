@@ -73,6 +73,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#a99c9c'
     },
+    customInput:{
+        textAlign: 'center',
+        color: '#fff',
+        fontSize: 12,
+        marginTop: -10
+    },
     mesa: {
         width: 150,
         height: 40,

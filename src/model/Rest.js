@@ -9,7 +9,11 @@ const RestSchema = new mongoose.Schema({
     cidade: String,
     bairro: String,
     rua: String,
-    numero: String
+    numero: String,
+    mesas: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Mesa'
+    }]
 });
 
 const Rest = mongoose.model('Rest', RestSchema);

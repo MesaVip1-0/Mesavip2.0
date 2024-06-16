@@ -1,3 +1,5 @@
+//reserva_cliente.js
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 

@@ -7,6 +7,8 @@ const cors = require('cors');
 // Models
 const User = require('../model/User');
 const Rest = require('../model/Rest');
+const Reserva = require('../model/Reserva');
+const Mesa = require('../model/Mesa');
 
 const router = express.Router();
 router.use(cors()); // Habilitando o CORS
@@ -27,7 +29,8 @@ function checkToken(req, res, next) {
 
     try {
         const secret = process.env.SECRET;
-        jwt.verify(token, secret);
+        const decoded = jwt.verify(token, secret);
+        req.user = decoded;
         next();
     } catch (error) {
         res.status(400).json({ msg: 'Token inválido' });
@@ -45,6 +48,17 @@ router.get('/user/:id', checkToken, async (req, res) => {
         return res.status(404).json({ msg: "Usuário não encontrado" });
     }
     res.status(200).json({ user });
+});
+
+
+// Rota para obter todos os restaurantes
+router.get('/restaurantes', async (req, res) => {
+    try {
+        const restaurantes = await Rest.find();
+        res.status(200).json(restaurantes);
+    } catch (error) {
+        res.status(500).json({ msg: 'Erro ao buscar restaurantes', error });
+    }
 });
 
 // Registro Restaurante
@@ -184,7 +198,7 @@ router.post("/auth/login_rest", async (req, res) => {
 
     try {
         // Busca pelo restaurante no banco de dados
-        const rest = await Rest.findOne({ email: email }); // Certifique-se de usar 'Rest' e não 'newRestaurant'
+        const rest = await Rest.findOne({ email: email });
         if (!rest) {
             return res.status(404).json({ msg: 'Usuário não existe' });
         }
@@ -203,6 +217,89 @@ router.post("/auth/login_rest", async (req, res) => {
     } catch (err) {
         console.log(err);
         return res.status(500).json({ msg: "Ocorreu um erro no servidor", err });
+    }
+});
+
+// Rota para registrar mesas em um restaurante
+router.post('/restaurante/:id/mesa', checkToken, async (req, res) => {
+    const restaurantId = req.params.id;
+    const { numero, nmrLugares } = req.body;
+
+    try {
+        const restaurant = await Rest.findById(restaurantId);
+        if (!restaurant) {
+            return res.status(404).json({ msg: 'Restaurante não encontrado' });
+        }
+
+        const mesaExistente = await Mesa.findOne({ numero, restaurant: restaurantId });
+        if (mesaExistente) {
+            return res.status(409).json({ msg: 'Este número de mesa já existe para este restaurante' });
+        }
+
+        const newMesa = new Mesa({
+            numero,
+            nmrLugares,
+            restaurant: restaurantId
+        });
+
+        await newMesa.save();
+
+        res.status(201).json({ msg: 'Mesa registrada com sucesso', mesa: newMesa });
+    } catch (error) {
+        res.status(500).json({ msg: 'Erro ao registrar mesa', error });
+    }
+});
+
+// Rota para fazer uma reserva
+router.post('/reserva', checkToken, async (req, res) => {
+    const { restaurant, mesa, date, time } = req.body;
+    const userId = req.user.id;
+
+    try {
+        // Verificar se o cliente existe
+        const client = await User.findById(userId);
+        if (!client) {
+            return res.status(404).json({ msg: 'Cliente não encontrado' });
+        }
+
+        // Verificar se o restaurante existe
+        const restaurantExists = await Rest.findById(restaurant);
+        if (!restaurantExists) {
+            return res.status(404).json({ msg: 'Restaurante não encontrado' });
+        }
+
+        // Verificar se a mesa existe e pertence ao restaurante
+        const mesaExists = await Mesa.findById(mesa);
+        if (!mesaExists || mesaExists.restaurant.toString() !== restaurant) {
+            return res.status(404).json({ msg: 'Mesa não encontrada no restaurante especificado' });
+        }
+
+        // Verificar se a mesa já está reservada no horário e data especificados
+        const reservaExistente = await Reserva.findOne({
+            mesa,
+            date,
+            time
+        });
+
+        if (reservaExistente) {
+            return res.status(409).json({ msg: 'Mesa já reservada para este horário e data' });
+        }
+
+        // Criar a nova reserva
+        const newReserva = new Reserva({
+            user: userId,
+            restaurant,
+            mesa,
+            date,
+            time
+        });
+
+        // Salvar a reserva no banco de dados
+        await newReserva.save();
+
+        res.status(201).json({ msg: 'Reserva criada com sucesso', reserva: newReserva });
+    } catch (error) {
+        res.status(500).json({ msg: 'Erro ao criar a reserva', error });
     }
 });
 
