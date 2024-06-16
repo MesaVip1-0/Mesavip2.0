@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
+import ResAgenda from '../../components/Reservas/ResAgenda-Anteriores';
 
 const agendadas = [
     {
@@ -20,32 +21,6 @@ const agendadas = [
     }
 ];
 
-const ResAgenda = ({ item, navigation }) => {
-    return (
-        <View style={styles.btnLogo}>
-            <TouchableOpacity onPress={() => navigation.navigate('SuaReserva')}>
-                {/* IMAGEM LOGO */}
-                <Image
-                    style={styles.image}
-                    source={item.img_logo}
-                />
-            </TouchableOpacity>
-
-            {/* DESCRIÇÃO DO FAVORITADO */}
-            <View style={styles.viewDescription}>
-                <Text style={styles.descriptionTxt}>
-                    {item.nome_produto}
-                </Text>
-
-                {/* SUB DESCRIÇÃO */}
-                <Text style={styles.subDescripition}>
-                    {item.descricao}
-                </Text>
-            </View>
-        </View>
-    );
-}
-
 const onde_esteve = [
     {
         codigo_produto: 1,
@@ -63,32 +38,6 @@ const onde_esteve = [
     }
 ];
 
-const Anteriores = ({ item, navigation }) => {
-    return (
-        <View style={styles.btnLogo}>
-            <TouchableOpacity onPress={() => navigation.navigate('DetailsCli')}>
-                {/* IMAGEM LOGO */}
-                <Image
-                    style={styles.image}
-                    source={item.img_logo}
-                />
-            </TouchableOpacity>
-
-            {/* DESCRIÇÃO DO FAVORITADO */}
-            <View style={styles.viewDescription}>
-                <Text style={styles.descriptionTxt}>
-                    {item.nome_produto}
-                </Text>
-
-                {/* SUB DESCRIÇÃO */}
-                <Text style={styles.subDescripition}>
-                    {item.descricao}
-                </Text>
-            </View>
-        </View>
-    );
-
-}
 export default function Reservas() {
     const navigation = useNavigation();
     return (
@@ -111,11 +60,11 @@ export default function Reservas() {
                     keyExtractor={item => item.codigo_produto} />
 
                 <Text style={styles.txtAgenda}>Onde já esteve:</Text>
-                <FlatList
+                {/* <FlatList
                     data={onde_esteve}
                     renderItem={({ item }) => <Anteriores item={item} navigation={navigation} />}
                     ListEmptyComponent={<Text> A LISTA DE PRODUTOS ESTÁ VAZIA</Text>}
-                    keyExtractor={item => item.codigo_produto} />
+                    keyExtractor={item => item.codigo_produto} /> */}
             </SafeAreaView>
         </SafeAreaView>
     );

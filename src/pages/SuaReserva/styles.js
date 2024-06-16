@@ -16,6 +16,13 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 10,
     },
+    return: {
+        position: 'absolute',
+        top: 5,
+        left: 5,
+        fontSize: 33,
+        color: '#fff',
+    },
     txtTitle: {
         color: '#fff',
         fontSize: 24,
@@ -41,8 +48,6 @@ const styles = StyleSheet.create({
         width: 50,
         alignItems: 'center',
         marginLeft: -50
-
-
     },
     img_mesa: {
         height: 50,
@@ -50,23 +55,32 @@ const styles = StyleSheet.create({
         marginRight: -50
     },
     containerBtn: {
-        marginTop: 50,
-        width: '90%',
-        height: "12.9%",
+        marginTop: 35,
+        width: 335,
+        height: 105,
         backgroundColor: '#433d3d',
         borderRadius: 10,
         margin: 'auto',
         justifyContent: 'center',
         borderWidth: 2,
         borderColor: '#fff',
-        opacity: 0.8
-
-
+        opacity: 0.8, 
+        alignItems: 'center'
     },
     text: {
         width: 300,
         opacity:1
-    }
+    },
+    subDescripition: {
+        fontSize: 13,
+        color: '#9d9595',
+        marginTop: -10
+    },
+    container1: {
+        flex: 1,
+        backgroundColor: '#141414',
+        
+    },
 })
 
 export default styles;
