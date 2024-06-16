@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import styles from '../../pages/Favoritos/styles';
+import styles from '../../pages/Cliente/Favoritos/styles';
 
 
 const BtnFavoritados = ({ item, navigation }) => {

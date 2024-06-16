@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
-import BtnFavoritados from '../../components/Favoritos/BtnFavoritos'
+import BtnFavoritados from '../../../components/Favoritos/BtnFavoritos'
 
 const favoritados = [
     {

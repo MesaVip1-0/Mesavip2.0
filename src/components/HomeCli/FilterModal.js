@@ -1,7 +1,7 @@
 // FilterModal.js
 import React from 'react';
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
-import styles from '../../pages/HomeCli/styles';
+import styles from '../../pages/Cliente/HomeCli/styles';
 
 const FilterModal = ({ modalVisible, setModalVisible, orderByAZ, handleOrderClick, categories, handleCategoryClick, selectedCategory }) => {
     return (

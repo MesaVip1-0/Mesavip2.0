@@ -1,20 +1,21 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 
-import DetailsCli from "../pages/DetailsCli"
+import DetailsCli from "../pages/Cliente/DetailsCli"
 import Welcome from "../pages/Welcome";
-import SignIn from "../pages/Signin";
-import SignInRest from "../pages/SignInRest";
-import RegisterCli from "../pages/RegisterCli";
-import RegisterRest from "../pages/RegisterRest";
-import Endereco from "../pages/RegisterRest/Endereco"
+import SignIn from "../pages/Cliente/Signin";
+import SignInRest from "../pages/Restaurante/SignInRest";
+import RegisterCli from "../pages/Cliente/RegisterCli";
+import RegisterRest from "../pages/Restaurante/RegisterRest";
+import Endereco from "../pages/Restaurante/RegisterRest/Endereco"
 import TabRoutes from "./tab.routes";
-import AlterDados from "../pages/AlterDados";
-import TermosUso from "../pages/TermosUso";
-import SuaReserva from "../pages/SuaReserva";
-import ReservaMesa from "../pages/ReservaMesa";
-import HomeRest from "../pages/HomeRest";
-import Cartoes from "../pages/Cartoes";
+import AlterDados from "../pages/Cliente/AlterDados";
+import TermosUso from "../pages/Cliente/TermosUso";
+import SuaReserva from "../pages/Cliente/SuaReserva";
+import ReservaMesa from "../pages/Cliente/ReservaMesa";
+import HomeRest from "../pages/Restaurante/HomeRest";
+import Cartoes from "../pages/Cliente/Cartoes";
+import MesasDispo from "../pages/Cliente/MesasDispo";
 
 
 const Stack = createNativeStackNavigator();
@@ -101,6 +102,11 @@ export default function StackRoutes() {
             <Stack.Screen
                 name="Cartoes"
                 component={Cartoes}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="MesasDispo"
+                component={MesasDispo}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>

@@ -1,7 +1,7 @@
 // ProdItem.js
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import styles from '../../pages/HomeCli/styles';
+import styles from '../../pages/Cliente/HomeCli/styles';
 import { useNavigation } from '@react-navigation/native';
 
 const ProdItem = ({ item }) => {

@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome } from '@expo/vector-icons';
-import HomeCli from '../pages/HomeCli';
-import Perfil from '../pages/Perfil';
-import Favoritos from '../pages/Favoritos';
-import Reserva from '../pages/Reserva';
+import HomeCli from '../pages/Cliente/HomeCli';
+import Perfil from '../pages/Cliente/Perfil';
+import Favoritos from '../pages/Cliente/Favoritos';
+import Reserva from '../pages/Cliente/Reserva';
 
 const Tab = createBottomTabNavigator();
 

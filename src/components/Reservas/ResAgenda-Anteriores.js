@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
-import styles from '../../pages/Reserva/styles';
+import styles from '../../pages/Cliente/Reserva/styles';
 
 
 const ResAgenda = ({ item, navigation }) => {

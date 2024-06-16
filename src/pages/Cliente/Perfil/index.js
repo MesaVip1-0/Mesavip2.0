@@ -13,7 +13,7 @@ export default function Perfil() {
         <SafeAreaView style={styles.container}>
             <View style={styles.containerLogo}>
                 <Image
-                    source={require('../../assets/comida.jpg')}
+                    source={require('../../../assets/comida.jpg')}
                     style={{ width: '100%' }}
                     resizeMode="repeat"
                 />
@@ -22,7 +22,7 @@ export default function Perfil() {
             <Animatable.View delay={1000} animation="fadeIn" style={styles.imageView}>
                 <TouchableOpacity style={styles.image}>
                     <Image
-                        source={require('../../assets/thiago.png')}
+                        source={require('../../../assets/thiago.png')}
                         style={{ width: '100%' }}
                         resizeMode="contain"
                     />

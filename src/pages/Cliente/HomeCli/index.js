@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './styles';
-import ProdItem from '../../components/HomeCli/ProdItem';
-import FilterModal from '../../components/HomeCli/FilterModal';
+import ProdItem from '../../../components/HomeCli/ProdItem';
+import FilterModal from '../../../components/HomeCli/FilterModal';
 
 const prod = [
     {

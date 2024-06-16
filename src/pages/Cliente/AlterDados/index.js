@@ -17,7 +17,7 @@ export default function AlterDados() {
         <SafeAreaView style={styles.container}>
             <View style={styles.containerLogo}>
                 <Image
-                    source={require('../../assets/comida.jpg')}
+                    source={require('../../../assets/comida.jpg')}
                     style={{ width: '100%' }}
                     resizeMode="repeat"
                 />

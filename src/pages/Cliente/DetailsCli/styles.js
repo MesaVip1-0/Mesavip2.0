@@ -133,7 +133,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         alignItems: 'center',
         borderWidth: 2,
-        borderColor: '#FE0000'
+        borderColor: '#FE0000',
+        marginBottom: 30,
     },
     titleReserv: {
         color: '#fff',

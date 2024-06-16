@@ -114,7 +114,7 @@ export default function HomeRest() {
         <SafeAreaView style={styles.container}>
             <View style={styles.containerLogo}>
                 <Image
-                    source={require('../HomeCli/outback.png')}
+                    source={require('../../Cliente/HomeCli/outback.png')}
                     style={{ width: '100%' }}
                     resizeMode="contain"
                 />
@@ -181,7 +181,7 @@ export default function HomeRest() {
 
                     <Text style={styles.title}>Localização:</Text>
                     <Image
-                        source={require('../../assets/outLoca.png')}
+                        source={require('../../../assets/outLoca.png')}
                         style={{ width: '100%', height: 250, marginStart: "5%", marginTop: "10%" }}
                         resizeMode="center"
                     />

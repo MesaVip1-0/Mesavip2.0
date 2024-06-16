@@ -33,7 +33,7 @@ const CartoesEstilo = ({ item, navigation }) => {
                     alignItems: 'center', marginLeft: 20
                 }}>
                     <Image
-                        source={require('../../assets/nubank-logo.png')}
+                        source={require('../../../assets/nubank-logo.png')}
                         style={{ width: 50, height: 40 }}
                         resizeMode='contain'
                     />

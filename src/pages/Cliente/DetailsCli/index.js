@@ -111,7 +111,7 @@ export default function Welcome() {
                     {/* Localização do restaurante */}
                     <Text style={styles.title}>Localização:</Text>
                     <Image
-                        source={require('../../assets/outLoca.png')}
+                        source={require('../../../assets/outLoca.png')}
                         style={{ width: '100%', height: 250, marginStart: "5%", marginTop: "10%" }}
                         resizeMode="center"
                     />

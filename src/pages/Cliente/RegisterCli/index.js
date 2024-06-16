@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
-import User from '../../model/User';
+import User from '../../../model/User';
 import styles from './styles';
 
 export default function RegisterCli() {

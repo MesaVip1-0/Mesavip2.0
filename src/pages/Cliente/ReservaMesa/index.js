@@ -33,7 +33,7 @@ export default function ReservaMesa() {
                 </View>
 
                 <View style={styles.viewBtnConfirma}>
-                    <TouchableOpacity style={styles.btnConfirma}>
+                    <TouchableOpacity style={styles.btnConfirma} onPress={() => navigation.navigate('MesasDispo')}>
                         <Text>CONFIRMAR</Text>
                     </TouchableOpacity>
                 </View>
