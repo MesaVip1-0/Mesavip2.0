@@ -57,7 +57,7 @@ export default function Perfil() {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('NotificacoesCli')}>
+                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('TermosUso')}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Feather name="bell" style={styles.iconsStyle} />
                             <View style={{ marginLeft: 10 }}>
