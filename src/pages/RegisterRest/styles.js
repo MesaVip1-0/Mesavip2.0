@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     registerText: {
-        color: '#a1a1a1'
+        color: '#a1a1a1',
+        marginBottom: 20
     }
 });
 

@@ -10,7 +10,7 @@ import RegisterRest from "../pages/RegisterRest";
 import Endereco from "../pages/RegisterRest/Endereco"
 import TabRoutes from "./tab.routes";
 import AlterDados from "../pages/AlterDados";
-import NotificacoesCli from "../pages/NotificacoesCli";
+import TermosUso from "../pages/TermosUso";
 import SuaReserva from "../pages/SuaReserva";
 import ReservaMesa from "../pages/ReservaMesa";
 import HomeRest from "../pages/HomeRest";
@@ -79,8 +79,8 @@ export default function StackRoutes() {
                 options={{ headerShown: false }}
             />
             <Stack.Screen
-                name="NotificacoesCli"
-                component={NotificacoesCli}
+                name="TermosUso"
+                component={TermosUso}
                 options={{ headerShown: false }}
             />
             <Stack.Screen

@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingVertical: 8,
         marginTop: 20,
+        marginBottom:30,
         justifyContent: 'center',
         alignSelf: 'center',
         alignItems: 'center',
@@ -162,6 +163,62 @@ const styles = StyleSheet.create({
     selectedIcon: {
         color: 'white',
         fontSize: 38
+    },
+    modalView: {
+        margin: 80,
+        backgroundColor: '#000',
+        borderRadius: 20,
+        borderWidth:3,
+        borderColor:'#fe0000',
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    optionButton: {
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc'
+    },
+    optionText: {
+        fontSize: 18,
+        color:'#fff'
+    },
+    closeButton: {
+        marginTop: 20,
+        padding: 10,
+        backgroundColor: '#fe0000',
+        borderRadius: 10,
+    },
+    closeButtonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    selectedOption: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#fff',
+    },
+    modalTitle: {
+        color: '#fff',
+        fontSize: 24,
+        fontWeight: 'bold',
+        paddingStart: '5%',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    uploadMessage: {
+        color: 'green',
+        fontSize: 16,
+        marginVertical: 10,
+        textAlign: 'center',
     },
 });
 
