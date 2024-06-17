@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 import User from '../../../model/User';
@@ -69,7 +70,12 @@ export default function RegisterCli() {
     }
 
     return (
-        <View style={styles.container}>
+
+        <KeyboardAwareScrollView
+            style={styles.container}
+            resetScrollToCoords={{ x: 0, y: 0 }}
+            scrollEnabled={true}
+        >
             <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
                 <Text style={styles.message}>Registro Cliente</Text>
             </Animatable.View>
@@ -120,7 +126,7 @@ export default function RegisterCli() {
 
             </Animatable.View>
 
-        </View>
+        </KeyboardAwareScrollView>
     );
 }
 

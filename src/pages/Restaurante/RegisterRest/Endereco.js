@@ -118,7 +118,7 @@ export default function Endereco() {
                     value={numero}
                 />
 
-                <TouchableOpacity style={styles.button} onPress={salvarEndereco}>
+                <TouchableOpacity style={styles.btnProx} onPress={salvarEndereco}>
                     <Text style={styles.buttonText}>Salvar Endereço</Text>
                 </TouchableOpacity>
 

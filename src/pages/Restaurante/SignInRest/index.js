@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import styles from './styles'
 
 import { useNavigation } from '@react-navigation/native';
 
-import * as Animatable from 'react-native-animatable';
-import styles from './styles';
-
+import * as Animatable from 'react-native-animatable'
 export default function SignInRest() {
     const navigation = useNavigation();
-    const [email, setEmail] = useState('')
-    const [pass, setPass] = useState('')
+    const[email, setEmail] = useState('')
+    const[pass, setPass] = useState('')
 
     function logandoRest() {
         console.log('If Teste');
@@ -20,10 +19,9 @@ export default function SignInRest() {
             alert("Digite seu e-mail");
             return;
         } else if (pass === '') {
-            alert("Digite sua senha");
+            alert ("Digite sua senha");
             return;
         }
-
 
         fetch('http://192.168.15.9:3000/auth/login_rest', {
             method: 'POST',
@@ -35,23 +33,23 @@ export default function SignInRest() {
                 pass: pass,
             })
         })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Resposta da API recebida');
-                console.log('Dados recebidos:', data);
-                console.log('Login bem-sucedido:', data);
-                if (data.token) {
+        .then(response => response.json())
+        .then(data => {
+            console.log('Resposta da API recebida');
+            console.log('Dados recebidos:', data);
+            console.log('Login bem-sucedido:', data);
+            if(data.token){
 
-                    AcessaHomi()
-                }
+                AcessaHomi()
+            }
 
-                // fetchUserData(data.token);
+            // fetchUserData(data.token);
 
-            })
-            .catch(error => console.error('Erro no login:', error));
+        })
+        .catch(error => console.error('Erro no login:', error));
     }
     const AcessaHomi = () => {
-        navigation.navigate("HomeCli")
+        navigation.navigate("HomeRest")
     }
     return (
         <View style={styles.container}>
@@ -77,7 +75,7 @@ export default function SignInRest() {
                     value={pass}
                 />
 
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(logandoRest)}>
+                <TouchableOpacity style={styles.button} onPress={logandoRest}>
                     <Text style={styles.buttonText}>Acessar</Text>
                 </TouchableOpacity>
 
@@ -90,4 +88,3 @@ export default function SignInRest() {
         </View>
     );
 }
-

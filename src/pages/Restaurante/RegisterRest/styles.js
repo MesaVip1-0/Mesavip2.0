@@ -33,14 +33,24 @@ const styles = StyleSheet.create({
         marginBottom: 12,
         fontSize: 16
     },
-    button: {
+    btnProx: {
         backgroundColor: 'red',
         width: '100%',
         borderRadius: 4,
         paddingVertical: 8,
         marginTop: 14,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+    },
+    btnTermos: {
+        backgroundColor: 'red',
+        width: '100%',
+        borderRadius: 4,
+        paddingVertical: 8,
+        marginTop: 14,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 25
     },
     buttonText: {
         color: '#000',
