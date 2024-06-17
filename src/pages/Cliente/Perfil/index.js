@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { Feather, MaterialCommunityIcons, } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -42,7 +42,7 @@ export default function Perfil() {
                             <Feather name="phone" style={styles.iconsStyle} />
                             <View style={{ marginLeft: 10 }}>
                                 <Text style={styles.text}>Telefone</Text>
-                                <Text style={styles.subTitle}>+55  (11) 94035-7986</Text>
+                                <TextInput style={styles.subTitle}>+55  (11) 94035-7986</TextInput>
                             </View>
                         </View>
                     </TouchableOpacity>

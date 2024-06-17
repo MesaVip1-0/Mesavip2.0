@@ -39,7 +39,7 @@ export default function HomeRest() {
                     name: result.name,
                 });
 
-                await axios.post("http://192.168.0.7:3000/upload", formData, {
+                await axios.post("http://192.168.233.253:3000/upload", formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
