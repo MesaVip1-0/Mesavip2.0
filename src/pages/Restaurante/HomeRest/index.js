@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, SafeAreaView, TextInput} from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, SafeAreaView, TextInput } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
 import * as DocumentPicker from 'expo-document-picker';
 import axios from 'axios';
 import styles from './styles';
 import CategoriaRest from '../../../components/CategoriaRest';
-import TextMask from '../../../components/TextMask';
 import IconButton from '../../../components/IconButton';
+import HorarioFuncRest from '../../../components/HorarioFuncRest';
 
 
 export default function HomeRest() {
@@ -17,6 +18,7 @@ export default function HomeRest() {
         outdoor: false
     });
 
+    const [horariosFuncionamento, setHorariosFuncionamento] = useState([]);
 
     const toggleIconSelection = (icon) => {
         setSelectedIcons((prevSelectedIcons) => ({
@@ -53,6 +55,21 @@ export default function HomeRest() {
         }
     };
 
+    const addHorarioFuncionamento = () => {
+        if (horariosFuncionamento.length < 3) {
+            setHorariosFuncionamento([
+                ...horariosFuncionamento,
+                { id: horariosFuncionamento.length }
+            ]);
+        } else {
+            alert('Você só pode adicionar até 3 horários.');
+        }
+    };
+
+    const removeHorarioFuncionamento = (id) => {
+        setHorariosFuncionamento(horariosFuncionamento.filter((horario) => horario.id !== id));
+    };
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -67,14 +84,14 @@ export default function HomeRest() {
             <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
                 <ScrollView>
                     <TextInput style={styles.title} multiline>Outback SteakHouse</TextInput>
-                    <CategoriaRest/>
+                    <CategoriaRest />
                     <Text style={styles.title}>Sobre</Text>
                     <TextInput style={styles.subTitle} multiline>
                         A especialidade da casa é a carne, como a costela ao molho barbecue, uma das mais pedidas.
                     </TextInput>
                     <Text style={styles.title}>Temos</Text>
                     <View style={styles.iconsContainerList}>
-                    <IconButton
+                        <IconButton
                             iconLib="AntDesign"
                             iconName="wifi"
                             iconStyle={[styles.iconsStyle, selectedIcons.wifi && styles.selectedIcon]}
@@ -109,33 +126,14 @@ export default function HomeRest() {
                     </View>
 
                     <Text style={styles.title}>Horário de Funcionamento:</Text>
-                    <View style={styles.horarioContainer}>
-                        <Text style={styles.horarioText}>Segunda a Sexta:</Text>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={{ flex: 0.1 }} />
-                            <View style={styles.horario}>
-                                <TextMask />
-                            </View>
-                            <Text style={styles.horarioText}>à</Text>
-                            <View style={styles.horario}>
-                                <TextMask />
-                            </View>
-                        </View>
-                    </View>
-
-                    <View style={styles.horarioContainer}>
-                        <Text style={styles.horarioText}>Sábado e Domingo:</Text>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={{ flex: 0.1 }} />
-                            <View style={styles.horario}>
-                                <TextMask />
-                            </View>
-                            <Text style={styles.horarioText}> à </Text>
-                            <View style={styles.horario}>
-                                <TextMask />
-                            </View>
-                        </View>
-                    </View>
+                    {horariosFuncionamento.map((horario, index) => (
+                        <HorarioFuncRest key={horario.id} onRemove={() => removeHorarioFuncionamento(horario.id)} />
+                    ))}
+                    {horariosFuncionamento.length < 3 && (
+                        <TouchableOpacity onPress={addHorarioFuncionamento} style={styles.horarioContainer}>
+                            <AntDesign name='plussquare' size={35} color='green' />
+                        </TouchableOpacity>
+                    )}
 
                     <Text style={styles.title}>Localização:</Text>
                     <Image
