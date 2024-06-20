@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const MesaSchema = new mongoose.Schema({
+const MesaSchema = new Schema({
     numero: {
         type: Number,
         required: true
@@ -13,11 +14,12 @@ const MesaSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Rest',
         required: true
+    },
+    tipo: {
+        type: String,
+        enum: ['interna', 'externa'],
+        required: true
     }
 });
 
-MesaSchema.index({ numero: 1, restaurant: 1 }, { unique: true });
-
-const Mesa = mongoose.model('Mesa', MesaSchema);
-
-module.exports = Mesa;
+module.exports = mongoose.model('Mesa', MesaSchema);

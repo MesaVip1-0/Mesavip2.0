@@ -1,60 +1,61 @@
-// HomeCli.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './styles';
-import ProdItem from '../../../components/HomeCli/ProdItem';
+import RestItem from '../../../components/HomeCli/RestItem';
 import FilterModal from '../../../components/HomeCli/FilterModal';
-
-const prod = [
-    {
-        codigo_produto: 1,
-        codigo_categoria: 1,
-        name_categoria: 'Churrascaria',
-        name_produto: 'Outback SteakHouse',
-        img_rest: require('../HomeCli/outback.png'),
-        descricao_produto: 'Av. Dos Autonomistas, 1400 - Osasco'
-    }, {
-        codigo_produto: 2,
-        codigo_categoria: 2,
-        name_categoria: 'Suínos',
-        name_produto: 'Casa Do Porco',
-        img_rest: require('../HomeCli/Casa-do-Porco.png'),
-        descricao_produto: 'R. Araújo, 124 - República, São Paulo'
-    }, {
-        codigo_produto: 3,
-        codigo_categoria: 3,
-        name_categoria: 'Fast Food',
-        name_produto: 'Habib’s',
-        img_rest: require('../HomeCli/habibs.jpg'),
-        descricao_produto: 'R. Cerro Corá, 307 - Lapa, São Paulo'
-    }, {
-        codigo_produto: 4,
-        codigo_categoria: 1,
-        name_categoria: 'Churrascaria',
-        name_produto: 'Fogo de Chão',
-        img_rest: require('../HomeCli/fogo-de-chao.jpg'),
-        descricao_produto: 'R. Augusta, 2077 - Cerqueira César, SP'
-    }
-];
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 export default function HomeCli() {
     const [searchText, setSearchText] = useState('');
-    const [list, setList] = useState(prod); // Inicializa com a lista de produtos completa
+    const [list, setList] = useState([]);
+    const [filteredList, setFilteredList] = useState([]); // Adicionado estado para lista filtrada
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
-    const [orderByAZ, setOrderByAZ] = useState(false); // Estado para controlar a ordem A a Z
+    const [orderByAZ, setOrderByAZ] = useState(false);
+    const route = useRoute();
+
+    useEffect(() => {
+        if (route.params) {
+            console.log('New Restaurant:'); // Adicione um log para verificar o valor de newRestaurant
+            const newRestItem = {
+                codigo_rest: list.length + 1,
+                codigo_categoria: 1,
+                name_categoria: name_categoria ,
+                name_rest: name_rest,
+                img_rest: require('./outback.png'), // Imagem padrão
+                descricao_rest: descricao_rest
+            };
+            setList([...list, newRestItem]);
+        }
+    }, [route.params]); // Corrigido o nome da dependência
+
+    useEffect(() => {
+        fetchRestaurants();
+    }, []);
 
     useEffect(() => {
         filterProducts();
-    }, [searchText, selectedCategory, orderByAZ]);
+    }, [searchText, selectedCategory, orderByAZ, list]); // Adicionado 'list' como dependência
+
+    const fetchRestaurants = async () => {
+        try {
+            const response = await fetch('http://192.168.233.75:3000/restaurants');
+            const data = await response.json();
+            setList(data);
+        } catch (error) {
+            console.error('Erro ao buscar restaurantes:', error);
+        }
+    };
 
     const filterProducts = () => {
-        let filteredList = [...prod]; // Cria uma cópia para não alterar a lista original
+        let filteredList = [...list];
 
         if (searchText !== '') {
             filteredList = filteredList.filter(
-                (item) => item.name_produto.toLowerCase().includes(searchText.toLowerCase()) || item.name_categoria.toLowerCase().includes(searchText.toLowerCase())
+                (item) => (item.name && item.name.toLowerCase().includes(searchText.toLowerCase())) || 
+                            (item.cidade && item.cidade.toLowerCase().includes(searchText.toLowerCase()))||
+                            (item.categoria && item.categoria.toLowerCase().includes(searchText.toLowerCase()))
             );
         }
 
@@ -65,14 +66,14 @@ export default function HomeCli() {
         }
 
         if (orderByAZ) {
-            filteredList.sort((a, b) => a.name_produto.localeCompare(b.name_produto));
+            filteredList.sort((a, b) => a.name.localeCompare(b.name));
         }
 
-        setList([...filteredList]); // Usamos spread para garantir que o estado seja atualizado
+        setFilteredList(filteredList); // Atualiza a lista filtrada
     };
 
     const handleOrderClick = () => {
-        setOrderByAZ(!orderByAZ); // Alterna entre ordenação A a Z e não ordenado
+        setOrderByAZ(!orderByAZ);
         setModalVisible(false);
     };
 
@@ -85,7 +86,7 @@ export default function HomeCli() {
         setModalVisible(false);
     };
 
-    const categories = [...new Set(prod.map(item => item.name_categoria))];
+    const categories = [...new Set(list.map(item => item.name_categoria))];
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -93,7 +94,7 @@ export default function HomeCli() {
                 <View style={styles.searchBtn}>
                     <Ionicons name="search" size={24}/>
                     <TextInput
-                        placeholder="Pesquise um produto ou categoria"
+                        placeholder="Pesquise um rest ou categoria"
                         placeholderTextColor="#888"
                         value={searchText}
                         onChangeText={(t) => setSearchText(t)}/>
@@ -107,10 +108,10 @@ export default function HomeCli() {
 
             <SafeAreaView style={styles.container1}>
                 <FlatList
-                    data={list}
-                    renderItem={({ item }) => <ProdItem item={item} />}
-                    ListEmptyComponent={<Text style={{ color: '#fff' }}>A LISTA DE PRODUTOS ESTÁ VAZIA</Text>}
-                    keyExtractor={(item) => item.codigo_produto.toString()}/>
+                    data={filteredList} // Use filteredList em vez de list
+                    renderItem={({ item }) => <RestItem key={item._id} item={item} />}
+                    ListEmptyComponent={<Text style={{ color: '#fff' }}>A LISTA DE RESTAURANTES ESTÁ VAZIA</Text>}
+                    keyExtractor={(item) => item._id.toString()}/>
             </SafeAreaView>
 
             <FilterModal

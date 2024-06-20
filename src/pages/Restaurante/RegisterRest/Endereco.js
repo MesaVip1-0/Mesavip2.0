@@ -7,7 +7,7 @@ import styles from './styles';
 export default function Endereco() {
     const navigation = useNavigation();
     const route = useRoute();
-    const { name, email, cnpj, cep, pass, confirmPass } = route.params;
+    const { name, email, cnpj, cep, categoria, pass, confirmPass } = route.params;
 
     const [cidade, setCidade] = useState("");
     const [rua, setRua] = useState("");
@@ -49,6 +49,7 @@ export default function Endereco() {
                     email,
                     cnpj,
                     cep,
+                    categoria,
                     pass,
                     confirmPass,
                     cidade,

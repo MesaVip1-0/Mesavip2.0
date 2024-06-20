@@ -28,6 +28,7 @@
     "expo-router": "^3.5.14",
     "expo-status-bar": "^1.12.1",
     "express": "^4.19.2",
+    "express-validator": "^7.1.0",
     "ionicons": "^7.4.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.6.2",

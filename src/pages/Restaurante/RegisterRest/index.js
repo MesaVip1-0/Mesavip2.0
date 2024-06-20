@@ -12,12 +12,13 @@ export default function RegisterRest() {
     const [email, setEmail] = useState("");
     const [cep, setCep] = useState("");
     const [cnpj, setCnpj] = useState("");
+    const [categoria, setCat] = useState("");
     const [pass, setPass] = useState("");
     const [confirmPass, setConfirmPass] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
 
     const handleSignup = async () => {
-        if (!name || !email || !pass || !confirmPass || !cnpj || !cep) {
+        if (!name || !email || !pass || !confirmPass || !cnpj || !cep || !categoria) {
             Alert.alert("Preencha todos os campos");
             return;
         }
@@ -42,6 +43,7 @@ export default function RegisterRest() {
                 email,
                 cnpj,
                 cep,
+                categoria,
                 pass,
                 confirmPass
             });
@@ -77,6 +79,13 @@ export default function RegisterRest() {
                         style={styles.input}
                         keyboardType='number-pad'
                         onChangeText={setCnpj}
+                    />
+                    <Text style={styles.title}>Categoria</Text>
+                    <TextInput
+                        placeholder="Categoria"
+                        style={styles.input}
+                        onChangeText={setCat}
+                        value={categoria}
                     />
 
                     <Text style={styles.title}>CEP</Text>

@@ -30,9 +30,9 @@ const FilterModal = ({ modalVisible, setModalVisible, orderByAZ, handleOrderClic
                             ]}>A a Z</Text>
                     </TouchableOpacity>
                     {
-                        categories.map((category) => (
+                        categories.map((category, index) => (
                             <TouchableOpacity
-                                key={category}
+                                key={index}
                                 style={styles.categoryBtn}
                                 onPress={() => handleCategoryClick(category)}>
                                 <Text

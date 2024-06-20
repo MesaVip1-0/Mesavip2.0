@@ -1,3 +1,5 @@
+//Rest.js
+
 const mongoose = require('mongoose');
 
 const RestSchema = new mongoose.Schema({
@@ -5,6 +7,7 @@ const RestSchema = new mongoose.Schema({
     email: String,
     cep: String,
     cnpj: String,
+    categoria:String,
     pass: String,
     cidade: String,
     bairro: String,
