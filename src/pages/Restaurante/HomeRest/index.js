@@ -8,7 +8,7 @@ import styles from './styles';
 import CategoriaRest from '../../../components/CategoriaRest';
 import IconButton from '../../../components/IconButton';
 import HorarioFuncRest from '../../../components/HorarioFuncRest';
-
+import FotosRest from '../../../components/FotosRest';
 
 export default function HomeRest() {
     const [selectedIcons, setSelectedIcons] = useState({
@@ -41,7 +41,7 @@ export default function HomeRest() {
                     name: result.name,
                 });
 
-                await axios.post("http://192.168.233.253:3000/upload", formData, {
+                await axios.post("http://192.168.41.253:3000/upload", formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
@@ -70,6 +70,10 @@ export default function HomeRest() {
         setHorariosFuncionamento(horariosFuncionamento.filter((horario) => horario.id !== id));
     };
 
+    const imagensFotos = [
+        require('./outLoca.png'),
+        require('./comida.jpg'),
+    ];
 
     return (
         <SafeAreaView style={styles.container}>
@@ -83,12 +87,15 @@ export default function HomeRest() {
 
             <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
                 <ScrollView>
-                    <TextInput style={styles.title} multiline>Outback SteakHouse</TextInput>
+                    <TextInput style={styles.title} multiline placeholder='Nome do Restaurante' placeholderTextColor="#fff"></TextInput>
                     <CategoriaRest />
-                    <Text style={styles.title}>Sobre</Text>
-                    <TextInput style={styles.subTitle} multiline>
-                        A especialidade da casa é a carne, como a costela ao molho barbecue, uma das mais pedidas.
-                    </TextInput>
+                    <Text style={styles.title}>Sobre o Restaurante</Text>
+                    <TextInput
+                        style={styles.subTitle}
+                        multiline
+                        placeholder='Fale sobre seu Restaurante'
+                        placeholderTextColor="#fff"
+                    />
                     <Text style={styles.title}>Temos</Text>
                     <View style={styles.iconsContainerList}>
                         <IconButton
@@ -146,6 +153,9 @@ export default function HomeRest() {
                     <TouchableOpacity style={styles.Button} onPress={uploadPDF}>
                         <Text style={styles.buttonText}>Upload Cardápio (PDF)</Text>
                     </TouchableOpacity>
+
+                    <Text style={styles.title}>Fotos:</Text>
+                    <FotosRest imagens={imagensFotos}/>
 
                 </ScrollView>
             </Animatable.View>

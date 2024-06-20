@@ -21,7 +21,7 @@ export default function SignIn() {
         }
 
 
-        fetch('http://192.168.233.253:3000/auth/login', {
+        fetch('http://192.168.41.253:3000/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

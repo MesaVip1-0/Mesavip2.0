@@ -23,7 +23,7 @@ export default function SignInRest() {
             return;
         }
 
-        fetch('http://192.168.233.253:3000/auth/login_rest', {
+        fetch('http://192.168.41.253:3000/auth/login_rest', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
