@@ -76,6 +76,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#fff',
     },
+    deleteIcon:{
+        fontSize:30,
+        color:'#fe0000',
+        paddingLeft:'2%'
+    }
 });
 
 export default styles;
