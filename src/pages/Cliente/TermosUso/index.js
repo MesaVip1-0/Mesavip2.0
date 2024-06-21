@@ -1,19 +1,12 @@
-import React from 'react';
-import { View, Text, SafeAreaView, ScrollView } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
+import React, { useState } from 'react';
+import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import styles from './styles';
-
-//imports página perfil
 import * as Animatable from 'react-native-animatable';
-import { useState } from 'react';
-
+import styles from './styles';
 
 export default function TermosUso() {
     const navigation = useNavigation();
-    //const checkbox
-    const [toggleCheckBox, setToggleCheckBox] = useState(false)
-
+    
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#141414' }}>
             <Animatable.View delay={600} animation="fadeInUp" style={styles.containerTermos}>
@@ -88,14 +81,6 @@ export default function TermosUso() {
                             escolher nosso aplicativo e esperamos proporcionar a você uma experiência excelente ao
                             reservar suas mesas em nossos restaurantes parceiros.</Text>
                     </View>
-                    {/* <View style={styles.checkboxContainer}>
-                        <CheckBox
-                            disabled={false}
-                            value={toggleCheckBox}
-                            onValueChange={(newValue) => setToggleCheckBox(newValue)}
-                        />
-                        <Text style={styles.label}>Do you like React Native?</Text>
-                    </View> */}
                 </ScrollView>
             </Animatable.View>
         </SafeAreaView>

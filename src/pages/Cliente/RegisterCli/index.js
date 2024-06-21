@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { CheckBox } from 'react-native-elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
@@ -13,6 +14,15 @@ export default function RegisterCli() {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
+    const [isChecked, setIsChecked] = useState(false);
+
+    const handleCheckBoxClick = () => {
+        setIsChecked(!isChecked);
+    };
+
+    const handleTextPress = () => {
+        navigation.navigate('TermosUso');
+    };
 
     function handleSignin() {
         if (name === '' || email === '' || pass === '' || confirmPass === '') {
@@ -29,7 +39,7 @@ export default function RegisterCli() {
         // utilizando o fetch ou axios para enviar os dados
         // de registro para o servidor.
         // Exemplo de chamada com fetch:
-        fetch('http://192.168.41.253:3000/auth/register', {
+        fetch('http://192.168.41.75:3000/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -123,9 +133,18 @@ export default function RegisterCli() {
                 <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('SignIn')}>
                     <Text style={styles.registerText}>Já possui uma conta? Faça Login</Text>
                 </TouchableOpacity>
-
+                <View style={styles.checkboxContainer}>
+                        <CheckBox
+                            checked={isChecked}
+                            onPress={handleCheckBoxClick}
+                            checkedColor="red"
+                            uncheckedColor="gray"
+                        />
+                        <TouchableOpacity onPress={handleTextPress}>
+                            <Text style={styles.checkboxText}>Ler Termos de uso</Text>
+                        </TouchableOpacity>
+                    </View>
             </Animatable.View>
-
         </KeyboardAwareScrollView>
     );
 }

@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView, SafeAreaView, TextInpu
 import { AntDesign } from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
 import * as DocumentPicker from 'expo-document-picker';
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import styles from './styles';
 import CategoriaRest from '../../../components/CategoriaRest';
@@ -75,6 +76,7 @@ export default function HomeRest() {
         require('./comida.jpg'),
     ];
 
+    const navigation = useNavigation();
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.containerLogo}>
@@ -160,6 +162,10 @@ export default function HomeRest() {
                         style={{ width: '100%', height: 250, marginStart: "5%", marginTop: "10%" }}
                         resizeMode="center"
                     />
+
+                    <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('cadastroMesas')}>
+                        <Text style={styles.buttonText}>Upload Cardápio (PDF)</Text>
+                    </TouchableOpacity>
 
                 </ScrollView>
             </Animatable.View>
