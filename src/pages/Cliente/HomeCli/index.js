@@ -40,7 +40,7 @@ export default function HomeCli() {
 
     const fetchRestaurants = async () => {
         try {
-            const response = await fetch('http://192.168.233.75:3000/restaurants');
+            const response = await fetch('http://192.168.41.75:3000/restaurants');
             const data = await response.json();
             setList(data);
         } catch (error) {

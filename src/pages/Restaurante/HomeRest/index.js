@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView, SafeAreaView, TextInpu
 import { AntDesign } from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
 import * as DocumentPicker from 'expo-document-picker';
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import styles from './styles';
 import CategoriaRest from '../../../components/CategoriaRest';
@@ -70,6 +71,7 @@ export default function HomeRest() {
         setHorariosFuncionamento(horariosFuncionamento.filter((horario) => horario.id !== id));
     };
 
+    const navigation = useNavigation();
 
     return (
         <SafeAreaView style={styles.container}>
@@ -144,6 +146,10 @@ export default function HomeRest() {
 
                     <Text style={styles.title}>Nosso Cardápio:</Text>
                     <TouchableOpacity style={styles.Button} onPress={uploadPDF}>
+                        <Text style={styles.buttonText}>Upload Cardápio (PDF)</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('cadastroMesas')}>
                         <Text style={styles.buttonText}>Upload Cardápio (PDF)</Text>
                     </TouchableOpacity>
 

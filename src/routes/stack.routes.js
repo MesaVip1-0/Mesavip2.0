@@ -16,6 +16,7 @@ import ReservaMesa from "../pages/Cliente/ReservaMesa";
 import HomeRest from "../pages/Restaurante/HomeRest";
 import Cartoes from "../pages/Cliente/Cartoes";
 import MesasDispo from "../pages/Cliente/MesasDispo";
+import cadastroMesas from "../pages/Restaurante/cadastroMesas"
 
 
 const Stack = createNativeStackNavigator();
@@ -107,6 +108,11 @@ export default function StackRoutes() {
             <Stack.Screen
                 name="MesasDispo"
                 component={MesasDispo}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="cadastroMesas"
+                component={cadastroMesas}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>
