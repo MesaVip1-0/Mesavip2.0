@@ -39,7 +39,7 @@ export default function RegisterCli() {
         // utilizando o fetch ou axios para enviar os dados
         // de registro para o servidor.
         // Exemplo de chamada com fetch:
-        fetch('http://192.168.41.75:3000/auth/register', {
+        fetch('http://192.168.100.213:3000/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

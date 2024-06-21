@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { Feather, MaterialCommunityIcons, } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './styles';
 
 export default function Perfil() {
     const navigation = useNavigation();
+    const [isEditingName, setIsEditingName] = useState(false);
+    const [name, setName] = useState('Thiago Justino');
+
+    const handleEditName = () => {
+        setIsEditingName(true);
+    };
+
+    const handleNameChange = (text) => {
+        setName(text);
+    };
+
+    const handleNameSubmit = () => {
+        setIsEditingName(false);
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -32,23 +46,36 @@ export default function Perfil() {
             <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
                 <ScrollView>
                     <View style={styles.container2}>
-                        <View style={styles.name}>
-                            <Text style={styles.text1}>Thiago Justino</Text>
+                        <View style={styles.nameContainer}>
+                            {isEditingName ? (
+                                <TextInput
+                                    style={styles.textInput}
+                                    value={name}
+                                    onChangeText={handleNameChange}
+                                    onBlur={handleNameSubmit}
+                                    autoFocus
+                                />
+                            ) : (
+                                <Text style={styles.text1}>{name}</Text>
+                            )}
+                            <TouchableOpacity onPress={handleEditName} style={{alignItems: 'center'}}>
+                                <FontAwesome name="pencil" size={24} color="white" style={{ marginLeft: 15}} />
+                            </TouchableOpacity>
                         </View>
-
                     </View>
+
                     <TouchableOpacity style={styles.btn}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Feather name="phone" style={styles.iconsStyle} />
                             <View style={{ marginLeft: 10 }}>
                                 <Text style={styles.text}>Telefone</Text>
-                                <TextInput style={styles.subTitle}>+55  (11) 94035-7986</TextInput>
+                                <TextInput style={styles.subTitle}>+55 (11) 94035-7986</TextInput>
                             </View>
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Cartoes')}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }} >
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Feather name="credit-card" style={styles.iconsStyle} />
                             <View style={{ marginLeft: 10 }}>
                                 <Text style={styles.text}>Pagamento</Text>
@@ -57,7 +84,7 @@ export default function Perfil() {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('TermosUso')}>
+                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('')}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Feather name="bell" style={styles.iconsStyle} />
                             <View style={{ marginLeft: 10 }}>
@@ -91,4 +118,3 @@ export default function Perfil() {
         </SafeAreaView>
     );
 }
-
