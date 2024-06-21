@@ -8,7 +8,7 @@ import styles from './styles';
 import CategoriaRest from '../../../components/CategoriaRest';
 import IconButton from '../../../components/IconButton';
 import HorarioFuncRest from '../../../components/HorarioFuncRest';
-import FotosRest from '../../../components/FotosRest';
+
 
 export default function HomeRest() {
     const [selectedIcons, setSelectedIcons] = useState({
@@ -87,14 +87,14 @@ export default function HomeRest() {
 
             <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
                 <ScrollView>
-                    <TextInput style={styles.title} multiline placeholder='Nome do Restaurante' placeholderTextColor="#fff"></TextInput>
+                    <TextInput style={styles.title} multiline placeholder='Nome do Restaurante' placeholderTextColor="grey"></TextInput>
                     <CategoriaRest />
                     <Text style={styles.title}>Sobre o Restaurante</Text>
                     <TextInput
                         style={styles.subTitle}
                         multiline
                         placeholder='Fale sobre seu Restaurante'
-                        placeholderTextColor="#fff"
+                        placeholderTextColor="grey"
                     />
                     <Text style={styles.title}>Temos</Text>
                     <View style={styles.iconsContainerList}>
@@ -155,7 +155,11 @@ export default function HomeRest() {
                     </TouchableOpacity>
 
                     <Text style={styles.title}>Fotos:</Text>
-                    <FotosRest imagens={imagensFotos}/>
+                    <Image
+                        source={require('../../../assets/outLoca.png')}
+                        style={{ width: '100%', height: 250, marginStart: "5%", marginTop: "10%" }}
+                        resizeMode="center"
+                    />
 
                 </ScrollView>
             </Animatable.View>

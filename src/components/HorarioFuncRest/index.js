@@ -19,8 +19,12 @@ const HorarioFuncRest = ({ onRemove, title }) => {
         'Quarta',
         'Quinta',
         'Sexta',
-        'Sábado'
+        'Sábado',
+        'Feriados'
     ];
+
+    // Filtra as opções para o segundo dia removendo "Feriados"
+    const filteredOptions = isStartDay ? options : options.filter(option => option !== 'Feriados');
 
     const renderOption = ({ item }) => (
         <TouchableOpacity
@@ -28,6 +32,9 @@ const HorarioFuncRest = ({ onRemove, title }) => {
             onPress={() => {
                 if (isStartDay) {
                     setSelectedStartDay(item);
+                    if (item === 'Feriados') {
+                        setSelectedEndDay('Dia');
+                    }
                 } else {
                     setSelectedEndDay(item);
                 }
@@ -56,18 +63,27 @@ const HorarioFuncRest = ({ onRemove, title }) => {
     return (
         <View style={styles.horarioContainer}>
             <TouchableOpacity
-                onPress={() => { setIsStartDay(true); setModalVisible(true); }}
+                onPress={() => {
+                    setIsStartDay(true);
+                    setModalVisible(true);
+                }}
             >
                 <Text style={styles.horarioButtonText}>{title}{selectedStartDay}</Text>
             </TouchableOpacity>
 
-            <Text style={styles.horarioText}>à</Text>
-
-            <TouchableOpacity
-                onPress={() => { setIsStartDay(false); setModalVisible(true); }}
-            >
-                <Text style={styles.horarioButtonText}>{title}{selectedEndDay}</Text>
-            </TouchableOpacity>
+            {selectedStartDay !== 'Feriados' && (
+                <>
+                    <Text style={styles.horarioText}>à</Text>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setIsStartDay(false);
+                            setModalVisible(true);
+                        }}
+                    >
+                        <Text style={styles.horarioButtonText}>{title}{selectedEndDay}</Text>
+                    </TouchableOpacity>
+                </>
+            )}
 
             <Text style={styles.horarioText}>:</Text>
             <View style={styles.horarioInputContainer}>
@@ -122,11 +138,12 @@ const HorarioFuncRest = ({ onRemove, title }) => {
                         onBlur={() => handleBlur(endTime, setEndTime)}
                     />
                 </View>
-
                 <TouchableOpacity onPress={onRemove}>
                     <AntDesign name='delete' style={styles.deleteIcon} />
                 </TouchableOpacity>
             </View>
+
+
 
             <Modal
                 animationType='slide'
@@ -136,7 +153,7 @@ const HorarioFuncRest = ({ onRemove, title }) => {
             >
                 <View style={styles.modalView}>
                     <FlatList
-                        data={options}
+                        data={filteredOptions}
                         renderItem={renderOption}
                         keyExtractor={(item) => item}
                     />

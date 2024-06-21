@@ -204,9 +204,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     selectedOption: {
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold',
-        color: '#fff',
+        color: '#fffd',
     },
     modalTitle: {
         color: '#fff',
