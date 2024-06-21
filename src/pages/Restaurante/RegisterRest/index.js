@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, Modal } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { CheckBox } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -16,6 +17,16 @@ export default function RegisterRest() {
     const [pass, setPass] = useState("");
     const [confirmPass, setConfirmPass] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
+
+
+    const handleCheckBoxClick = () => {
+        setIsChecked(!isChecked);
+    };
+
+    const handleTextPress = () => {
+        navigation.navigate('TermosUso');
+    };
 
     const handleSignup = async () => {
         if (!name || !email || !pass || !confirmPass || !cnpj || !cep || !categoria) {
@@ -127,31 +138,18 @@ export default function RegisterRest() {
                     <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('SignInRest')}>
                         <Text style={styles.registerText}>Já possui uma conta? Entre</Text>
                     </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.btnTermos} onPress={() => setModalVisible(true)}>
-                        <Text style={styles.buttonText}>Mostrar Mensagem</Text>
-                    </TouchableOpacity>
-                </Animatable.View>
-
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                        setModalVisible(!modalVisible);
-                    }}>
-                    <View style={styles.modalContainer}>
-                        <View style={styles.modalView}>
-                            <Text style={styles.modalText}>Esta é a mensagem que aparece na tela sobreposta</Text>
-                            <TouchableOpacity
-                                style={styles.buttonClose}
-                                onPress={() => setModalVisible(!modalVisible)}>
-                                <Text style={styles.buttonText}>Fechar</Text>
-                            </TouchableOpacity>
-                        </View>
+                    <View style={styles.checkboxContainer}>
+                        <CheckBox
+                            checked={isChecked}
+                            onPress={handleCheckBoxClick}
+                            checkedColor="red"
+                            uncheckedColor="gray"
+                        />
+                        <TouchableOpacity onPress={handleTextPress}>
+                            <Text style={styles.checkboxText}>Ler Termos de uso</Text>
+                        </TouchableOpacity>
                     </View>
-                </Modal>
-
+                </Animatable.View>
             </View>
         </KeyboardAwareScrollView>
     );

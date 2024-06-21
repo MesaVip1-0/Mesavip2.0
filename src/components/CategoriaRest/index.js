@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Modal } from 'react-native';
-import styles from '../../pages/Restaurante/HomeRest/styles';
+import styles from './styles';
 
 const CategoriaRest = () => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -59,17 +59,3 @@ const CategoriaRest = () => {
 
 export default CategoriaRest;
 
-
-{/* <View style={styles.modalView}>
-            <FlatList
-                data={options}
-                renderItem={renderOption}
-                keyExtractor={(item) => item}
-            />
-            <TouchableOpacity
-                style={styles.closeButton}
-                onPress={() => setModalVisible(false)}
-            >
-                <Text style={styles.closeButtonText}>Close</Text>
-            </TouchableOpacity>
-        </View> */}

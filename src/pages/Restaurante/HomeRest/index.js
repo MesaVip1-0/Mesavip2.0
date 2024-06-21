@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, ScrollView, SafeAreaView, TextInpu
 import { AntDesign } from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
 import * as DocumentPicker from 'expo-document-picker';
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import styles from './styles';
 import CategoriaRest from '../../../components/CategoriaRest';
@@ -41,7 +42,7 @@ export default function HomeRest() {
                     name: result.name,
                 });
 
-                await axios.post("http://192.168.233.253:3000/upload", formData, {
+                await axios.post("http://192.168.41.253:3000/upload", formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
@@ -70,7 +71,12 @@ export default function HomeRest() {
         setHorariosFuncionamento(horariosFuncionamento.filter((horario) => horario.id !== id));
     };
 
+    const imagensFotos = [
+        require('./outLoca.png'),
+        require('./comida.jpg'),
+    ];
 
+    const navigation = useNavigation();
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.containerLogo}>
@@ -83,12 +89,15 @@ export default function HomeRest() {
 
             <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
                 <ScrollView>
-                    <TextInput style={styles.title} multiline>Outback SteakHouse</TextInput>
+                    <TextInput style={styles.title} multiline placeholder='Nome do Restaurante' placeholderTextColor="grey"></TextInput>
                     <CategoriaRest />
-                    <Text style={styles.title}>Sobre</Text>
-                    <TextInput style={styles.subTitle} multiline>
-                        A especialidade da casa é a carne, como a costela ao molho barbecue, uma das mais pedidas.
-                    </TextInput>
+                    <Text style={styles.title}>Sobre o Restaurante</Text>
+                    <TextInput
+                        style={styles.subTitle}
+                        multiline
+                        placeholder='Fale sobre seu Restaurante'
+                        placeholderTextColor="grey"
+                    />
                     <Text style={styles.title}>Temos</Text>
                     <View style={styles.iconsContainerList}>
                         <IconButton
@@ -144,6 +153,17 @@ export default function HomeRest() {
 
                     <Text style={styles.title}>Nosso Cardápio:</Text>
                     <TouchableOpacity style={styles.Button} onPress={uploadPDF}>
+                        <Text style={styles.buttonText}>Upload Cardápio (PDF)</Text>
+                    </TouchableOpacity>
+
+                    <Text style={styles.title}>Fotos:</Text>
+                    <Image
+                        source={require('../../../assets/outLoca.png')}
+                        style={{ width: '100%', height: 250, marginStart: "5%", marginTop: "10%" }}
+                        resizeMode="center"
+                    />
+
+                    <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('cadastroMesas')}>
                         <Text style={styles.buttonText}>Upload Cardápio (PDF)</Text>
                     </TouchableOpacity>
 

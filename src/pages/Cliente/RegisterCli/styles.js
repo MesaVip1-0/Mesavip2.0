@@ -54,8 +54,16 @@ const styles = StyleSheet.create({
     },
     registerText: {
         color: '#a1a1a1'
-    }
+    },
+    checkboxContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft: '18%'
+    },
+    checkboxText: {
+        color: '#a1a1a1',
+        textDecorationLine: 'underline',
+    },
 });
-
 
 export default styles;

@@ -1,14 +1,12 @@
-// Em HorarioFuncRest.js
-
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Modal, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Modal, Alert } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text';
 import styles from './styles';
 import { AntDesign } from '@expo/vector-icons';
 
 const HorarioFuncRest = ({ onRemove, title }) => {
     const [modalVisible, setModalVisible] = useState(false);
-    const [isStartDay, setIsStartDay] = useState(true); // New state to determine which day to set
+    const [isStartDay, setIsStartDay] = useState(true);
     const [selectedStartDay, setSelectedStartDay] = useState('Dia');
     const [selectedEndDay, setSelectedEndDay] = useState('Dia');
     const [startTime, setStartTime] = useState('');
@@ -21,8 +19,12 @@ const HorarioFuncRest = ({ onRemove, title }) => {
         'Quarta',
         'Quinta',
         'Sexta',
-        'Sábado'
+        'Sábado',
+        'Feriados'
     ];
+
+    // Filtra as opções para o segundo dia removendo "Feriados"
+    const filteredOptions = isStartDay ? options : options.filter(option => option !== 'Feriados');
 
     const renderOption = ({ item }) => (
         <TouchableOpacity
@@ -30,6 +32,9 @@ const HorarioFuncRest = ({ onRemove, title }) => {
             onPress={() => {
                 if (isStartDay) {
                     setSelectedStartDay(item);
+                    if (item === 'Feriados') {
+                        setSelectedEndDay('Dia');
+                    }
                 } else {
                     setSelectedEndDay(item);
                 }
@@ -40,21 +45,45 @@ const HorarioFuncRest = ({ onRemove, title }) => {
         </TouchableOpacity>
     );
 
+    const handleBlur = (text, setTime) => {
+        if (text.length === 2) {
+            const hour = parseInt(text, 10);
+            if (hour > 23) {
+                Alert.alert(
+                    'Horário inválido',
+                    `Horário inválido: ${text}`,
+                    [{ text: 'OK', onPress: () => setTime('') }]
+                );
+            } else {
+                setTime(`${text}:00`);
+            }
+        }
+    };
+
     return (
         <View style={styles.horarioContainer}>
             <TouchableOpacity
-                onPress={() => { setIsStartDay(true); setModalVisible(true); }}
+                onPress={() => {
+                    setIsStartDay(true);
+                    setModalVisible(true);
+                }}
             >
                 <Text style={styles.horarioButtonText}>{title}{selectedStartDay}</Text>
             </TouchableOpacity>
 
-            <Text style={styles.horarioText}>à</Text>
-
-            <TouchableOpacity
-                onPress={() => { setIsStartDay(false); setModalVisible(true); }}
-            >
-                <Text style={styles.horarioButtonText}>{title}{selectedEndDay}</Text>
-            </TouchableOpacity>
+            {selectedStartDay !== 'Feriados' && (
+                <>
+                    <Text style={styles.horarioText}>à</Text>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setIsStartDay(false);
+                            setModalVisible(true);
+                        }}
+                    >
+                        <Text style={styles.horarioButtonText}>{title}{selectedEndDay}</Text>
+                    </TouchableOpacity>
+                </>
+            )}
 
             <Text style={styles.horarioText}>:</Text>
             <View style={styles.horarioInputContainer}>
@@ -67,14 +96,19 @@ const HorarioFuncRest = ({ onRemove, title }) => {
                         }}
                         value={startTime}
                         onChangeText={(text) => {
-                            const isValidTime = /^([01][0-9]|2[0-3]):([0-5][0-9])$/.test(text);
-                            if (isValidTime) {
-                                setStartTime(text);
-                                console.log(`Horário de início válido: ${text}`);
-                            } else {
-                                console.log(`Horário de início inválido: ${text}`);
+                            setStartTime(text);
+                            if (text.length === 5) {
+                                const isValidTime = /^([01][0-9]|2[0-3]):([0-5][0-9])$/.test(text);
+                                if (!isValidTime) {
+                                    Alert.alert(
+                                        'Horário inválido',
+                                        `Horário inválido: ${text}`,
+                                        [{ text: 'OK', onPress: () => setStartTime('') }]
+                                    );
+                                }
                             }
                         }}
+                        onBlur={() => handleBlur(startTime, setStartTime)}
                     />
                 </View>
 
@@ -89,21 +123,27 @@ const HorarioFuncRest = ({ onRemove, title }) => {
                         }}
                         value={endTime}
                         onChangeText={(text) => {
-                            const isValidTime = /^([01][0-9]|2[0-3]):([0-5][0-9])$/.test(text);
-                            if (isValidTime) {
-                                setEndTime(text);
-                                console.log(`Horário de término válido: ${text}`);
-                            } else {
-                                console.log(`Horário de término inválido: ${text}`);
+                            setEndTime(text);
+                            if (text.length === 5) {
+                                const isValidTime = /^([01][0-9]|2[0-3]):([0-5][0-9])$/.test(text);
+                                if (!isValidTime) {
+                                    Alert.alert(
+                                        'Horário inválido',
+                                        `Horário inválido: ${text}`,
+                                        [{ text: 'OK', onPress: () => setEndTime('') }]
+                                    );
+                                }
                             }
                         }}
+                        onBlur={() => handleBlur(endTime, setEndTime)}
                     />
                 </View>
-
                 <TouchableOpacity onPress={onRemove}>
-                    <AntDesign name='delete' size={30} color='red' />
+                    <AntDesign name='delete' style={styles.deleteIcon} />
                 </TouchableOpacity>
             </View>
+
+
 
             <Modal
                 animationType='slide'
@@ -113,7 +153,7 @@ const HorarioFuncRest = ({ onRemove, title }) => {
             >
                 <View style={styles.modalView}>
                     <FlatList
-                        data={options}
+                        data={filteredOptions}
                         renderItem={renderOption}
                         keyExtractor={(item) => item}
                     />
