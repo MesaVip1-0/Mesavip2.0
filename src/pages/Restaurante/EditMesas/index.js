@@ -3,9 +3,9 @@ import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, Image, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 import styles from "./styles";
-import DateTime from "./cadMesas"
+import EditMesas from "./EditMesas"
 
-export default function ReservaMesa() {
+export default function EditarMesas() {
 
     const navigation = useNavigation();
 
@@ -14,27 +14,23 @@ export default function ReservaMesa() {
         <SafeAreaView style={styles.container}>
 
             <View style={styles.containerLogo}>
-                {/* Exibindo a imagem do logo */}
-                <Image
-                    source={require('./outbackBanner.jpg')}
-                    style={{ width: '100%' }}
-                    resizeMode="contain"
-                />
 
                 {/* Botão de voltar para a esquerda no canto superior esquerdo do logo */}
                 <TouchableOpacity style={styles.return} onPress={() => navigation.navigate('DetailsCli')}>
                     <AntDesign name="arrowleft" style={styles.return} />
                 </TouchableOpacity>
+                <Text style={styles.titulo}>Editar Mesas</Text>
+
             </View>
             <ScrollView>
                 <View>
                     <Text style={styles.escolhaDia}>Mesas internas ou externas:</Text>
-                    <DateTime />
+                    <EditMesas />
                 </View>
 
                 <View style={styles.viewBtnConfirma}>
                     <TouchableOpacity style={styles.btnConfirma} onPress={() => navigation.navigate('MesasCadastradas')}>
-                        <Text>CADASTRAR</Text>
+                        <Text>EDITAR</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>

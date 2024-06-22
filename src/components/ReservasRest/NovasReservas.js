@@ -54,17 +54,22 @@ const NovasReservas = ({ item }) => {
             </View>
             <Animated.View style={{ height: animatedHeight, overflow: 'hidden' }}>
                 <View style={[styles.containerInfo, { marginTop: 0, backgroundColor: '#f0f0f0', flexDirection: 'row' }]}>
-                    <View style={{ marginLeft: 20 }}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center'}}>
+                        <TouchableOpacity>
                         <View>
-                            <Text style={{ color: '#000', fontSize: 17 }}>{item.qnt_pessoas}</Text>
+                            <Text style={{ color: '#000', fontSize: 13, marginLeft: 10 }}>QR code de confirmação</Text>
+                        </View>
+                        </TouchableOpacity>
+                        <View style={{ marginTop: 20 }}>
+                            <Text style={{ color: '#000', fontSize: 13, marginLeft: 10  }}>{item.descricao}</Text>
                         </View>
                     </View>
-                    <View style={{ marginRight: 20 }}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center'}}>
                         <View>
-                            <Text style={{ color: '#000', fontSize: 13 }}>{item.num_mesa}</Text>
+                            <Text style={{ color: '#000', fontSize: 13, marginRight: 30 }}>{item.num_mesa}</Text>
                         </View>
                         <View style={{ marginTop: 20 }}>
-                            <Text style={{ color: '#000', fontSize: 13 }}>{item.descricao}</Text>
+                            <Text style={{ color: '#000', fontSize: 13, marginRight: 30 }}>{item.qnt_pessoas}</Text>
                         </View>
                     </View>
                 </View>

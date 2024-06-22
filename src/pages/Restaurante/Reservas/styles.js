@@ -140,7 +140,30 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
     },
-
+    outlinedText: {
+        color: '#000',
+        fontSize: 13,
+        marginLeft: 10,
+        textShadowColor: '#fe0000',
+        textShadowOffset: { width: 0, height: 0 },
+        textShadowRadius: 2,
+    },
+    cameraOverlay: {
+        flex: 1,
+        backgroundColor: 'transparent',
+        flexDirection: 'row',
+    },
+    closeButton: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        padding: 10,
+    },
+    closeButtonText: {
+        color: '#fff',
+        fontSize: 18,
+    },
 })
 
 export default styles;

@@ -162,11 +162,6 @@ export default function HomeRest() {
                         style={{ width: '100%', height: 250, marginStart: "5%", marginTop: "10%" }}
                         resizeMode="center"
                     />
-
-                    <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('cadastroMesas')}>
-                        <Text style={styles.buttonText}>Upload Cardápio (PDF)</Text>
-                    </TouchableOpacity>
-
                 </ScrollView>
             </Animatable.View>
         </SafeAreaView>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, FlatList, Image, TextInput } from 'react-native';
 import styles from "./styles";
 
-const DateTime = () => {
+const EditMesas = () => {
     const [selectedPeople, setSelectedPeople] = useState(null);
     const [selectedMesa, setSelectedMesa] = useState(null);
     const [selectedDispo, setSelectedDispo] = useState(null);
@@ -254,4 +254,4 @@ const DateTime = () => {
     );
 }
 
-export default DateTime;
+export default EditMesas;

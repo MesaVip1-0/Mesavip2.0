@@ -8,8 +8,11 @@ const styles = StyleSheet.create({
     containerLogo: {
         width:'100%',
         justifyContent: 'center',
-        paddingBottom: 50,
-        height: '26%'
+        paddingBottom: 0,
+        height: '12%',
+        alignItems: 'center',
+        borderBottomWidth: 3,
+        borderBottomColor: '#616161'
     },
     return: {
         position: 'absolute',
@@ -23,9 +26,8 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 20,
         paddingLeft: 25,
-        paddingTop: 15,
+        paddingTop: 20,
         paddingBottom: 10,
-        marginTop:-10
     },
     btnConfirma:{
         width: 230,
@@ -59,6 +61,13 @@ const styles = StyleSheet.create({
     escolhaHorario: {
         color: '#fff',
         fontSize: 20,
+        paddingLeft: 25,
+        paddingTop: 20,
+        paddingBottom: 10
+    },
+    titulo: {
+        color: '#fff',
+        fontSize: 30,
         paddingLeft: 25,
         paddingTop: 20,
         paddingBottom: 10
