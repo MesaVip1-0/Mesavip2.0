@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 import styles from './styles';
+import {IP} from '../../IP';
 
 export default function SignIn() {
     const navigation = useNavigation();
@@ -21,7 +22,7 @@ export default function SignIn() {
         }
 
 
-        fetch('http://192.168.15.9:3000/auth/login', {
+        fetch(`http://${IP}:3000/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

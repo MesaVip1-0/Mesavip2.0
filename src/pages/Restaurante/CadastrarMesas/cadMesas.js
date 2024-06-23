@@ -209,8 +209,6 @@ const CadMesas = () => {
                             {item.key === 'd' && selectedPeople === 'd' ? (
                                 <TextInput
                                     style={styles.customInput}
-                                    placeholder="Digite a quantidade"
-                                    placeholderTextColor="#888"
                                     keyboardType="numeric"
                                     value={customNumberOfPeople}
                                     onChangeText={handleCustomNumberChange}

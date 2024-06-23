@@ -10,9 +10,8 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         marginLeft: 20,
         marginTop: 40,
-        marginRight: 15,
-        borderWidth: 1,
-        borderColor: '#a2a2a2',
+        borderBottomWidth: 1,
+        borderBottomColor: '#a2a2a2',
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
@@ -113,7 +112,8 @@ const styles = StyleSheet.create({
         height: 37,
         alignItems: 'center',
         width: 250,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginBottom: 15,
     },
 });
 

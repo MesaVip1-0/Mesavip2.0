@@ -33,46 +33,14 @@ export default function Perfil() {
                 />
             </View>
 
-            <Animatable.View delay={1000} animation="fadeIn" style={styles.imageView}>
-                <TouchableOpacity style={styles.image}>
-                    <Image
-                        source={require('../../../assets/thiago.png')}
-                        style={{ width: '100%' }}
-                        resizeMode="contain"
-                    />
-                </TouchableOpacity>
-            </Animatable.View>
-
+        
             <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
-                <ScrollView>
-                <View 
-                    style={{flexDirection: 'row', 
-                            marginTop: 40,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            marginLeft: 30
-                            }}>
-                    <View style={styles.container2}>
-                        <View style={styles.nameContainer}>
-                            {isEditingName ? (
-                                <TextInput
-                                    style={styles.textInput}
-                                    value={name}
-                                    onChangeText={handleNameChange}
-                                    onBlur={handleNameSubmit}
-                                    autoFocus
-                                />
-                            ) : (
-                                <Text style={styles.text1}>{name}</Text>
-                            )}
-                            
-                        </View>
-                        
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                >
+                    <View style={{alignItems: 'center', justifyContent: 'center', borderBottomWidth: 2, borderColor: "#616161", marginBottom: 30, width: '100%', height: 100, borderRadius:30}}>
+                        <Text style={{color: '#fff', fontSize: 30, fontWeight: 'bold'}}>Configurações</Text>
                     </View>
-                    <TouchableOpacity onPress={handleEditName} >
-                                <FontAwesome name="pencil" size={24} color="white"  />
-                            </TouchableOpacity>
-                            </View>
 
                     <TouchableOpacity style={styles.btn}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -126,7 +94,7 @@ export default function Perfil() {
 
                     <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('MesasCadastradas')}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Feather name="edit-3" style={styles.iconsStyle} />
+                            <FontAwesome name="cutlery" style={styles.iconsStyle} />
                             <View style={{ marginLeft: 10 }}>
                                 <Text style={styles.text}>Editar Mesas</Text>
                                 <Text style={styles.subTitle}>Modifique as mesas cadastradas</Text>
