@@ -5,7 +5,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import Animated, { Easing, useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import HomeRest from '../pages/Restaurante/HomeRest';
 import Configuracoes from '../pages/Restaurante/Configuracoes';
-import Favoritos from '../pages/Cliente/Favoritos';
+import CadastroMesas from '../pages/Restaurante/CadastrarMesas';
 import Reservas from '../pages/Restaurante/Reservas';
 
 const Tab = createBottomTabNavigator();
@@ -50,7 +50,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
 
                 if (route.name === 'Início') {
                     iconName = 'home';
-                } else if (route.name === 'Favoritos') {
+                } else if (route.name === 'CadMesas') {
                     iconName = 'heart';
                 } else if (route.name === 'Reservas') {
                     iconName = 'book';
@@ -87,7 +87,7 @@ function TabRoutes() {
             tabBar={props => <CustomTabBar {...props} />}
         >
             <Tab.Screen name="Início" component={HomeRest} />
-            <Tab.Screen name="Favoritos" component={Favoritos} />
+            <Tab.Screen name="CadMesas" component={CadastroMesas} />
             <Tab.Screen name="Reservas" component={Reservas} />
             <Tab.Screen name="Perfil" component={Configuracoes} />
         </Tab.Navigator>

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, Image, TouchableOpacity, Animated, Easing, Modal, StyleSheet } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Feather, AntDesign } from '@expo/vector-icons';
 import styles from '../../pages/Restaurante/Reservas/styles';
 
 const NovasReservas = ({ item }) => {
@@ -51,13 +51,15 @@ const NovasReservas = ({ item }) => {
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.subDescripition}>{item.descricao}</Text>
+                <AntDesign name='down' color='#fff' size={15} style={{ marginBottom: 10 }} />
+
             </View>
             <Animated.View style={{ height: animatedHeight, overflow: 'hidden' }}>
                 <View style={[styles.containerInfo, { marginTop: 0, backgroundColor: '#f0f0f0', flexDirection: 'row' }]}>
                     <View style={{ justifyContent: 'center', alignItems: 'center'}}>
                         <TouchableOpacity>
                         <View>
-                            <Text style={{ color: '#000', fontSize: 13, marginLeft: 10 }}>QR code de confirmação</Text>
+                            <Text style={{ color: '#000', fontSize: 13, marginLeft: 10 }}>Ler QR code</Text>
                         </View>
                         </TouchableOpacity>
                         <View style={{ marginTop: 20 }}>

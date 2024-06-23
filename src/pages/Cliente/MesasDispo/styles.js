@@ -82,6 +82,70 @@ const styles = StyleSheet.create({
         backgroundColor: '#141414',
         
     },
+    modalBackground: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContainer: {
+        width: 300,
+        padding: 20,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    modalText: {
+        fontSize: 16,
+        marginBottom: 20,
+        textAlign: 'center',
+    },
+    modalButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+    button: {
+        flex: 1,
+        padding: 10,
+        marginHorizontal: 5,
+        alignItems: 'center',
+        backgroundColor: '#fe0000',
+        borderRadius: 5,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+    },
+    outlinedText: {
+        color: '#000',
+        fontSize: 13,
+        marginLeft: 10,
+        textShadowColor: '#fe0000',
+        textShadowOffset: { width: 0, height: 0 },
+        textShadowRadius: 2,
+    },
+    cameraOverlay: {
+        flex: 1,
+        backgroundColor: 'transparent',
+        flexDirection: 'row',
+    },
+    closeButton: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        padding: 10,
+    },
+    closeButtonText: {
+        color: '#fff',
+        fontSize: 18,
+    },
 })
 
 export default styles;

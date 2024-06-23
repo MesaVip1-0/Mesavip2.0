@@ -10,24 +10,29 @@ const InfoReserva = [
     {
         codigo_produto: 1,
         num_mesa: 'Mesa Interna 10',
-        descricao: 'Terça, 15/08/23 ás 18:30'
+        descricao: 'Terça, 15/08/23 ás 18:30',
+        qntPessoas: '4 Pessoas'
 
     }, {
         codigo_produto: 2,
         num_mesa: 'Mesa Interna 16',
-        descricao: 'Segunda, 30/10/23 ás 18:30'
+        descricao: 'Segunda, 30/10/23 ás 18:30',
+        qntPessoas: '2 Pessoas'
     }, {
         codigo_produto: 3,
         num_mesa: 'Mesa Interna 25',
-        descricao: 'Segunda, 30/10/23 ás 18:30'
+        descricao: 'Segunda, 30/10/23 ás 18:30',
+        qntPessoas: '20 Pessoas'
     }, {
         codigo_produto: 4,
         num_mesa: 'Mesa Interna 3',
-        descricao: 'Segunda, 30/10/23 ás 18:30'
+        descricao: 'Segunda, 30/10/23 ás 18:30',
+        qntPessoas: '1 Pessoa'
     }, {
         codigo_produto: 5,
         num_mesa: 'Mesa Interna 1',
-        descricao: 'Segunda, 30/10/23 ás 18:30'
+        descricao: 'Segunda, 30/10/23 ás 18:30',
+        qntPessoas: '6 Pessoas'
     }
 ];
 

@@ -8,8 +8,18 @@ const styles = StyleSheet.create({
     containerLogo: {
         width:'100%',
         justifyContent: 'center',
-        paddingBottom: 50,
-        height: '26%'
+        paddingBottom: 0,
+        height: '12%',
+        alignItems: 'center',
+        borderBottomWidth: 3,
+        borderBottomColor: '#616161'
+    },
+    titulo: {
+        color: '#fff',
+        fontSize: 30,
+        paddingLeft: 25,
+        paddingTop: 20,
+        paddingBottom: 10
     },
     return: {
         position: 'absolute',
@@ -23,9 +33,8 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 20,
         paddingLeft: 25,
-        paddingTop: 15,
+        paddingTop: 20,
         paddingBottom: 10,
-        marginTop:-10
     },
     btnConfirma:{
         width: 230,
@@ -60,7 +69,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 20,
         paddingLeft: 25,
-        paddingTop: 20,
+        paddingTop: 30,
         paddingBottom: 10
     },
     qtdPessoas: {
@@ -88,7 +97,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 20,
         borderBottomRightRadius: 20,
         marginRight: 40,
-        marginBottom: 30
+        marginBottom: 10
     },
     disponibilidade: {
         width: 150,

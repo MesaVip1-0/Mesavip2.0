@@ -39,7 +39,7 @@ export default function MesasCadastradas() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <TouchableOpacity style={styles.return} onPress={() => navigation.navigate('HomeCli')}>
+            <TouchableOpacity style={styles.return} onPress={() => navigation.navigate('HomeRest')}>
                     <AntDesign name="arrowleft" style={styles.return} />
                 </TouchableOpacity>
             <View style={styles.title}>

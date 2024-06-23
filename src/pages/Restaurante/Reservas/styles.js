@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
     },
     btnMesa: {
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: 15
     },
     txtBtn: {
         textAlign: 'center',
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginLeft: -50,
         paddingTop: 8,
+        marginTop: 15
     },
     img_mesa: {
         height: 50,
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
     subDescripition: {
         fontSize: 13,
         color: '#9d9595',
-        marginTop: -10,
+        marginTop: -15,
     },
     container1: {
         flex: 1,

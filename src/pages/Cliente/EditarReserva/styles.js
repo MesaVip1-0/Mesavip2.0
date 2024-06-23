@@ -8,11 +8,8 @@ const styles = StyleSheet.create({
     containerLogo: {
         width:'100%',
         justifyContent: 'center',
-        paddingBottom: 0,
-        height: '12%',
-        alignItems: 'center',
-        borderBottomWidth: 3,
-        borderBottomColor: '#616161'
+        paddingBottom: 50,
+        height: '26%'
     },
     return: {
         position: 'absolute',
@@ -26,8 +23,9 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 20,
         paddingLeft: 25,
-        paddingTop: 20,
+        paddingTop: 15,
         paddingBottom: 10,
+        marginTop:-10
     },
     btnConfirma:{
         width: 230,
@@ -48,7 +46,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 100,
-        margin: 5
+        margin: 5,
     },
     horarios: {
         width: 100,
@@ -61,13 +59,6 @@ const styles = StyleSheet.create({
     escolhaHorario: {
         color: '#fff',
         fontSize: 20,
-        paddingLeft: 25,
-        paddingTop: 30,
-        paddingBottom: 10
-    },
-    titulo: {
-        color: '#fff',
-        fontSize: 30,
         paddingLeft: 25,
         paddingTop: 20,
         paddingBottom: 10
@@ -90,22 +81,12 @@ const styles = StyleSheet.create({
     },
     mesa: {
         width: 150,
-        height: 143,
+        height: 40,
+        backgroundColor: '#5F5959',
         justifyContent: 'center',
         alignItems: 'center',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        borderBottomRightRadius: 20,
-        marginRight: 40,
-        marginBottom: 10
-    },
-    disponibilidade: {
-        width: 150,
-        height: 45,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 40,
-        borderRadius: 10
+        borderRadius: 5,
+        marginRight: 40
     },
     indisponivel: {
         fontSize: 15,
@@ -123,50 +104,17 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginLeft: 40
     },
-   // ...existingStyles,
-    initialButton: {
-        padding: 20,
+    btnCancelar:{
+        width: 230,
+        height: 45,
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: '#fe0000',
+        marginBottom: 30,
         borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 20,
+        flexDirection: 'row'
     },
-    buttonText: {
-        color: '#fff',
-        fontSize: 18,
-    },
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 20,
-        marginLeft: 20
-        
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#888',
-        padding: 10,
-        width: 150,
-        marginRight: 10,
-        color: '#000',
-        backgroundColor: '#fff',
-        borderRadius: 5,
-    },
-    confirmButton: {
-        padding: 10,
-        backgroundColor: '#04b600',
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    dynamicButton: {
-        padding: 20,
-        backgroundColor: '#373539',
-        borderRadius: 10,
-        marginTop: 10,
-        alignItems: 'center',
-    },
+    
     modalBackground: {
         flex: 1,
         justifyContent: 'center',
@@ -206,30 +154,6 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#fff',
         fontSize: 16,
-    },
-    outlinedText: {
-        color: '#000',
-        fontSize: 13,
-        marginLeft: 10,
-        textShadowColor: '#fe0000',
-        textShadowOffset: { width: 0, height: 0 },
-        textShadowRadius: 2,
-    },
-    cameraOverlay: {
-        flex: 1,
-        backgroundColor: 'transparent',
-        flexDirection: 'row',
-    },
-    closeButton: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        padding: 10,
-    },
-    closeButtonText: {
-        color: '#fff',
-        fontSize: 18,
     },
 
 })
