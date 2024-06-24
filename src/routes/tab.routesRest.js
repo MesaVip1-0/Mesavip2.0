@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
 import Animated, { Easing, useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import HomeRest from '../pages/Restaurante/HomeRest';
 import Configuracoes from '../pages/Restaurante/Configuracoes';
@@ -51,7 +51,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                 if (route.name === 'Início') {
                     iconName = 'home';
                 } else if (route.name === 'CadMesas') {
-                    iconName = 'heart';
+                    iconName = 'newspaper-o';
                 } else if (route.name === 'Reservas') {
                     iconName = 'book';
                 } else if (route.name === 'Perfil') {

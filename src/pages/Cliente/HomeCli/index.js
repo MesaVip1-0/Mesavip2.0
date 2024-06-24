@@ -5,6 +5,7 @@ import styles from './styles';
 import RestItem from '../../../components/HomeCli/RestItem';
 import FilterModal from '../../../components/HomeCli/FilterModal';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import {IP} from '../../IP';
 
 export default function HomeCli() {
     const [searchText, setSearchText] = useState('');
@@ -40,7 +41,7 @@ export default function HomeCli() {
 
     const fetchRestaurants = async () => {
         try {
-            const response = await fetch('http://192.168.15.9:3000/restaurants');
+            const response = await fetch(`http://${IP}:3000/restaurants`);
             const data = await response.json();
             setList(data);
         } catch (error) {

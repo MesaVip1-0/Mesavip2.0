@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 import styles from './styles';
+import {IP} from '../../IP';
 
 export default function Endereco() {
     const navigation = useNavigation();
@@ -39,7 +40,7 @@ export default function Endereco() {
 
     const salvarEndereco = async () => {
         try {
-            const response = await fetch('http://192.168.15.9:3000/auth/register_rest', {
+            const response = await fetch(`http://${IP}:3000/auth/register_rest`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
