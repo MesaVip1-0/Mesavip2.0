@@ -39,7 +39,7 @@ export default function Endereco() {
 
     const salvarEndereco = async () => {
         try {
-            const response = await fetch('http://192.168.100.213:3000/auth/register_rest', {
+            const response = await fetch('http://192.168.0.4:3000/auth/register_rest', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

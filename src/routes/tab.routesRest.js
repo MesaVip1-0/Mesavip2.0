@@ -1,12 +1,14 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import React, { useState, useEffect, useRef } from 'react';
+import { Text, View, Button, Platform , Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome } from '@expo/vector-icons';
 import Animated, { Easing, useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import HomeRest from '../pages/Restaurante/HomeRest';
 import Configuracoes from '../pages/Restaurante/Configuracoes';
-import Favoritos from '../pages/Cliente/Favoritos';
+import Notificações from '../components/NoficaçõesPush';
 import Reservas from '../pages/Restaurante/Reservas';
+
 
 const Tab = createBottomTabNavigator();
 const { width } = Dimensions.get('window');
@@ -50,12 +52,12 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
 
                 if (route.name === 'Início') {
                     iconName = 'home';
-                } else if (route.name === 'Favoritos') {
-                    iconName = 'heart';
+                } else if (route.name === 'Notificações') {
+                    iconName = 'bell';
                 } else if (route.name === 'Reservas') {
                     iconName = 'book';
-                } else if (route.name === 'Perfil') {
-                    iconName = 'user';
+                } else if (route.name === 'Config') {
+                    iconName = 'gear';
                 }
 
                 return (
@@ -80,17 +82,18 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
 
 function TabRoutes() {
     return (
-        <Tab.Navigator
-            screenOptions={{
-                headerShown: false,
-            }}
-            tabBar={props => <CustomTabBar {...props} />}
-        >
-            <Tab.Screen name="Início" component={HomeRest} />
-            <Tab.Screen name="Favoritos" component={Favoritos} />
-            <Tab.Screen name="Reservas" component={Reservas} />
-            <Tab.Screen name="Perfil" component={Configuracoes} />
-        </Tab.Navigator>
+            <Tab.Navigator
+                screenOptions={{
+                    headerShown: false,
+                }}
+                tabBar={props => <CustomTabBar {...props} />}
+            >
+                <Tab.Screen name="Início" component={HomeRest} />
+                <Tab.Screen name="Notificações" component={Notificações} />
+                <Tab.Screen name="Reservas" component={Reservas} />
+                <Tab.Screen name="Config" component={Configuracoes} />
+            </Tab.Navigator>
+        
     );
 }
 
@@ -110,7 +113,7 @@ const styles = StyleSheet.create({
         top: 0,
         left: (tabWidth - indicatorWidth) / 2, // Center the indicator
         borderBottomLeftRadius: 5, // Adjust border radius as needed
-        borderBottomRightRadius: 5
+        borderBottomRightRadius: 5,
     },
     tabButton: {
         flex: 1,
