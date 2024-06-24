@@ -42,7 +42,7 @@ export default function HomeRest() {
                     name: result.name,
                 });
 
-                await axios.post("http://192.168.41.253:3000/upload", formData, {
+                await axios.post("http://192.168.15.9:3000/upload", formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
@@ -135,14 +135,7 @@ export default function HomeRest() {
                     </View>
 
                     <Text style={styles.title}>Horário de Funcionamento:</Text>
-                    {horariosFuncionamento.map((horario, index) => (
-                        <HorarioFuncRest key={horario.id} onRemove={() => removeHorarioFuncionamento(horario.id)} />
-                    ))}
-                    {horariosFuncionamento.length < 3 && (
-                        <TouchableOpacity onPress={addHorarioFuncionamento} style={styles.horarioContainer}>
-                            <AntDesign name='plussquare' size={35} color='green' />
-                        </TouchableOpacity>
-                    )}
+                    <HorarioFuncRest/>
 
                     <Text style={styles.title}>Localização:</Text>
                     <Image
