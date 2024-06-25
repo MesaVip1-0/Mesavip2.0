@@ -7,10 +7,10 @@ const styles = StyleSheet.create({
         paddingStart: '5%',
         paddingEnd: '5%',
         marginTop: 10,
-        alignItems:"flex-start"
+        alignItems:"flex-start",
     },
     horario: {
-        width: '26%',
+        width: '30%',
         height: 35,
         borderRadius: 10,
         borderWidth: 2.5,

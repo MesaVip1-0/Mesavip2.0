@@ -97,7 +97,7 @@ export default function Perfil() {
                             <FontAwesome name="cutlery" style={styles.iconsStyle} />
                             <View style={{ marginLeft: 10 }}>
                                 <Text style={styles.text}>Editar Mesas</Text>
-                                <Text style={styles.subTitle}>Modifique as mesas cadastradas</Text>
+                                <Text style={styles.subTitle}>Modifique as   mesas cadastradas</Text>
                             </View>
                         </View>
                     </TouchableOpacity>

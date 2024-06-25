@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const RestSchema = new mongoose.Schema({
     name: String,
+    src: String, 
     email: String,
     cep: String,
     cnpj: String,
