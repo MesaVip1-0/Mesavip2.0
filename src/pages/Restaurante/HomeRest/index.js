@@ -162,7 +162,6 @@ export default function HomeRest() {
                         style={{ width: '100%', height: 250, marginStart: "5%", marginTop: "10%" }}
                         resizeMode="center"
                     />
-
                 </ScrollView>
             </Animatable.View>
         </SafeAreaView>

@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const router = require('./src/controller/Rotas'); // Importando o arquivo de rotas
+const router = require('./src/controller/Rotas');
 
 const app = express();
 app.use(express.json());

@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, Image, TouchableOpacity, Animated, Easing, Modal, StyleSheet } from 'react-native';
 import { Feather, AntDesign } from '@expo/vector-icons';
-import styles from '../../pages/Restaurante/Reservas/styles';
+import styles from '../../pages/Restaurante/Historico/styles';
 
-const NovasReservas = ({ item }) => {
+const HistoricoCom = ({ item }) => {
     const [expanded, setExpanded] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const animatedHeight = useRef(new Animated.Value(0)).current;
@@ -40,7 +40,8 @@ const NovasReservas = ({ item }) => {
                     <TouchableOpacity style={styles.btnMesa} onPress={toggleExpansion}>
                         <Image style={styles.img_mesa} source={require('../../pages/Cliente/SuaReserva/mesa-interna.png')} />
                         <View style={styles.text}>
-                            <Text style={styles.txtBtn}>{item.num_mesa}</Text>
+                            <Text style={styles.txtBtnCli} >{item.nome_cliente}</Text>
+                            <Text style={styles.txtBtn} >{item.num_mesa}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => setModalVisible(true)}>
@@ -57,11 +58,9 @@ const NovasReservas = ({ item }) => {
             <Animated.View style={{ height: animatedHeight, overflow: 'hidden' }}>
                 <View style={[styles.containerInfo, { marginTop: 0, backgroundColor: '#f0f0f0', flexDirection: 'row' }]}>
                     <View style={{ justifyContent: 'center', alignItems: 'center'}}>
-                        <TouchableOpacity>
                         <View>
-                            <Text style={{ color: '#000', fontSize: 13, marginLeft: 10 }}>Ler QR code</Text>
+                            <Text style={{ color: '#000', fontSize: 13, marginLeft: 10 }}>{item.nome_cliente}</Text>
                         </View>
-                        </TouchableOpacity>
                         <View style={{ marginTop: 20 }}>
                             <Text style={{ color: '#000', fontSize: 13, marginLeft: 10  }}>{item.descricao}</Text>
                         </View>
@@ -103,4 +102,4 @@ const NovasReservas = ({ item }) => {
 }
 
 
-export default NovasReservas;
+export default HistoricoCom;

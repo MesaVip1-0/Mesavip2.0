@@ -13,11 +13,14 @@ import AlterDados from "../pages/Cliente/AlterDados";
 import TermosUso from "../pages/Cliente/TermosUso";
 import SuaReserva from "../pages/Cliente/SuaReserva";
 import ReservaMesa from "../pages/Cliente/ReservaMesa";
-import HomeRest from "../pages/Restaurante/HomeRest";
 import Cartoes from "../pages/Cliente/Cartoes";
 import MesasDispo from "../pages/Cliente/MesasDispo";
-import cadastroMesas from "../pages/Restaurante/cadastroMesas";
-import TabRoutesRest from "../routes/tab.routesRest"
+import TabRoutesRest from "../routes/tab.routesRest";
+import MesasCadastradas from "../pages/Restaurante/MesasCadastradas";
+import EditMesas from "../pages/Restaurante/EditMesas";
+import CadastroMesas from "../pages/Restaurante/CadastrarMesas";
+import EditarReserva from "../pages/Cliente/EditarReserva"
+import Historico from "../pages/Restaurante/Historico";
 
 
 
@@ -113,8 +116,29 @@ export default function StackRoutes() {
                 options={{ headerShown: false }}
             />
             <Stack.Screen
-                name="cadastroMesas"
-                component={cadastroMesas}
+                name="CadastroMesas"
+                component={CadastroMesas}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="MesasCadastradas"
+                component={MesasCadastradas}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="EditMesas"
+                component={EditMesas}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="EditarReserva"
+                component={EditarReserva}
+                options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+                name="Histórico"
+                component={Historico}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>

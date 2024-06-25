@@ -3,7 +3,8 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#141414'
+        backgroundColor: '#141414',
+        alignItems:'center'
     },
     title: {
         borderWidth: 1,
@@ -14,6 +15,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: '65%',
         alignSelf: 'center',
+        marginTop: 10,
+    },
+    subTitle: {
+        borderBottomWidth: 2,
+        borderColor: '#a2a2a2',
+        width: '65%',
+        alignSelf: 'flex-start',
         marginTop: 10,
     },
     return: {
@@ -30,6 +38,13 @@ const styles = StyleSheet.create({
         marginTop: 15,
         textAlign: 'center',
     },
+    txtSubtitle: {
+        color: '#fff',
+        fontSize: 22,
+        fontWeight: 'bold',
+        marginTop: 15,
+        textAlign: 'center',
+    },
     btnMesa: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -39,7 +54,15 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#fff',
         fontSize: 17,
-        padding: 10,
+        width: '50%',
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        justifyContent: 'center',
+    },
+    txtBtnCli: {
+        textAlign: 'center',
+        color: '#fff',
+        fontSize: 16,
         width: '50%',
         alignSelf: 'center',
         fontWeight: 'bold',
@@ -85,7 +108,7 @@ const styles = StyleSheet.create({
     text: {
         width: 300,
         opacity:1,
-        marginTop: 12
+        flexDirection:'column'
     },
     subDescripition: {
         fontSize: 13,
@@ -102,33 +125,67 @@ const styles = StyleSheet.create({
     },
 
 
-    modalBackground: {
+    modalTitle: {
+        color: '#fff',
+        fontSize: 24,
+        fontWeight: 'bold',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    selectedOption: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#fffd',
+
+    },
+    modalContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
-    modalContainer: {
-        width: 300,
-        padding: 20,
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        alignItems: 'center',
-    },
-    modalTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 10,
-    },
-    modalText: {
-        fontSize: 16,
-        marginBottom: 20,
-        textAlign: 'center',
-    },
-    modalButtons: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+    modalOverlay: {
+        flex: 1,
         width: '100%',
+        backgroundColor: 'transparent',
+    },
+    modalView: {
+        margin: 80,
+        backgroundColor: '#000',
+        borderRadius: 20,
+        borderWidth: 3,
+        borderColor: '#fe0000',
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    optionButton: {
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc'
+    },
+    optionText: {
+        fontSize: 20,
+        color: '#fff'
+    },
+    closeButton: {
+        marginTop: 20,
+        padding: 10,
+        backgroundColor: '#fe0000',
+        borderRadius: 10,
+    },
+    closeButtonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontSize:16
     },
     button: {
         flex: 1,
@@ -155,16 +212,20 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         flexDirection: 'row',
     },
-    closeButton: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        padding: 10,
+    monthSelection: {
+        marginTop: 10,
+        marginBottom: 10,
     },
-    closeButtonText: {
+    monthButton: {
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderRadius: 20,
+        marginRight: 10,
+    },
+    monthButtonText: {
         color: '#fff',
         fontSize: 18,
+        fontWeight: 'bold',
     },
 })
 

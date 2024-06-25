@@ -1,54 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, FlatList, Image, TextInput, AsyncStorage } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Image, TextInput } from 'react-native';
 import styles from "./styles";
 
-const DateTime = () => {
+const EditReserva = () => {
+    const [selectedDay, setSelectedDay] = useState(null);
+    const [selectedTime, setSelectedTime] = useState(null);
     const [selectedPeople, setSelectedPeople] = useState(null);
     const [selectedMesa, setSelectedMesa] = useState(null);
+    const [daysOfWeek, setDaysOfWeek] = useState([]);
     const [customNumberOfPeople, setCustomNumberOfPeople] = useState('');
     const [qntPessoas, setQntPessoas] = useState([
         { key: 'a', image: require('./uma-pessoa1.png') },
         { key: 'b', image: require('./duas-pessoas1.png') },
         { key: 'c', image: require('./tres-pessoas1.png') },
-        { key: 'd', image: require('./quatro-pessoas1.png'), customImage: require('./mais-quatro.png') }
+        { key: 'd', image: require('./quatro-pessoas1.png'), customImage: require('./mais-quatro.png') } // Inicialmente sem imagem personalizada
     ]);
 
-    const [buttonCount, setButtonCount] = useState(0);
-    const [inputVisible, setInputVisible] = useState(false);
-    const [numButtons, setNumButtons] = useState('');
-    const [selectedButton, setSelectedButton] = useState(null);
+    const handleSelectDay = (item) => {
+        setSelectedDay(item === selectedDay ? null : item);
+    };
 
-    useEffect(() => {
-        const loadButtonCount = async () => {
-            try {
-                const savedButtonCount = await AsyncStorage.getItem('buttonCount');
-                if (savedButtonCount !== null) {
-                    setButtonCount(parseInt(savedButtonCount, 10));
-                }
-            } catch (error) {
-                console.error('Failed to load button count', error);
-            }
-        };
-        loadButtonCount();
-    }, []);
-
-    useEffect(() => {
-        const saveButtonCount = async () => {
-            try {
-                await AsyncStorage.setItem('buttonCount', buttonCount.toString());
-            } catch (error) {
-                console.error('Failed to save button count', error);
-            }
-        };
-        if (buttonCount > 0) {
-            saveButtonCount();
-        }
-    }, [buttonCount]);
-
-    const handleCreateButtons = () => {
-        setButtonCount(buttonCount + parseInt(numButtons, 10));
-        setInputVisible(false);
-        setNumButtons('');
+    const handleSelectTime = (horario) => {
+        setSelectedTime(horario === selectedTime ? null : horario);
     };
 
     const handleSelectPeople = (key) => {
@@ -63,75 +36,92 @@ const DateTime = () => {
         setSelectedMesa(item === selectedMesa ? null : item);
     };
 
-    const handleCustomNumberChange = (text) => {
-        if (/^\d+$/.test(text) || text === '') {
-            setCustomNumberOfPeople(text);
-            setSelectedPeople('d');
+    const getNext7Days = () => {
+        const days = [];
+        const daysOfWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+        const today = new Date();
+        for (let i = 0; i < 7; i++) {
+            const nextDay = new Date(today);
+            nextDay.setDate(today.getDate() + i);
+            days.push({
+                day: daysOfWeek[nextDay.getDay()],
+                date: nextDay.getDate()
+            });
         }
+        return days;
     };
 
-    const handleButtonPress = (item) => {
-        setSelectedButton(item.key);
-        setSelectedMesa(item.key);
+    useEffect(() => {
+        setDaysOfWeek(getNext7Days());
+    }, []);
+
+    const handleCustomNumberChange = (text) => {
+        // Valida se o texto contém apenas números antes de atualizar o estado
+        if (/^\d+$/.test(text) || text === '') {
+            setCustomNumberOfPeople(text);
+            setSelectedPeople('d'); // Define "d" como selecionado quando o usuário digitar um número customizado
+        }
     };
 
     return (
         <>
-            <View>
-                {buttonCount === 0 && (
+            <FlatList
+                data={daysOfWeek}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{
+                    paddingLeft: 20,
+                    paddingRight: 20
+                }}
+                keyExtractor={(item) => item.day + item.date}
+                renderItem={({ item }) => (
                     <TouchableOpacity
-                        style={styles.initialButton}
-                        onPress={() => setInputVisible(true)}
+                        style={[
+                            styles.dias,
+                            { backgroundColor: item === selectedDay ? '#fe0000' : undefined }
+                        ]}
+                        onPress={() => handleSelectDay(item)}
                     >
-                        <Text style={styles.buttonText}>Cadastre suas Mesas</Text>
+                        <Text style={{ color: item === selectedDay ? '#fff' : '#dfdddd' }}>{item.date}</Text>
+                        <Text style={{ color: item === selectedDay ? '#fff' : '#dfdddd' }}>{item.day}</Text>
                     </TouchableOpacity>
                 )}
+            />
 
-                {inputVisible && (
-                    <View style={styles.inputContainer}>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Enter number of buttons"
-                            placeholderTextColor="#888"
-                            keyboardType="numeric"
-                            value={numButtons}
-                            onChangeText={setNumButtons}
-                        />
-                        <TouchableOpacity
-                            style={styles.confirmButton}
-                            onPress={handleCreateButtons}
-                        >
-                            <Text style={styles.buttonText}>Confirm</Text>
-                        </TouchableOpacity>
+            <Text style={styles.escolhaHorario}>
+                Escolha o Horário:
+            </Text>
+
+            <FlatList
+                data={[
+                    ['14:30', '15:00'],
+                    ['15:30', '16:00'],
+                    ['16:30', '17:00'],
+                    ['17:30', '18:00'],
+                ]}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{
+                    paddingLeft: 20,
+                    paddingRight: 20
+                }}
+                renderItem={({ item }) => (
+                    <View>
+                        {item.map(horario => (
+                            <TouchableOpacity
+                                key={horario}
+                                style={[
+                                    styles.horarios,
+                                    { backgroundColor: horario === selectedTime ? '#fe0000' : '#d9d9d9' }
+                                ]}
+                                onPress={() => handleSelectTime(horario)}
+                            >
+                                <Text style={{ color: horario === selectedTime ? '#fff' : '#000' }}>{horario}</Text>
+                            </TouchableOpacity>
+                        ))}
                     </View>
                 )}
-
-                {buttonCount > 0 && (
-                    <FlatList
-                        data={Array.from({ length: buttonCount + 1 }, (_, i) => ({ key: i.toString() }))}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        renderItem={({ item }) => (
-                            item.key === buttonCount.toString() ? (
-                                <TouchableOpacity
-                                    style={styles.addButton}
-                                    onPress={() => setInputVisible(true)}
-                                >
-                                    <Text style={styles.buttonText}>Adicionar Mais</Text>
-                                </TouchableOpacity>
-                            ) : (
-                                <TouchableOpacity
-                                    style={[styles.dias, { backgroundColor: item.key === selectedButton ? '#fe0000' : '#373539' }]}
-                                    onPress={() => handleButtonPress(item)}
-                                >
-                                    <Text style={styles.buttonText}>{item.key}</Text>
-                                </TouchableOpacity>
-                            )
-                        )}
-                        keyExtractor={item => item.key}
-                    />
-                )}
-            </View>
+            />
 
             <Text style={styles.escolhaHorario}>
                 Quantidade de Pessoas:
@@ -229,4 +219,4 @@ const DateTime = () => {
     );
 }
 
-export default DateTime;
+export default EditReserva;

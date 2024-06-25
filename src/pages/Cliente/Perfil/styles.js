@@ -7,14 +7,15 @@ const styles = StyleSheet.create({
         flex: 2,
     },
     container2: {
-        margin: 40,
-        marginTop: 70,
-        // borderBottomWidth: 1,
-        borderWidth: 1,
-        borderColor: '#a2a2a2',
+        marginBottom: 30,
+        marginLeft: 20,
+        marginTop: 40,
+        borderBottomWidth: 1,
+        borderBottomColor: '#a2a2a2',
         borderRadius: 10,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: 40,
     },
     containerLogo: {
         flex: 0.3,
@@ -58,11 +59,8 @@ const styles = StyleSheet.create({
     },
     text1: {
         color: '#fff',
-        paddingStart: '5%',
         fontSize: 22,
         fontWeight: 'bold',
-        marginTop: 15,
-        textAlign: 'center',
     },
     iconsStyle: {
         fontSize: 40,
@@ -109,15 +107,13 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 22,
         fontWeight: 'bold',
-        textAlign: 'center',
-        padding: 5,
-        marginTop: 15,
-        width: '80%',
     },
     nameContainer: {
-        flexDirection: 'row',
+        height: 37,
         alignItems: 'center',
+        width: 250,
         justifyContent: 'center',
+        marginBottom: 15,
     },
 });
 

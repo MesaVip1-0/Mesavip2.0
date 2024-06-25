@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "MesaVip",
-    "slug": "MesaVip",
+    "name": "mesavip",
+    "slug": "mesavip",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

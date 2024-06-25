@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import styles from './styles'
+import styles from './styles';
+import {IP} from '../../IP';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -23,7 +24,7 @@ export default function SignInRest() {
             return;
         }
 
-        fetch('http://192.168.0.4:3000/auth/login_rest', {
+        fetch(`http://${IP}:3000/auth/login_rest`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

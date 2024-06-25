@@ -8,8 +8,11 @@ const styles = StyleSheet.create({
     containerLogo: {
         width:'100%',
         justifyContent: 'center',
-        paddingBottom: 50,
-        height: '26%'
+        paddingBottom: 0,
+        height: '12%',
+        alignItems: 'center',
+        borderBottomWidth: 3,
+        borderBottomColor: '#616161'
     },
     return: {
         position: 'absolute',
@@ -23,9 +26,8 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 20,
         paddingLeft: 25,
-        paddingTop: 15,
+        paddingTop: 20,
         paddingBottom: 10,
-        marginTop:-10
     },
     btnConfirma:{
         width: 230,
@@ -60,6 +62,13 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 20,
         paddingLeft: 25,
+        paddingTop: 30,
+        paddingBottom: 10
+    },
+    titulo: {
+        color: '#fff',
+        fontSize: 30,
+        paddingLeft: 25,
         paddingTop: 20,
         paddingBottom: 10
     },
@@ -81,12 +90,22 @@ const styles = StyleSheet.create({
     },
     mesa: {
         width: 150,
-        height: 40,
-        backgroundColor: '#5F5959',
+        height: 143,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 5,
-        marginRight: 40
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        borderBottomRightRadius: 20,
+        marginRight: 40,
+        marginBottom: 10
+    },
+    disponibilidade: {
+        width: 150,
+        height: 45,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 40,
+        borderRadius: 10
     },
     indisponivel: {
         fontSize: 15,
@@ -115,12 +134,14 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#fff',
-        fontSize: 16,
+        fontSize: 18,
     },
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 20,
+        marginLeft: 20
+        
     },
     input: {
         borderWidth: 1,
@@ -145,7 +166,71 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 10,
         alignItems: 'center',
-    }
+    },
+    modalBackground: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContainer: {
+        width: 300,
+        padding: 20,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    modalText: {
+        fontSize: 16,
+        marginBottom: 20,
+        textAlign: 'center',
+    },
+    modalButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+    button: {
+        flex: 1,
+        padding: 10,
+        marginHorizontal: 5,
+        alignItems: 'center',
+        backgroundColor: '#fe0000',
+        borderRadius: 5,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+    },
+    outlinedText: {
+        color: '#000',
+        fontSize: 13,
+        marginLeft: 10,
+        textShadowColor: '#fe0000',
+        textShadowOffset: { width: 0, height: 0 },
+        textShadowRadius: 2,
+    },
+    cameraOverlay: {
+        flex: 1,
+        backgroundColor: 'transparent',
+        flexDirection: 'row',
+    },
+    closeButton: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        padding: 10,
+    },
+    closeButtonText: {
+        color: '#fff',
+        fontSize: 18,
+    },
 
 })
 

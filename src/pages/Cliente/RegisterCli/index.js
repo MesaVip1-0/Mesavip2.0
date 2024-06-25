@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 import User from '../../../model/User';
 import styles from './styles';
+import {IP} from '../../IP';
 
 export default function RegisterCli() {
     const navigation = useNavigation();
@@ -39,7 +40,7 @@ export default function RegisterCli() {
         // utilizando o fetch ou axios para enviar os dados
         // de registro para o servidor.
         // Exemplo de chamada com fetch:
-        fetch('http://192.168.0.4:3000/auth/register', {
+        fetch(`http://${IP}:3000/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -45,6 +45,13 @@ export default function Perfil() {
 
             <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
                 <ScrollView>
+                    <View 
+                    style={{flexDirection: 'row', 
+                            marginTop: 40,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginLeft: 30
+                            }}>
                     <View style={styles.container2}>
                         <View style={styles.nameContainer}>
                             {isEditingName ? (
@@ -58,12 +65,14 @@ export default function Perfil() {
                             ) : (
                                 <Text style={styles.text1}>{name}</Text>
                             )}
-                            <TouchableOpacity onPress={handleEditName} style={{alignItems: 'center'}}>
-                                <FontAwesome name="pencil" size={24} color="white" style={{ marginLeft: 15}} />
-                            </TouchableOpacity>
+                            
                         </View>
+                        
                     </View>
-
+                    <TouchableOpacity onPress={handleEditName} >
+                                <FontAwesome name="pencil" size={24} color="white"  />
+                            </TouchableOpacity>
+                            </View>
                     <TouchableOpacity style={styles.btn}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Feather name="phone" style={styles.iconsStyle} />

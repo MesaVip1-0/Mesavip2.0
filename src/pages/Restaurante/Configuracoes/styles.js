@@ -7,11 +7,16 @@ const styles = StyleSheet.create({
         flex: 2,
     },
     container2: {
-        margin: 40,
-        marginTop: 70,
-        borderBottomWidth: 1,
+        marginBottom: 30,
+        marginLeft: 20,
+        marginTop: 40,
+        marginRight: 15,
+        borderWidth: 1,
         borderColor: '#a2a2a2',
         borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 40,
     },
     containerLogo: {
         flex: 0.3,
@@ -26,7 +31,6 @@ const styles = StyleSheet.create({
         borderTopWidth: 3,
         borderLeftWidth: 3,
         borderRightWidth: 3,
-
         borderColor: '#fff',
         paddingEnd: '5%',
     },
@@ -45,7 +49,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 5,
         paddingStart: '3%',
-        height:21
+        height: 21
     },
     text: {
         color: '#fff',
@@ -56,16 +60,13 @@ const styles = StyleSheet.create({
     },
     text1: {
         color: '#fff',
-        paddingStart: '5%',
         fontSize: 22,
         fontWeight: 'bold',
-        marginTop: 15,
-        textAlign: 'center'
     },
     iconsStyle: {
         fontSize: 40,
         color: '#fff',
-        marginStart:'5%'
+        marginStart: '5%'
     },
     name: {
         flexDirection: 'row',
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     btn: {
         alignItems: 'flex-start',
         justifyContent: 'center',
-        borderBottomWidth:1,
+        borderBottomWidth: 1,
         borderColor: '#a2a2a2',
         borderRadius: 25,
     },
@@ -102,7 +103,18 @@ const styles = StyleSheet.create({
         top: '50%',
         left: '50%',
         zIndex: 1
-    }
-})
+    },
+    textInput: {
+        color: '#fff',
+        fontSize: 22,
+        fontWeight: 'bold',
+    },
+    nameContainer: {
+        height: 37,
+        alignItems: 'center',
+        width: 250,
+        justifyContent: 'center'
+    },
+});
 
 export default styles;

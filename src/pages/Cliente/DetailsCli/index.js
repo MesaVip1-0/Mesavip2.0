@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import HeartButton from '../../../components/HeartButton.js';
 
+
 // Definindo o componente Welcome
 export default function DetailsCli() {
     // Usando o hook useNavigation para obter a navegação
@@ -14,12 +15,13 @@ export default function DetailsCli() {
         heart: false
     });
 
-    const toggleIconSelection = (icon) => {
-        setSelectedIcons((prevSelectedIcons) => ({
-            ...prevSelectedIcons,
-            [icon]: !prevSelectedIcons[icon],
-        }));
-    };
+const toggleIconSelection = (icon) => {
+    setSelectedIcons((prevSelectedIcons) => ({
+        ...prevSelectedIcons,
+        [icon]: !prevSelectedIcons[icon],
+    }));
+};
+    
     // Retornando o JSX do componente
     return (
         <SafeAreaView style={styles.container}>

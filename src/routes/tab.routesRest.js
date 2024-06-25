@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, Button, Platform , Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { FontAwesome } from '@expo/vector-icons';
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
 import Animated, { Easing, useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import HomeRest from '../pages/Restaurante/HomeRest';
 import Configuracoes from '../pages/Restaurante/Configuracoes';
-import Notificações from '../components/NoficaçõesPush';
+import CadastroMesas from '../pages/Restaurante/CadastrarMesas';
 import Reservas from '../pages/Restaurante/Reservas';
 
 
@@ -52,8 +51,8 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
 
                 if (route.name === 'Início') {
                     iconName = 'home';
-                } else if (route.name === 'Notificações') {
-                    iconName = 'bell';
+                } else if (route.name === 'CadMesas') {
+                    iconName = 'newspaper-o';
                 } else if (route.name === 'Reservas') {
                     iconName = 'book';
                 } else if (route.name === 'Config') {
@@ -82,18 +81,17 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
 
 function TabRoutes() {
     return (
-            <Tab.Navigator
-                screenOptions={{
-                    headerShown: false,
-                }}
-                tabBar={props => <CustomTabBar {...props} />}
-            >
-                <Tab.Screen name="Início" component={HomeRest} />
-                <Tab.Screen name="Notificações" component={Notificações} />
-                <Tab.Screen name="Reservas" component={Reservas} />
-                <Tab.Screen name="Config" component={Configuracoes} />
-            </Tab.Navigator>
-        
+        <Tab.Navigator
+            screenOptions={{
+                headerShown: false,
+            }}
+            tabBar={props => <CustomTabBar {...props} />}
+        >
+            <Tab.Screen name="Início" component={HomeRest} />
+            <Tab.Screen name="CadMesas" component={CadastroMesas} />
+            <Tab.Screen name="Reservas" component={Reservas} />
+            <Tab.Screen name="Config" component={Configuracoes} />
+        </Tab.Navigator>
     );
 }
 
