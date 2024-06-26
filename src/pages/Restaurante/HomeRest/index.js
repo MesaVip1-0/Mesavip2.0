@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, SafeAreaView, TextInput } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
 import * as DocumentPicker from 'expo-document-picker';
 import { useNavigation } from '@react-navigation/native';
@@ -9,7 +8,7 @@ import styles from './styles';
 import CategoriaRest from '../../../components/CategoriaRest';
 import IconButton from '../../../components/IconButton';
 import HorarioFuncRest from '../../../components/HorarioFuncRest';
-
+import ImageCarousel from '../../../components/ImageCarousel';
 
 export default function HomeRest() {
     const [selectedIcons, setSelectedIcons] = useState({
@@ -135,7 +134,7 @@ export default function HomeRest() {
                     </View>
 
                     <Text style={styles.title}>Horário de Funcionamento:</Text>
-                    <HorarioFuncRest/>
+                    <HorarioFuncRest />
 
                     <Text style={styles.title}>Localização:</Text>
                     <Image
@@ -150,11 +149,7 @@ export default function HomeRest() {
                     </TouchableOpacity>
 
                     <Text style={styles.title}>Fotos:</Text>
-                    <Image
-                        source={require('../../../assets/outLoca.png')}
-                        style={{ width: '100%', height: 250, marginStart: "5%", marginTop: "10%" }}
-                        resizeMode="center"
-                    />
+                    <ImageCarousel images={imagensFotos} />
                 </ScrollView>
             </Animatable.View>
         </SafeAreaView>
