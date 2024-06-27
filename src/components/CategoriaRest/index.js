@@ -1,10 +1,10 @@
-// components/CategoriaRest.js
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Modal } from 'react-native';
 import styles from './styles';
 
 const CategoriaRest = ({ setCategoria, categoria }) => {
     const [modalVisible, setModalVisible] = useState(false);
+
 
     const options = [
         'Hamburgueria',
@@ -20,6 +20,7 @@ const CategoriaRest = ({ setCategoria, categoria }) => {
             style={styles.optionButton}
             onPress={() => {
                 setCategoria(item);  // Atualiza a categoria no componente pai (HomeRest)
+
                 setModalVisible(false);
             }}
         >
@@ -31,6 +32,7 @@ const CategoriaRest = ({ setCategoria, categoria }) => {
         <>
             <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.modalTitle}>
                 <Text style={styles.selectedOption}>{categoria || 'Selecionar Categoria'}</Text>
+
             </TouchableOpacity>
 
             <Modal

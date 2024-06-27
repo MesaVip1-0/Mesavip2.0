@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import React, { useState, useEffect} from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Keyboard } from 'react-native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
 import Animated, { Easing, useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
@@ -8,6 +8,7 @@ import Configuracoes from '../pages/Restaurante/Configuracoes';
 import CadastroMesas from '../pages/Restaurante/CadastrarMesas';
 import Reservas from '../pages/Restaurante/Reservas';
 
+
 const Tab = createBottomTabNavigator();
 const { width } = Dimensions.get('window');
 const tabWidth = width / 4; // Assuming there are 4 tabs, adjust if needed
@@ -15,6 +16,21 @@ const indicatorWidth = tabWidth - 20; // Adjust as needed for indicator width
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
     const translateX = useSharedValue(0);
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+            setKeyboardVisible(true);
+        });
+        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+            setKeyboardVisible(false);
+        });
+
+        return () => {
+            keyboardDidHideListener.remove();
+            keyboardDidShowListener.remove();
+        };
+    }, []);
 
     const indicatorStyle = useAnimatedStyle(() => {
         return {
@@ -26,6 +42,11 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
         translateX.value = withTiming(index * tabWidth, { duration: 300, easing: Easing.inOut(Easing.ease) });
         navigation.navigate(routeName);
     };
+
+    if (isKeyboardVisible) {
+        return null;
+    }
+
 
     return (
         <View style={styles.tabBarContainer}>
@@ -54,8 +75,8 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                     iconName = 'newspaper-o';
                 } else if (route.name === 'Reservas') {
                     iconName = 'book';
-                } else if (route.name === 'Perfil') {
-                    iconName = 'user';
+                } else if (route.name === 'Config') {
+                    iconName = 'gear';
                 }
 
                 return (
@@ -89,7 +110,7 @@ function TabRoutes() {
             <Tab.Screen name="Início" component={HomeRest} />
             <Tab.Screen name="CadMesas" component={CadastroMesas} />
             <Tab.Screen name="Reservas" component={Reservas} />
-            <Tab.Screen name="Perfil" component={Configuracoes} />
+            <Tab.Screen name="Config" component={Configuracoes} />
         </Tab.Navigator>
     );
 }
@@ -110,7 +131,7 @@ const styles = StyleSheet.create({
         top: 0,
         left: (tabWidth - indicatorWidth) / 2, // Center the indicator
         borderBottomLeftRadius: 5, // Adjust border radius as needed
-        borderBottomRightRadius: 5
+        borderBottomRightRadius: 5,
     },
     tabButton: {
         flex: 1,

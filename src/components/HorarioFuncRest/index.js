@@ -4,6 +4,7 @@ import { TextInputMask } from 'react-native-masked-text';
 import styles from './styles';
 
 const HorarioFuncRest = ({ title, betweenText, onTimeChange }) => {
+
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
 
@@ -54,6 +55,7 @@ const HorarioFuncRest = ({ title, betweenText, onTimeChange }) => {
         }
     };
 
+
     return (
         <View style={{ flexDirection: 'column' }}>
             <View style={styles.horarioContainer}>
@@ -61,6 +63,7 @@ const HorarioFuncRest = ({ title, betweenText, onTimeChange }) => {
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={styles.horarioText}>{betweenText}</Text>
                 </View>
+
                 <View style={styles.horarioInputContainer}>
                     <View style={styles.horario}>
                         <TextInputMask
@@ -71,6 +74,7 @@ const HorarioFuncRest = ({ title, betweenText, onTimeChange }) => {
                             }}
                             value={startTime}
                             onChangeText={handleStartTimeChange}
+
                             onBlur={() => handleBlur(startTime, setStartTime)}
                         />
                     </View>
@@ -84,6 +88,7 @@ const HorarioFuncRest = ({ title, betweenText, onTimeChange }) => {
                             }}
                             value={endTime}
                             onChangeText={handleEndTimeChange}
+
                             onBlur={() => handleBlur(endTime, setEndTime)}
                         />
                     </View>
@@ -94,3 +99,4 @@ const HorarioFuncRest = ({ title, betweenText, onTimeChange }) => {
 };
 
 export default HorarioFuncRest;
+

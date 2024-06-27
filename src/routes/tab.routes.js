@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Keyboard } from 'react-native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome } from '@expo/vector-icons';
 import Animated, { Easing, useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
@@ -15,6 +15,21 @@ const indicatorWidth = tabWidth - 20; // Adjust as needed for indicator width
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
     const translateX = useSharedValue(0);
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+            setKeyboardVisible(true);
+        });
+        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+            setKeyboardVisible(false);
+        });
+
+        return () => {
+            keyboardDidHideListener.remove();
+            keyboardDidShowListener.remove();
+        };
+    }, []);
 
     const indicatorStyle = useAnimatedStyle(() => {
         return {
@@ -26,6 +41,10 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
         translateX.value = withTiming(index * tabWidth, { duration: 300, easing: Easing.inOut(Easing.ease) });
         navigation.navigate(routeName);
     };
+
+    if (isKeyboardVisible) {
+        return null;
+    }
 
     return (
         <View style={styles.tabBarContainer}>
