@@ -19,7 +19,7 @@ import TabRoutesRest from "../routes/tab.routesRest";
 import MesasCadastradas from "../pages/Restaurante/MesasCadastradas";
 import EditMesas from "../pages/Restaurante/EditMesas";
 import CadastroMesas from "../pages/Restaurante/CadastrarMesas";
-import EditarReserva from "../pages/Cliente/EditarReserva"
+import EditarReserva from "../pages/Cliente/EditarReserva";
 
 
 

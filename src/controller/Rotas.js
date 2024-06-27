@@ -353,11 +353,37 @@ router.get('/restaurants', async (req, res) => {
 });
 
 
-//Rota das imagens do restaurante
-router.post('/img', upload.single('file'), async (req, res) => {
-    try {
+// Rota para upload de imagens do restaurante
+// router.post('/image', upload.single('file'), async (req, res) => {
+//     try {
+//         if (!req.file) {
+//             return res.status(400).json({ message: 'Nenhum arquivo enviado' });
+//         }
 
-        const {name} = req.body
+//         const { restId } = req.body; // Supondo que você envia o ID do restaurante junto com a imagem
+
+//         // Verifica se o restaurante existe
+//         const restaurant = await Rest.findById(restId);
+//         if (!restaurant) {
+//             return res.status(404).json({ message: 'Restaurante não encontrado' });
+//         }
+
+//         // Atualiza o restaurante com o caminho da imagem
+//         restaurant.src = req.file.path;
+//         await restaurant.save();
+
+//         res.json({ restaurant, message: 'Imagem salva com sucesso!!!' });
+
+//     } catch (error) {
+//         console.error('Erro ao salvar imagem:', error);
+//         res.status(500).json({ message: 'Erro ao salvar imagem.' });
+//     }
+// });
+
+
+// //Rota das imagens do restaurante
+router.post('/image', upload.single('file'), async (req, res) => {
+    try {
 
         const file = req.file
 
@@ -374,5 +400,57 @@ router.post('/img', upload.single('file'), async (req, res) => {
         res.status(500).json({message:'Erro ao salvar imagem.'});
     }
 });
+
+// //Rota das imagens que ja estão no banco
+router.get('/image', async (req, res) => {
+    try {
+
+        const rest = await Rest.find()
+
+        res.json({rest, msg:'Imagem salva com sucesso!!!'});
+
+
+    } catch (error) {
+        res.status(500).json({message:'Erro ao salvar imagem.'});
+    }
+});
+
+//Deleta as imagens
+// router.delete('/img/:id', async (req, res) => {
+//     try {
+
+//         const rest = await Rest.findById(req.params.id);
+//         delete rest.src;
+
+
+//         if(!rest){
+//         return res.status(404).json({message:'Imagem não encontrada'});
+
+//     }
+
+//     } catch (error) {
+//         res.status(500).json({message:'Erro ao excluir imagem.'});
+//     }
+// });
+
+//Rota dos pdfs restaurante
+// router.post('/pdf', upload.single('file'), async (req, res) => {
+//     try {
+        
+//         const file = req.file
+
+//         const rest = new Rest({
+//             src: file.path,
+//         });
+
+//         await rest.save()
+
+//         res.json({rest, msg:'PDF salvo com sucesso!!!'});
+
+//     } catch (error) {
+//         res.status(500).json({ message: 'Erro no uploading do PDF'});
+//     }
+// });
+
 
 module.exports = router;

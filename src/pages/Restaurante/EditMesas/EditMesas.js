@@ -81,7 +81,7 @@ const EditMesas = () => {
         }
     };
 
-    
+
 
     return (
         <View style={{ flex: 1 }}>
@@ -150,33 +150,33 @@ const EditMesas = () => {
 
                 {buttonCount > 0 && (
                     <FlatList
-                    data={Array.from({ length: buttonCount + 1 }, (_, i) => ({ key: (i + 1).toString() }))}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={{
-                        paddingLeft: 20,
-                        paddingRight: 20
-                    }}
-                    renderItem={({ item }) => (
-                        item.key === (buttonCount + 1).toString() ? (
-                            <TouchableOpacity
-                                style={[styles.dias, { backgroundColor:'#fe0000' }]} // Estilo similar aos botões da FlatList
-                                onPress={() => setInputVisible(true)}
-                            >
-                                <Text style={[styles.buttonText, {fontSize: 25}]}>+</Text>
-                            </TouchableOpacity>
-                        ) : (
-                            <TouchableOpacity
-                                style={[styles.dias, { backgroundColor: selectedQntMesas.includes(item.key) ? '#fe0000' : '#373539' }]}
-                                onPress={() => handleSelectQntMesas(item)}
-                            >
-                                <Text style={styles.buttonText}>{item.key}</Text>
-                            </TouchableOpacity>
-                        )
-                    )}
-                    keyExtractor={item => item.key}
-                />
-            )}
+                        data={Array.from({ length: buttonCount + 1 }, (_, i) => ({ key: (i + 1).toString() }))}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={{
+                            paddingLeft: 20,
+                            paddingRight: 20
+                        }}
+                        renderItem={({ item }) => (
+                            item.key === (buttonCount + 1).toString() ? (
+                                <TouchableOpacity
+                                    style={[styles.dias, { backgroundColor: '#fe0000' }]} // Estilo similar aos botões da FlatList
+                                    onPress={() => setInputVisible(true)}
+                                >
+                                    <Text style={[styles.buttonText, { fontSize: 25 }]}>+</Text>
+                                </TouchableOpacity>
+                            ) : (
+                                <TouchableOpacity
+                                    style={[styles.dias, { backgroundColor: selectedQntMesas.includes(item.key) ? '#fe0000' : '#373539' }]}
+                                    onPress={() => handleSelectQntMesas(item)}
+                                >
+                                    <Text style={styles.buttonText}>{item.key}</Text>
+                                </TouchableOpacity>
+                            )
+                        )}
+                        keyExtractor={item => item.key}
+                    />
+                )}
             </View>
 
             <Text style={styles.escolhaHorario}>
