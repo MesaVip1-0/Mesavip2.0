@@ -115,6 +115,31 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginBottom: 15,
     },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    modalContent: {
+        width: 300,
+        backgroundColor: 'white',
+        borderRadius: 15,
+        padding: 20,
+        alignItems: 'center',
+    },
+    modalButton: {
+        width: '100%',
+        backgroundColor: 'white',
+        borderRadius: 15,
+        height: 45,
+        gap: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
+        flexDirection: 'row',
+    },
 });
+
 
 export default styles;

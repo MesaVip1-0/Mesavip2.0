@@ -492,4 +492,38 @@ router.put('/restaurante/:id', async (req, res) => {
         res.status(500).json({ error: 'Erro ao atualizar restaurante, verifique o console para mais detalhes' });
     }
 });
+
+ //Rota das imagens do restaurante
+router.post('/image', upload.single('file'), async (req, res) => {
+    try {
+
+        const file = req.file
+
+        const rest = new Rest({
+            src: file.path,
+        });
+
+        await rest.save()
+
+        res.json({rest, msg:'Imagem salva com sucesso!!!'});
+
+
+    } catch (error) {
+        res.status(500).json({message:'Erro ao salvar imagem.'});
+    }
+});
+
+// //Rota das imagens que ja estão no banco
+    router.get('/image', async (req, res) => {
+    try {
+
+        const rest = await Rest.find()
+
+        res.json({rest, msg:'Imagem salva com sucesso!!!'});
+
+
+    } catch (error) {
+        res.status(500).json({message:'Erro ao salvar imagem.'});
+    }
+});
 module.exports = router;
