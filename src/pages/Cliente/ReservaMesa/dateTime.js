@@ -252,7 +252,7 @@ const DateTime = () => {
 
                 <View style={styles.imgIn}>
                     <Image
-                        source={require('./MesaIn-removebg1.png')}
+                        source={require('./mesaIn-removebg.png')}
                         style={{ width: '100%' }}
                         resizeMode="contain"
                     />
