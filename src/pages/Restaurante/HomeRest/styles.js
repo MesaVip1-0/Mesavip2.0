@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         borderRightWidth: 1.5,
         borderColor: '#fff',
         paddingEnd: '5%',
-        paddingBottom: '5%',
+        paddingBottom:'5%',
         overflow: 'hidden', // Evita que a borda cubra outros componentes
     },
     title: {
@@ -82,7 +82,10 @@ const styles = StyleSheet.create({
         marginBottom: '5%',
     },
     horarioContainer: {
-
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingStart: '5%',
+        paddingEnd: '5%',
     },
     horarioTextContainer: {
         width: '55%',

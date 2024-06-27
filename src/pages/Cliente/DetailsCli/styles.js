@@ -12,6 +12,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'relative'
     },
+    selectedIcon: {
+        color: 'white',
+        fontSize: 38
+    },
     containerForm: {
         flex: 1,
         backgroundColor: '#141414',

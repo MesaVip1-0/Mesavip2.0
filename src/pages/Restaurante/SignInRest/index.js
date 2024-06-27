@@ -1,26 +1,21 @@
+//SiginiRest
+
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import styles from './styles';
-import {IP} from '../../IP';
-
+import { IP } from '../../IP';
 import { useNavigation } from '@react-navigation/native';
+import * as Animatable from 'react-native-animatable';
 
-import * as Animatable from 'react-native-animatable'
 export default function SignInRest() {
     const navigation = useNavigation();
-    const[email, setEmail] = useState('')
-    const[pass, setPass] = useState('')
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
 
     function logandoRest() {
         console.log('If Teste');
         if (email === '' || pass === '') {
             alert("Todos os campos devem ser preenchidos");
-            return;
-        } else if (email === '') {
-            alert("Digite seu e-mail");
-            return;
-        } else if (pass === '') {
-            alert ("Digite sua senha");
             return;
         }
 
@@ -38,20 +33,18 @@ export default function SignInRest() {
         .then(data => {
             console.log('Resposta da API recebida');
             console.log('Dados recebidos:', data);
-            console.log('Login bem-sucedido:', data);
-            if(data.token){
-
-                AcessaHomi()
+            if (data.token && data.restId) {
+                navigation.navigate('HomeRest', { restaurantId: data.restId }); // Passa restaurantId para HomeRest
+            } else {
+                alert('Erro no login, verifique suas credenciais.');
             }
-
-            // fetchUserData(data.token);
-
         })
-        .catch(error => console.error('Erro no login:', error));
+        .catch(error => {
+            console.error('Erro no login:', error);
+            alert('Erro ao tentar fazer login.');
+        });
     }
-    const AcessaHomi = () => {
-        navigation.navigate("HomeRest")
-    }
+
     return (
         <View style={styles.container}>
             <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader} >
@@ -65,6 +58,7 @@ export default function SignInRest() {
                     style={styles.input}
                     keyboardType='email-address'
                     onChangeText={setEmail}
+                    value={email}
                 />
 
                 <Text style={styles.title}>Senha</Text>
@@ -83,9 +77,7 @@ export default function SignInRest() {
                 <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('RegisterRest')}>
                     <Text style={styles.registerText}>Não possui uma conta? Cadastre-se</Text>
                 </TouchableOpacity>
-
             </Animatable.View>
-
         </View>
     );
 }

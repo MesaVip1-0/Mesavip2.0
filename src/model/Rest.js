@@ -1,6 +1,5 @@
-//Rest.js
-
 const mongoose = require('mongoose');
+const HorarioFuncionamentoSchema = require('./HorarioFuncioname');
 
 const RestSchema = new mongoose.Schema({
     name: String,
@@ -8,7 +7,7 @@ const RestSchema = new mongoose.Schema({
     email: String,
     cep: String,
     cnpj: String,
-    categoria:String,
+    categoria: String,
     pass: String,
     cidade: String,
     bairro: String,
@@ -17,9 +16,14 @@ const RestSchema = new mongoose.Schema({
     mesas: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Mesa'
-    }]
+    }],
+    wifi: { type: Boolean, default: false },
+    estacionamento: { type: Boolean, default: false },
+    arCondicionado: { type: Boolean, default: false },
+    areaExterna: { type: Boolean, default: false },
+    horariosFuncionamento: [HorarioFuncionamentoSchema],
+    categoria: String
 });
 
-const Rest = mongoose.model('Rest', RestSchema);
-
-module.exports = Rest;
+module.exports = mongoose.model('Rest', RestSchema);
+    

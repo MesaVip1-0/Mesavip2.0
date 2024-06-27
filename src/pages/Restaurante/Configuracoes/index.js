@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { Feather, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons, FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './styles';
@@ -62,12 +62,12 @@ export default function Perfil() {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('')}>
+                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Histórico')}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Feather name="bell" style={styles.iconsStyle} />
+                            <FontAwesome5 name="history" style={styles.iconsStyle} />
                             <View style={{ marginLeft: 10 }}>
-                                <Text style={styles.text}>Notificações</Text>
-                                <Text style={styles.subTitle}>Gerencie suas notificações</Text>
+                                <Text style={styles.text}>Histórico de Reservas</Text>
+                                <Text style={styles.subTitle}>Veja reservas feitas anteriormente</Text>
                             </View>
                         </View>
                     </TouchableOpacity>

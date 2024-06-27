@@ -1,33 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
 import { View, Text, TouchableOpacity, FlatList, Image, TextInput } from 'react-native';
 import styles from "./styles";
+import { IP } from "../../IP";
 
-const CadMesas = () => {
+let pessoas = 0;
+let mesa = '';
+let mesasSelecionadas = [];
+let primeiraMesa = '';
+let ultimaMesa = '';
+
+const CadMesas = forwardRef((props, ref) => {
     const [selectedPeople, setSelectedPeople] = useState(null);
     const [selectedMesa, setSelectedMesa] = useState(null);
     const [selectedDispo, setSelectedDispo] = useState(null);
     const [customNumberOfPeople, setCustomNumberOfPeople] = useState('');
     const [qntPessoas, setQntPessoas] = useState([
-        { key: 'a', image: require('./uma-pessoa1.png') },
-        { key: 'b', image: require('./duas-pessoas1.png') },
-        { key: 'c', image: require('./tres-pessoas1.png') },
-        { key: 'd', image: require('./quatro-pessoas1.png'), customImage: require('./mais-quatro.png') }
+        { key: 'a', image: require('./uma-pessoa1.png'), value: 1 },
+        { key: 'b', image: require('./duas-pessoas1.png'), value: 2 },
+        { key: 'c', image: require('./tres-pessoas1.png'), value: 3 },
+        { key: 'd', image: require('./quatro-pessoas1.png'), value: 'custom', customImage: require('./mais-quatro.png') }
     ]);
-
     const [buttonCount, setButtonCount] = useState(0);
     const [inputVisible, setInputVisible] = useState(false);
     const [numButtons, setNumButtons] = useState('');
     const [selectedQntMesas, setSelectedQntMesas] = useState([]);
+
+    useEffect(() => {
+        pessoas = getSelectedPeopleValue();
+    }, [selectedPeople, customNumberOfPeople]);
+
+    useEffect(() => {
+        mesa = getSelectedMesaValue();
+    }, [selectedMesa]);
+
+    useEffect(() => {
+        mesasSelecionadas = selectedQntMesas;
+        if (selectedQntMesas.length > 0) {
+            primeiraMesa = selectedQntMesas[0];
+            ultimaMesa = selectedQntMesas[selectedQntMesas.length - 1];
+        } else {
+            primeiraMesa = '';
+            ultimaMesa = '';
+        }
+    }, [selectedQntMesas]);
 
     const handleSelectQntMesas = (item) => {
         const key = item.key;
         let updatedSelectedQntMesas = [...selectedQntMesas];
 
         if (updatedSelectedQntMesas.includes(key)) {
-            // Botão já está selecionado, desselecionar
             updatedSelectedQntMesas = updatedSelectedQntMesas.filter(btnKey => btnKey !== key);
         } else {
-            // Determinar intervalo de seleção automática
             let start = null;
             let end = null;
 
@@ -40,7 +63,6 @@ const CadMesas = () => {
                 end = Math.max(lastSelected, parseInt(key));
             }
 
-            // Selecionar todos os botões no intervalo
             for (let i = start; i <= end; i++) {
                 if (!updatedSelectedQntMesas.includes(i.toString())) {
                     updatedSelectedQntMesas.push(i.toString());
@@ -50,7 +72,6 @@ const CadMesas = () => {
 
         setSelectedQntMesas(updatedSelectedQntMesas.sort((a, b) => parseInt(a) - parseInt(b)));
     };
-
 
     const handleCreateButtons = () => {
         setButtonCount(buttonCount + parseInt(numButtons, 10));
@@ -81,11 +102,62 @@ const CadMesas = () => {
         }
     };
 
+    const getSelectedPeopleValue = () => {
+        const selectedPerson = qntPessoas.find(item => item.key === selectedPeople);
+        if (selectedPerson) {
+            if (selectedPerson.value === 'custom') {
+                return customNumberOfPeople || 0;
+            }
+            return selectedPerson.value;
+        }
+        return 0;
+    };
 
+    const getSelectedMesaValue = () => {
+        switch (selectedMesa) {
+            case 'a':
+                return 'externa';
+            case 'b':
+                return 'interna';
+            default:
+                return '';
+        }
+    };
+
+    const criarMesas = async () => {
+        try {
+            const response = await fetch(`http://${IP}:3000/restaurante/667b89c538e14d718f66dc25/mesas`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NzcyZGY3MzNkMjgzNWZiNWFkZmZjZiIsImlhdCI6MTcxOTQyNTAyMX0.MWQ-INLeeX0CS5PA77OYqcBNOYclK-LqiMUj7eeI6t4`
+                },
+                body: JSON.stringify({
+                    numeroInicial: primeiraMesa,
+                    quantidade: ultimaMesa,
+                    nmrLugares: pessoas,
+                    tipo: mesa
+                })
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.msg || 'Erro ao criar mesas');
+            }
+
+            const data = await response.json();
+            console.log('Mesas criadas com sucesso:', data.mesas);
+        } catch (error) {
+            console.error('Erro ao criar mesas:', error.message);
+        }
+    };
+
+    useImperativeHandle(ref, () => ({
+        criarMesas
+    }));
 
     return (
         <View style={{ flex: 1 }}>
-            {/* FlatList para selecionar uma mesa por vez */}
             <FlatList
                 data={[
                     { key: 'a', image: require('./mesaEx-removebg1.png') },
@@ -160,7 +232,7 @@ const CadMesas = () => {
                         renderItem={({ item }) => (
                             item.key === (buttonCount + 1).toString() ? (
                                 <TouchableOpacity
-                                    style={[styles.dias, { backgroundColor: '#fe0000' }]} // Estilo similar aos botões da FlatList
+                                    style={[styles.dias, { backgroundColor: '#fe0000' }]}
                                     onPress={() => setInputVisible(true)}
                                 >
                                     <Text style={[styles.buttonText, { fontSize: 25 }]}>+</Text>
@@ -224,7 +296,6 @@ const CadMesas = () => {
                 Disponibilidade das mesas:
             </Text>
 
-
             <FlatList
                 data={['60 Minutos', '120 Minutos']}
                 horizontal
@@ -246,10 +317,8 @@ const CadMesas = () => {
                     </TouchableOpacity>
                 )}
             />
-
-
         </View>
     );
-}
+});
 
 export default CadMesas;
