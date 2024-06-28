@@ -1,18 +1,17 @@
 //Rotas.js
-
 require('dotenv').config();
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const { body, validationResult } = require('express-validator');
-const upload = require('../config/multer')
 
 // Models
 const User = require('../model/User');
 const Rest = require('../model/Rest');
 const Reserva = require('../model/Reserva');
 const Mesa = require('../model/Mesa');
+const upload = require('../config/multer')
 
 const router = express.Router();
 router.use(cors()); // Habilitando o CORS
@@ -21,6 +20,44 @@ router.use(cors()); // Habilitando o CORS
 router.get('/', (req, res) => {
     res.status(200).json({ msg: 'Bem vindo a nossa API' });
 });
+
+// // Rota para criar novas mesas
+// router.post('/:restauranteId/mesas', checkToken, async (req, res) => {
+//     const { restauranteId } = req.params;
+//     const { numeroInicial, quantidade, nmrLugares, tipo } = req.body;
+
+//     try {
+//         // Encontrar o restaurante
+//         const restaurante = await Rest.findById(restauranteId);
+//         if (!restaurante) {
+//             return res.status(404).json({ msg: 'Restaurante não encontrado' });
+//         }
+
+//         // Criar as mesas
+//         const mesas = [];
+//         for (let i = numeroInicial; i <= quantidade; i++) {
+//             const novaMesa = new Mesa({
+//                 numero: i,
+//                 nmrLugares,
+//                 restaurant: restauranteId,
+//                 tipo
+//             });
+
+//             // Salvar a mesa no banco de dados
+//             await novaMesa.save();
+//             mesas.push(novaMesa);
+//         }
+
+//         // Adicionar as mesas ao restaurante
+//         restaurante.mesas = restaurante.mesas.concat(mesas.map(mesa => mesa._id));
+//         await restaurante.save();
+
+//         res.status(201).json({ msg: 'Mesas criadas com sucesso', mesas });
+//     } catch (error) {
+//         res.status(500).json({ msg: 'Erro ao criar as mesas', error });
+//     }
+// });
+
 
 // VALIDAÇÃO DE TOKEN
 function checkToken(req, res, next) {
@@ -56,7 +93,10 @@ router.get('/user/:id', checkToken, async (req, res) => {
 
 // Registro Restaurante
 router.post('/auth/register_rest', async (req, res) => {
-    const { name, email, cnpj, cep, pass, categoria, confirmPass, cidade, bairro, rua, numero } = req.body;
+    const {
+        name, email, cnpj, cep, pass, categoria, confirmPass,
+        cidade, bairro, rua, numero, horariosFuncionamento
+    } = req.body;
 
     if (pass !== confirmPass) {
         return res.status(400).json({ error: 'Senhas não conferem' });
@@ -69,8 +109,7 @@ router.post('/auth/register_rest', async (req, res) => {
 
     // Validação do CEP
     try {
-        const fetch = await import('node-fetch');
-        const response = await fetch.default(`https://brasilapi.com.br/api/cep/v1/${cep}`);
+        const response = await fetch(`https://brasilapi.com.br/api/cep/v1/${cep}`);
         if (!response.ok) {
             const errorText = await response.text();
             console.error("Erro na resposta do CEP API:", errorText);
@@ -90,6 +129,7 @@ router.post('/auth/register_rest', async (req, res) => {
 
     const newRestaurant = new Rest({
         name,
+        desc: "Descrição",
         email,
         cnpj,
         cep,
@@ -98,7 +138,12 @@ router.post('/auth/register_rest', async (req, res) => {
         cidade,
         bairro,
         rua,
-        numero
+        numero,
+        wifi: false,  // Valor padrão false para wifi
+        estacionamento: false,  // Valor padrão false para estacionamento
+        arCondicionado: false,  // Valor padrão false para ar condicionado
+        areaExterna: false,  // Valor padrão false para área externa
+        horariosFuncionamento
     });
 
     try {
@@ -107,8 +152,7 @@ router.post('/auth/register_rest', async (req, res) => {
     } catch (e) {
         res.status(500).json({ msg: "Ocorreu um erro no servidor, tente novamente mais tarde", e });
     }
-})
-
+});
 // Register
 router.post('/auth/register', async (req, res) => {
     const { name, email, pass, confirmPass } = req.body;
@@ -203,11 +247,14 @@ router.post("/auth/login_rest", async (req, res) => {
             return res.status(422).json({ msg: "Senha incorreta" });
         }
 
+        // Armazena o id do restaurante em uma variável
+        var restId = rest._id;
+
         // Geração do token JWT
         const secret = process.env.SECRET;
-        const token = jwt.sign({ id: rest._id }, secret, { expiresIn: '1h' }); // Token expira em 1 hora
-
-        return res.status(200).json({ msg: "Autenticação realizada com sucesso", token });
+        const token = jwt.sign({ id: restId }, secret, { expiresIn: '1h' }); // Token expira em 1 hora
+        //console.log('ID do restaurante logado:', restId);
+        return res.status(200).json({ msg: "Autenticação realizada com sucesso", token, restId });
     } catch (err) {
         console.log(err);
         return res.status(500).json({ msg: "Ocorreu um erro no servidor", err });
@@ -232,9 +279,15 @@ router.post('/reserva', checkToken, async (req, res) => {
             return res.status(404).json({ msg: 'Mesa não encontrada' });
         }
 
+        // Verificar se o restaurante existe
+        const restaurant = await Rest.findById(mesa.restaurant);
+        if (!restaurant) {
+            return res.status(404).json({ msg: 'Restaurante não encontrado' });
+        }
+
         // Verificar se a mesa está disponível no horário e data desejados
         const reservaExistente = await Reserva.findOne({
-            mesaId,
+            mesa: mesaId,
             date,
             time
         });
@@ -245,8 +298,9 @@ router.post('/reserva', checkToken, async (req, res) => {
 
         // Criar a nova reserva
         const newReserva = new Reserva({
-            userId,
-            mesaId,
+            user: userId,
+            mesa: mesaId,
+            restaurant: restaurant._id,
             date,
             time
         });
@@ -259,6 +313,9 @@ router.post('/reserva', checkToken, async (req, res) => {
         res.status(500).json({ msg: 'Erro ao criar a reserva', error });
     }
 });
+
+
+
 
 // Rota para criar mesas
 router.post('/restaurante/:restId/mesas', [
@@ -299,6 +356,23 @@ router.post('/restaurante/:restId/mesas', [
         res.status(201).json({ msg: 'Mesas criadas com sucesso', mesas });
     } catch (error) {
         res.status(500).json({ msg: 'Erro ao criar mesas', error });
+    }
+});
+
+
+//Rota para buscar informações das mesas
+router.get('/restaurante/:restId/mesas', checkToken, async (req, res) => {
+    const { restId } = req.params;
+
+    try {
+        const restaurant = await Rest.findById(restId).populate('mesas');
+        if (!restaurant) {
+            return res.status(404).json({ msg: 'Restaurante não encontrado' });
+        }
+
+        res.status(200).json({ mesas: restaurant.mesas });
+    } catch (error) {
+        res.status(500).json({ msg: 'Erro ao buscar mesas', error });
     }
 });
 
@@ -345,19 +419,84 @@ router.put('/restaurante/:restId/mesas/:mesaId', [
 // Rota para obter todos os restaurantes
 router.get('/restaurants', async (req, res) => {
     try {
-        const restaurants = await Rest.find().select('name cidade bairro rua numero'); // Adicione os campos de endereço aqui
+        const restaurants = await Rest.find().select('name cidade bairro rua numero categoria'); // Adicione os campos de endereço aqui
         res.status(200).json(restaurants);
     } catch (error) {
         res.status(500).json({ msg: 'Erro ao buscar os restaurantes', error });
     }
 });
 
+///////////////////////////////////////////////////////////////////////////////////////////
+// Rota para buscar informações do restaurante
+router.get('/restaurante/:id', async (req, res) => {
+    const { id } = req.params;
 
-//Rota das imagens do restaurante
-router.post('/img', upload.single('file'), async (req, res) => {
     try {
+        const restaurante = await Rest.findById(id);
+        if (!restaurante) {
+            return res.status(404).json({ error: 'Restaurante não encontrado' });
+        }
 
-        const {name} = req.body
+        res.status(200).json(restaurante);
+    } catch (error) {
+        console.error('Erro ao buscar restaurante:', error);
+        res.status(500).json({ error: 'Erro ao buscar restaurante, verifique o console para mais detalhes' });
+    }
+});
+
+
+router.put('/restaurante/:id', async (req, res) => {
+    const { id } = req.params;
+    const {
+        name,
+        desc,
+        wifi,
+        estacionamento,
+        arCondicionado,
+        areaExterna,
+        horariosFuncionamento,
+        categoria
+    } = req.body;
+
+    try {
+        // Verifica se o restaurante existe
+        let restaurante = await Rest.findById(id);
+        if (!restaurante) {
+            return res.status(404).json({ error: 'Restaurante não encontrado' });
+        }
+
+        // Atualiza os campos conforme necessário
+        if (name !== undefined) restaurante.name = name;
+        if (desc !== undefined) restaurante.desc = desc;
+        if (wifi !== undefined) restaurante.wifi = wifi;
+        if (estacionamento !== undefined) restaurante.estacionamento = estacionamento;
+        if (arCondicionado !== undefined) restaurante.arCondicionado = arCondicionado;
+        if (areaExterna !== undefined) restaurante.areaExterna = areaExterna;
+        if (categoria !== undefined) restaurante.categoria = categoria; // Atualiza a categoria
+
+        // Atualiza os horários de funcionamento, se fornecidos
+        if (Array.isArray(horariosFuncionamento) && horariosFuncionamento.length > 0) {
+            restaurante.horariosFuncionamento = horariosFuncionamento.map(horario => ({
+                diaSemana: horario.diaSemana,
+                horarioAbertura: horario.horarioAbertura,
+                horarioFechamento: horario.horarioFechamento
+            }));
+        }
+
+        // Salva as alterações no banco de dados
+        await restaurante.save();
+
+        // Responde com sucesso
+        res.status(200).json({ message: 'Restaurante atualizado com sucesso', restaurante });
+    } catch (error) {
+        console.error('Erro ao atualizar restaurante:', error);
+        res.status(500).json({ error: 'Erro ao atualizar restaurante, verifique o console para mais detalhes' });
+    }
+});
+
+ //Rota das imagens do restaurante
+router.post('/image', upload.single('file'), async (req, res) => {
+    try {
 
         const file = req.file
 
@@ -375,4 +514,17 @@ router.post('/img', upload.single('file'), async (req, res) => {
     }
 });
 
+// //Rota das imagens que ja estão no banco
+    router.get('/image', async (req, res) => {
+    try {
+
+        const rest = await Rest.find()
+
+        res.json({rest, msg:'Imagem salva com sucesso!!!'});
+
+
+    } catch (error) {
+        res.status(500).json({message:'Erro ao salvar imagem.'});
+    }
+});
 module.exports = router;

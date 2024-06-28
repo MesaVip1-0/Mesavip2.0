@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Modal, Alert } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text';
 import styles from './styles';
-import { AntDesign } from '@expo/vector-icons';
 
-const HorarioFuncRest = ({ onRemove, title, betweenText }) => {
+const HorarioFuncRest = ({ title, betweenText, onTimeChange }) => {
+
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
 
@@ -23,15 +23,47 @@ const HorarioFuncRest = ({ onRemove, title, betweenText }) => {
         }
     };
 
+    const handleStartTimeChange = (text) => {
+        setStartTime(text);
+        if (text.length === 5) {
+            const isValidTime = /^([01][0-9]|2[0-3]):([0-5][0-9])$/.test(text);
+            if (!isValidTime) {
+                Alert.alert(
+                    'Horário inválido',
+                    `Horário inválido: ${text}`,
+                    [{ text: 'OK', onPress: () => setStartTime('') }]
+                );
+            } else {
+                onTimeChange(title, 'start', text);
+            }
+        }
+    };
+
+    const handleEndTimeChange = (text) => {
+        setEndTime(text);
+        if (text.length === 5) {
+            const isValidTime = /^([01][0-9]|2[0-3]):([0-5][0-9])$/.test(text);
+            if (!isValidTime) {
+                Alert.alert(
+                    'Horário inválido',
+                    `Horário inválido: ${text}`,
+                    [{ text: 'OK', onPress: () => setEndTime('') }]
+                );
+            } else {
+                onTimeChange(title, 'end', text);
+            }
+        }
+    };
+
+
     return (
         <View style={{ flexDirection: 'column' }}>
             <View style={styles.horarioContainer}>
                 <Text style={styles.horarioButtonText}>{title}</Text>
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={styles.horarioText}>{betweenText}</Text>
-                    <Text style={styles.horarioButtonText}>Sexta</Text>
                 </View>
-                <Text style={styles.horarioText}>:</Text>
+
                 <View style={styles.horarioInputContainer}>
                     <View style={styles.horario}>
                         <TextInputMask
@@ -41,19 +73,8 @@ const HorarioFuncRest = ({ onRemove, title, betweenText }) => {
                                 format: 'HH:mm'
                             }}
                             value={startTime}
-                            onChangeText={(text) => {
-                                setStartTime(text);
-                                if (text.length === 5) {
-                                    const isValidTime = /^([01][0-9]|2[0-3]):([0-5][0-9])$/.test(text);
-                                    if (!isValidTime) {
-                                        Alert.alert(
-                                            'Horário inválido',
-                                            `Horário inválido: ${text}`,
-                                            [{ text: 'OK', onPress: () => setStartTime('') }]
-                                        );
-                                    }
-                                }
-                            }}
+                            onChangeText={handleStartTimeChange}
+
                             onBlur={() => handleBlur(startTime, setStartTime)}
                         />
                     </View>
@@ -66,19 +87,8 @@ const HorarioFuncRest = ({ onRemove, title, betweenText }) => {
                                 format: 'HH:mm'
                             }}
                             value={endTime}
-                            onChangeText={(text) => {
-                                setEndTime(text);
-                                if (text.length === 5) {
-                                    const isValidTime = /^([01][0-9]|2[0-3]):([0-5][0-9])$/.test(text);
-                                    if (!isValidTime) {
-                                        Alert.alert(
-                                            'Horário inválido',
-                                            `Horário inválido: ${text}`,
-                                            [{ text: 'OK', onPress: () => setEndTime('') }]
-                                        );
-                                    }
-                                }
-                            }}
+                            onChangeText={handleEndTimeChange}
+
                             onBlur={() => handleBlur(endTime, setEndTime)}
                         />
                     </View>
@@ -88,13 +98,5 @@ const HorarioFuncRest = ({ onRemove, title, betweenText }) => {
     );
 };
 
-const MainComponent = () => {
-    return (
-        <View style={{ padding: 20 }}>
-            <HorarioFuncRest title="Segunda" betweenText="à" />
-            <HorarioFuncRest title="Domingo" betweenText="e" />
-        </View>
-    );
-};
+export default HorarioFuncRest;
 
-export default MainComponent;

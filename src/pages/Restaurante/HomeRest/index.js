@@ -1,30 +1,112 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, SafeAreaView, TextInput } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, Text, Image, TouchableOpacity, ScrollView, SafeAreaView, TextInput, Modal, Alert } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import * as DocumentPicker from 'expo-document-picker';
+import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import styles from './styles';
 import CategoriaRest from '../../../components/CategoriaRest';
 import IconButton from '../../../components/IconButton';
+import { Feather } from '@expo/vector-icons';
 import HorarioFuncRest from '../../../components/HorarioFuncRest';
-import ImageCarousel from '../../../components/ImageCarousel';
+import { IconSelectionContext } from '../../../components/Context/IconSelectionContext';
+import { IP } from '../../IP';
 
 export default function HomeRest() {
-    const [selectedIcons, setSelectedIcons] = useState({
-        wifi: false,
-        car: false,
-        ac: false,
-        outdoor: false
-    });
+    const [name, setName] = useState('');
+    const [desc, setDesc] = useState('');
+    const [horariosFuncionamento, setHorariosFuncionamento] = useState([
+        { diaSemana: 'Segunda', horarioAbertura: '', horarioFechamento: '' },
+        { diaSemana: 'Domingo', horarioAbertura: '', horarioFechamento: '' }
+    ]);
+    const [categoria, setCategoria] = useState('');
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [modalVisible, setModalVisible] = useState(false);
+    const { selectedIcons, toggleIconSelection } = useContext(IconSelectionContext);
+    const navigation = useNavigation();
 
-    const [horariosFuncionamento, setHorariosFuncionamento] = useState([]);
+    useEffect(() => {
+        fetchRestaurantData();
+    }, []);
 
-    const toggleIconSelection = (icon) => {
-        setSelectedIcons((prevSelectedIcons) => ({
-            ...prevSelectedIcons,
-            [icon]: !prevSelectedIcons[icon],
-        }));
+    const fetchRestaurantData = async () => {
+        try {
+            const response = await axios.get(`http://${IP}:3000/restaurante/667a2b55f3d605aadf8355d3`);
+            const data = response.data;
+
+            setName(data.name);
+            setDesc(data.desc);
+            toggleIconSelection('wifi', data.wifi);
+            toggleIconSelection('car', data.estacionamento);
+            toggleIconSelection('ac', data.arCondicionado);
+            toggleIconSelection('outdoor', data.areaExterna);
+            setHorariosFuncionamento(data.horariosFuncionamento || []);
+            setCategoria(data.categoria || '');
+        } catch (error) {
+            console.error('Erro ao buscar dados do restaurante:', error);
+            alert('Erro ao buscar dados do restaurante');
+        }
+    };
+
+    const openImagePickerAsync = async (mediaType) => {
+        let permissionResult;
+        if (mediaType === 'camera') {
+            permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+        } else {
+            permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        }
+
+        if (!permissionResult.granted) {
+            Alert.alert('Permissão negada para acessar a câmera/galeria');
+            return;
+        }
+
+        let pickerResult;
+        if (mediaType === 'camera') {
+            pickerResult = await ImagePicker.launchCameraAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [1, 1],
+                quality: 1,
+            });
+        } else if (mediaType === 'gallery') {
+            pickerResult = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [1, 1],
+                quality: 1,
+            });
+        }
+
+        if (!pickerResult.cancelled) {
+            const imageUri = pickerResult.assets[0].uri;
+            setSelectedImage(imageUri);
+            await uploadImage(imageUri);
+            setModalVisible(false);
+        }
+    };
+
+    const uploadImage = async (uri) => {
+        const formData = new FormData();
+        formData.append("file", {
+            uri: uri,
+            type: "image/jpeg",
+            name: "profile.jpg",
+        });
+
+        try {
+            const response = await axios.post(`http://${IP}:3000/image`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
+            Alert.alert("Imagem enviada com sucesso");
+        } catch (error) {
+            console.error("Erro ao enviar imagem", error);
+            Alert.alert("Erro ao enviar imagem");
+        }
     };
 
     const uploadPDF = async () => {
@@ -41,61 +123,86 @@ export default function HomeRest() {
                     name: result.name,
                 });
 
-                await axios.post("http://192.168.15.9:3000/upload", formData, {
+                await axios.post(`http://${IP}:3000/upload`, formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
                 });
 
-                alert("PDF uploaded successfully");
+                alert("PDF carregado com sucesso");
             }
         } catch (error) {
-            console.error("Error uploading PDF", error);
-            alert("Error uploading PDF");
+            console.error("Erro ao carregar PDF", error);
+            alert("Erro ao carregar PDF");
         }
     };
 
-    const addHorarioFuncionamento = () => {
-        if (horariosFuncionamento.length < 3) {
-            setHorariosFuncionamento([
-                ...horariosFuncionamento,
-                { id: horariosFuncionamento.length }
-            ]);
-        } else {
-            alert('Você só pode adicionar até 3 horários.');
+    const handleTimeChange = (day, type, time) => {
+        const updatedHorarios = horariosFuncionamento.map((horario) => {
+            if (horario.diaSemana === day) {
+                return {
+                    ...horario,
+                    [type === 'start' ? 'horarioAbertura' : 'horarioFechamento']: time
+                };
+            }
+            return horario;
+        });
+        setHorariosFuncionamento(updatedHorarios);
+    };
+
+    const handleSubmit = async () => {
+        try {
+            const response = await axios.put(`http://${IP}:3000/restaurante/667a2b55f3d605aadf8355d3`, {
+                name,
+                desc,
+                wifi: selectedIcons.wifi,
+                estacionamento: selectedIcons.car,
+                arCondicionado: selectedIcons.ac,
+                areaExterna: selectedIcons.outdoor,
+                horariosFuncionamento,
+                categoria
+            });
+
+            alert('Restaurante atualizado com sucesso');
+        } catch (error) {
+            console.error('Erro ao atualizar restaurante:', error);
+            alert('Erro ao atualizar restaurante');
         }
     };
 
-    const removeHorarioFuncionamento = (id) => {
-        setHorariosFuncionamento(horariosFuncionamento.filter((horario) => horario.id !== id));
-    };
-
-    const imagensFotos = [
-        require('./outLoca.png'),
-        require('./comida.jpg'),
-    ];
-
-    const navigation = useNavigation();
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.containerLogo}>
-                <Image
-                    source={require('../../Cliente/HomeCli/outback.png')}
-                    style={{ width: '100%' }}
-                    resizeMode="contain"
-                />
-            </View>
+            <TouchableOpacity style={styles.containerLogo} onPress={() => setModalVisible(true)}>
+                <Feather name='camera' color={'#fff'} size={22} />
+                <Text style={{ paddingTop: 2, color: '#fff' }}>Adicionar Foto</Text>
+                {selectedImage && (
+                    <Image
+                        source={{ uri: selectedImage }}
+                        style={{ width: '100%', height: 250, marginTop: 20 }}
+                        resizeMode="cover"
+                    />
+                )}
+            </TouchableOpacity>
 
             <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
                 <ScrollView>
-                    <TextInput style={styles.title} multiline placeholder='Nome do Restaurante' placeholderTextColor="grey"></TextInput>
-                    <CategoriaRest />
+                    <TextInput 
+                        style={styles.title} 
+                        multiline 
+                        placeholder='Nome do Restaurante' 
+                        placeholderTextColor="grey"
+                        onChangeText={setName}
+                        value={name}
+                    />
+                    <CategoriaRest setCategoria={setCategoria} categoria={categoria} />
                     <Text style={styles.title}>Sobre o Restaurante</Text>
                     <TextInput
                         style={styles.subTitle}
                         multiline
                         placeholder='Fale sobre seu Restaurante'
                         placeholderTextColor="grey"
+                        onChangeText={setDesc}
+                        value={desc}
                     />
                     <Text style={styles.title}>Temos</Text>
                     <View style={styles.iconsContainerList}>
@@ -134,7 +241,10 @@ export default function HomeRest() {
                     </View>
 
                     <Text style={styles.title}>Horário de Funcionamento:</Text>
-                    <HorarioFuncRest />
+                    <HorarioFuncRest
+                        horariosFuncionamento={horariosFuncionamento}
+                        onTimeChange={handleTimeChange}
+                    />
 
                     <Text style={styles.title}>Localização:</Text>
                     <Image
@@ -148,8 +258,41 @@ export default function HomeRest() {
                         <Text style={styles.buttonText}>Upload Cardápio (PDF)</Text>
                     </TouchableOpacity>
 
-                    <Text style={styles.title}>Fotos:</Text>
-                    <ImageCarousel images={imagensFotos} />
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => {
+                            setModalVisible(!modalVisible);
+                        }}
+                    >
+                        <View style={styles.modalView}>
+                            <View style={styles.modal}>
+                                <TouchableOpacity
+                                    onPress={() => openImagePickerAsync('camera')}
+                                    style={styles.button}
+                                >
+                                    <Text style={styles.textStyle}>Tire uma foto</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => openImagePickerAsync('gallery')}
+                                    style={styles.button}
+                                >
+                                    <Text style={styles.textStyle}>Escolha uma foto</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => setModalVisible(!modalVisible)}
+                                    style={styles.button}
+                                >
+                                    <Text style={styles.textStyle}>Cancelar</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Modal>
+
+                    <TouchableOpacity style={styles.buttonReserv} onPress={handleSubmit}>
+                        <Text style={styles.buttonText}>Salvar Configurações</Text>
+                    </TouchableOpacity>
                 </ScrollView>
             </Animatable.View>
         </SafeAreaView>

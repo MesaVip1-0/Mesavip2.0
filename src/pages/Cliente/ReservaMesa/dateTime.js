@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, FlatList, Image, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Image, TextInput, Alert } from 'react-native';
 import styles from "./styles";
+import { IP } from "../../IP";
 
 const DateTime = () => {
     const [selectedDay, setSelectedDay] = useState(null);
@@ -10,30 +11,41 @@ const DateTime = () => {
     const [daysOfWeek, setDaysOfWeek] = useState([]);
     const [customNumberOfPeople, setCustomNumberOfPeople] = useState('');
     const [qntPessoas, setQntPessoas] = useState([
-        { key: 'a', image: require('./uma-pessoa1.png') },
-        { key: 'b', image: require('./duas-pessoas1.png') },
-        { key: 'c', image: require('./tres-pessoas1.png') },
-        { key: 'd', image: require('./quatro-pessoas1.png'), customImage: require('./mais-quatro.png') } // Inicialmente sem imagem personalizada
+        { key: 'a', image: require('./uma-pessoa1.png'), value: 1 },
+        { key: 'b', image: require('./duas-pessoas1.png'), value: 2 },
+        { key: 'c', image: require('./tres-pessoas1.png'), value: 3 },
+        { key: 'd', image: require('./quatro-pessoas1.png'), customImage: require('./mais-quatro.png'), value: 4 } // Inicialmente sem imagem personalizada
     ]);
+
+    const [dia, setDia] = useState(null);
+    const [horario, setHorario] = useState(null);
+    const [mesa, setMesa] = useState(null);
+    const [pessoas, setPessoas] = useState(null);
 
     const handleSelectDay = (item) => {
         setSelectedDay(item === selectedDay ? null : item);
+        // Formatando a data para ISO string
+        setDia(item === selectedDay ? null : `${new Date().getFullYear()}-06-${item.date}T19:00:00.000Z`);
     };
 
     const handleSelectTime = (horario) => {
         setSelectedTime(horario === selectedTime ? null : horario);
+        setHorario(horario === selectedTime ? null : horario);
     };
 
     const handleSelectPeople = (key) => {
+        const selectedPerson = qntPessoas.find(pessoa => pessoa.key === key);
         if (key === 'd') {
             setSelectedPeople('d');
         } else {
             setSelectedPeople(key === selectedPeople ? null : key);
+            setPessoas(key === selectedPeople ? null : selectedPerson.value);
         }
     };
 
     const handleSelectMesa = (item) => {
         setSelectedMesa(item === selectedMesa ? null : item);
+        setMesa(item === selectedMesa ? null : item);
     };
 
     const getNext7Days = () => {
@@ -56,10 +68,41 @@ const DateTime = () => {
     }, []);
 
     const handleCustomNumberChange = (text) => {
-        // Valida se o texto contém apenas números antes de atualizar o estado
         if (/^\d+$/.test(text) || text === '') {
             setCustomNumberOfPeople(text);
-            setSelectedPeople('d'); // Define "d" como selecionado quando o usuário digitar um número customizado
+            setSelectedPeople('d');
+            setPessoas(text === '' ? null : parseInt(text, 10));
+        }
+    };
+
+    const seuTokenDeAutenticacao = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Nzg2N2U2ZTgxZjczNmIxZjZiMDUyMiIsImlhdCI6MTcxOTQ1ODczNH0.dxen1gAY7_G4hd1XWNUd6vUfP2QX6q7XNLvpUfwoeFk';
+
+    const fazerReserva = async () => {
+        const reservaData = {
+            mesaId: "667c590d1dd10c40e3d651fa",
+            date: dia,
+            time: horario
+        };
+
+        try {
+            const response = await fetch(`http://${IP}:3000/reserva`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${seuTokenDeAutenticacao}`,
+                },
+                body: JSON.stringify(reservaData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Erro ao fazer reserva');
+            }
+
+            const data = await response.json();
+            alert('Reserva feita com sucesso!');
+        } catch (error) {
+            console.error('Erro ao fazer reserva:', error.message);
+            alert('Erro ao fazer reserva. Verifique os dados e tente novamente.');
         }
     };
 
@@ -158,7 +201,7 @@ const DateTime = () => {
                                     keyboardType="numeric"
                                     value={customNumberOfPeople}
                                     onChangeText={handleCustomNumberChange}
-                                    autoFocus={true} // Foca no TextInput automaticamente quando selecionado
+                                    autoFocus={true}
                                 />
                             ) : null}
                         </View>
@@ -215,8 +258,17 @@ const DateTime = () => {
                     />
                 </View>
             </View>
+
+            <TouchableOpacity
+                style={styles.btnReservar}
+                onPress={fazerReserva}
+            >
+                <Text style={styles.textoBtn}>
+                    RESERVAR
+                </Text>
+            </TouchableOpacity>
         </>
     );
-}
+};
 
 export default DateTime;

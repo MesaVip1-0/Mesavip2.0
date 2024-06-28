@@ -7,14 +7,14 @@ const ReservaSchema = new Schema({
         ref: 'User',
         required: true
     },
-    restaurant: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Rest',
-        required: true
-    },
     mesa: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Mesa',
+        required: true
+    },
+    restaurant: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Rest',
         required: true
     },
     date: {
@@ -24,11 +24,9 @@ const ReservaSchema = new Schema({
     time: {
         type: String,
         required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
     }
 });
 
-module.exports = mongoose.model('Reserva', ReservaSchema);
+const Reserva = mongoose.model('Reserva', ReservaSchema);
+
+module.exports = Reserva;

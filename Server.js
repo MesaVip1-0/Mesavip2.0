@@ -16,7 +16,7 @@ const dbUser = process.env.DB_USER;
 const dbPass = process.env.DB_PASS;
 
 mongoose
-    .connect(`mongodb+srv://${dbUser}:${dbPass}@mesavip.vck1pac.mongodb.net/?retryWrites=true&w=majority&appName=MesaVip`)
+    .connect(`mongodb+srv://${dbUser}:${dbPass}@cluster0.bo7gooi.mongodb.net/TesteLogin?retryWrites=true&w=majority&appName=Cluster0`)
     .then(() => {
         app.listen(3000, () => {
             console.log("Servidor rodando na porta 3000");

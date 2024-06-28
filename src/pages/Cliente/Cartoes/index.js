@@ -38,7 +38,7 @@ const CartoesEstilo = ({ item, navigation }) => {
                         resizeMode='contain'
                     />
                 </View>
-                <Text style={{ color: '#fff', fontSize: 20, marginLeft: 15, fontWeight: 'bold' }}>5446 1002 6116 0575</Text>
+                <Text style={{ color: '#fff', fontSize: 20, marginLeft: 15, fontWeight: 'bold' }}>5446 XXXX XXXX 0575</Text>
             </View>
 
     );

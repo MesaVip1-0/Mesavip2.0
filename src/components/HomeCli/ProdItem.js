@@ -17,6 +17,9 @@ const ProdItem = ({ item }) => {
             <Text style={styles.description} numberOfLines={2}>
                 {item.descricao_produto}
             </Text>
+            <Text style={styles.description} numberOfLines={2}>
+                {item.name_categoria}
+            </Text>
         </View>
     );
 };
