@@ -12,12 +12,6 @@ const agendadas = [
         img_logo: require('../Favoritos/logohab.png'),
         descricao: 'Domingo, 31/12/23 ás 13:30'
 
-    }, {
-        codigo_produto: 2,
-        nome_produto: 'Outback Steakhouse, Osasco',
-        valor_produto: '90,00',
-        img_logo: require('../Favoritos/logo-outback.jpg'),
-        descricao: 'Domingo, 31/11/23 ás 13:30'
     }
 ];
 
